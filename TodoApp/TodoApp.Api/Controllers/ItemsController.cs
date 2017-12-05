@@ -16,66 +16,6 @@ namespace TodoApp.Api.Controllers
         public Boolean isEdited;
     }
 
-    public class Items : IEnumerable
-    {
-        private Item[] items;
-
-        public Items(Item[] pArray)
-        {
-            items = new Item[pArray.Length];
-
-            for (int i = 0; i < pArray.Length; i++)
-            {
-                items[i] = pArray[i];
-            }
-        }
-        public IEnumerator GetEnumerator()
-        {
-            return (IEnumerator) GetEnumerator();
-        }
-
-        public ItemEnum GetEmumerator()
-        {
-            return new ItemEnum(items);
-        }
-    }
-
-    public class ItemEnum : IEnumerator
-    {
-        public Item[] Items;
-        private int Position = -1;
-
-        public ItemEnum(Item[] list)
-        {
-            Items = list;
-        }
-        public bool MoveNext()
-        {
-            Position++;
-            return (Position < Items.Length);
-        }
-
-        public void Reset()
-        {
-            Position = -1;
-        }
-
-        public object Current
-        {
-            get
-            {
-                try
-                {
-                    return Items[Position];
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-        }
-    }
-
     public class ItemsController : ApiController
     {
         private static List<Item> items = new List<Item>()
@@ -83,26 +23,31 @@ namespace TodoApp.Api.Controllers
             new Item("item0"), new Item("item1"), new Item("item2")
         };
 
+        /*public List<Item> GetList()
+        {
+            return items;
+        }
+        */
         private static IEnumerable<Item> GetItemsAsync()
         {
             return items;
         }
 
         // GET api/<controller>
-        public async Task<IEnumerable<Item>> Get()
+        public async Task<IHttpActionResult> Get()
         {
-            return await Task.Run(() => GetItemsAsync());
+            return await Task.Run(() => Ok(GetItemsAsync()));
         }
 
         private static Item GetItemById(int id)
         {
-            return items[id];
+            return new Item("New Item");
         }
 
         // GET api/<controller>/5
-        public async Task<Item> Get(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
-            return await Task.Run(() => GetItemById(id));
+            return await Task.Run(() => Ok(GetItemById(id)));
         }
 
         private static void AddItem(Item item)
@@ -111,9 +56,10 @@ namespace TodoApp.Api.Controllers
         }
 
         // POST api/<controller>
-        public async Task Post([FromBody]Item item)
+        public async Task<IHttpActionResult> Post([FromBody]Item item)
         {
             await Task.Run(() => AddItem(item));
+            return Ok();
         }
 
         private void UpdateItem(int id, Item item)
@@ -122,9 +68,10 @@ namespace TodoApp.Api.Controllers
         }
 
         // PUT api/<controller>/5
-        public async Task Put(int id, [FromBody]Item item)
+        public async Task<IHttpActionResult> Put(int id, [FromBody]Item item)
         {
             await Task.Run(() => UpdateItem(id, item));
+            return Ok();
         }
 
         private static void DeleteItem(int id)
@@ -133,9 +80,10 @@ namespace TodoApp.Api.Controllers
         }
 
         // DELETE api/<controller>/5
-        public async Task Delete(int id)
+        public async Task<IHttpActionResult> Delete(int id)
         {
             await Task.Run(() => DeleteItem(id));
+            return Ok();
         }
     }
 }
