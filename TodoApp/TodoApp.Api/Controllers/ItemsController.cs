@@ -83,7 +83,7 @@ namespace TodoApp.Api.Controllers
             new Item("item0"), new Item("item1"), new Item("item2")
         };
 
-        private async Task<IEnumerable<Item>> GetItemsAsync()
+        private static IEnumerable<Item> GetItemsAsync()
         {
             return items;
         }
@@ -91,10 +91,10 @@ namespace TodoApp.Api.Controllers
         // GET api/<controller>
         public async Task<IEnumerable<Item>> Get()
         {
-            return await GetItemsAsync();
+            return await Task.Run(() => GetItemsAsync());
         }
 
-        private async Task<Item> GetItemById(int id)
+        private static Item GetItemById(int id)
         {
             return items[id];
         }
@@ -102,10 +102,10 @@ namespace TodoApp.Api.Controllers
         // GET api/<controller>/5
         public async Task<Item> Get(int id)
         {
-            return await GetItemById(id);
+            return await Task.Run(() => GetItemById(id));
         }
 
-        private async Task AddItem(Item item)
+        private static void AddItem(Item item)
         {
             items.Add(item);
         }
@@ -113,10 +113,10 @@ namespace TodoApp.Api.Controllers
         // POST api/<controller>
         public async Task Post([FromBody]Item item)
         {
-            await AddItem(item);
+            await Task.Run(() => AddItem(item));
         }
 
-        private async Task UpdateItem(int id, Item item)
+        private void UpdateItem(int id, Item item)
         {
             items[id] = item;
         }
@@ -124,10 +124,10 @@ namespace TodoApp.Api.Controllers
         // PUT api/<controller>/5
         public async Task Put(int id, [FromBody]Item item)
         {
-            await UpdateItem(id, item);
+            await Task.Run(() => UpdateItem(id, item));
         }
 
-        private async Task DeleteItem(int id)
+        private static void DeleteItem(int id)
         {
             items.RemoveAt(id);
         }
@@ -135,7 +135,7 @@ namespace TodoApp.Api.Controllers
         // DELETE api/<controller>/5
         public async Task Delete(int id)
         {
-            await DeleteItem(id);
+            await Task.Run(() => DeleteItem(id));
         }
     }
 }
