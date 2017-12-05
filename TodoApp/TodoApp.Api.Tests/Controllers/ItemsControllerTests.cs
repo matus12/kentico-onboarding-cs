@@ -24,7 +24,7 @@ namespace TodoApp.Api.Tests.Controllers
                 new Item(2, "item1"),
                 new Item(3, "item2")
             };
-    }
+        }
 
         [TearDown]
         public void TearDown()

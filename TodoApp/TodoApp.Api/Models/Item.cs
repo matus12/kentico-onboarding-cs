@@ -5,13 +5,26 @@ using System.Web;
 
 namespace TodoApp.Api.Models
 {
-    public class Item
+    public class Item : IEquatable<Item>
     {
-        public Item(string text)
+        public Item(int id, string text)
         {
-            this.text = text;
+            Id = id;
+            Text = text;
         }
-        public string text;
-        public Boolean isEdited;
+
+        public int Id;
+        public string Text;
+        public Boolean IsEdited;
+        public bool Equals(Item other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            return Id.Equals(other.Id) &&
+                   Text.Equals(other.Text) &&
+                   IsEdited.Equals(other.IsEdited);
+        }
     }
 }
