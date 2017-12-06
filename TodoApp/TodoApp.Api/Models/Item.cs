@@ -1,30 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace TodoApp.Api.Models
 {
-    public class Item : IEquatable<Item>
+    [Serializable]
+    public class Item
     {
-        public Item(int id, string text)
+        public Item(string text, Guid id)
         {
-            Id = id;
             Text = text;
+            Id = id;
         }
 
-        public int Id;
+        public Guid Id;
         public string Text;
-        public Boolean IsEdited;
-        public bool Equals(Item other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-            return Id.Equals(other.Id) &&
-                   Text.Equals(other.Text) &&
-                   IsEdited.Equals(other.IsEdited);
-        }
     }
 }
