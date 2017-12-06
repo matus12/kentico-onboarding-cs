@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,7 +6,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Models;
@@ -42,8 +40,11 @@ namespace TodoApp.Api.Tests.Controllers
         public void SetUp()
         {
             var config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "{id}/test-route/15",
-                defaults: new {id = RouteParameter.Optional});
+            config.Routes.MapHttpRoute(
+                "DefaultApi",
+                "{id}/test-route/15",
+                new {id = RouteParameter.Optional}
+            );
             _controller = new ItemsController
             {
                 Request = new HttpRequestMessage(),
@@ -87,8 +88,9 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PostSetsLocationHeader()
         {
             var actionResult =
-                await _controller.PostAsync(new Item("updatedText", new Guid("e6eb4638-38a4-49ac-8aaf-878684397705")));
-            var expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
+                await _controller.PostAsync(
+                    new Item("updatedText", new Guid("e6eb4638-38a4-49ac-8aaf-878684397705")));
+            const string expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
 
             var createdResult = await actionResult.ExecuteAsync(CancellationToken.None);
             createdResult.TryGetContentValue(out Item item);
