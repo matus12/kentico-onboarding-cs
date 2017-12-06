@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TodoApp.Api.Models;
@@ -9,43 +8,32 @@ namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
     {
-        private Item[] items = new Item[3]
+        private static readonly Item[] Items = new Item[3]
         {
-            new Item(1, "item0"),
-            new Item(2, "item1"),
-            new Item(3, "item2")
+            new Item("item0", new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")),
+            new Item("item1", new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141")),
+            new Item("item2", new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057"))
         };
 
         // GET api/<controller>
-        public async Task<IHttpActionResult> Get()
-        {
-            return await Task.Run(() => Ok(items));
-        }
+
+        public async Task<IHttpActionResult> GetAsync()
+            => await Task.FromResult(Ok(Items));
 
         // GET api/<controller>/5
-        public async Task<IHttpActionResult> Get(int id)
-        {
-            return await Task.Run(() => Ok(new Item(4, "New Item")));
-        }
+        public async Task<IHttpActionResult> GetAsync(Guid id)
+            => await Task.FromResult(Ok(Items[0]));
 
         // POST api/<controller>
-        public async Task<IHttpActionResult> Post([FromBody]Item item)
-        {
-            //await Task.Run(() => items.Add(item));
-            return await Task.Run(() => CreatedAtRoute("DefaultApi", new { Id = 5 }, item));
-            //return await Task.Run(() => Ok());
-        }
+        public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
+            => await Task.FromResult(CreatedAtRoute("DefaultApi", new {Id = 5}, item));
 
         // PUT api/<controller>/5
-        public async Task<IHttpActionResult> Put(int id, [FromBody]Item item)
-        {
-            return await Task.Run(() => Content(HttpStatusCode.Accepted, item));
-        }
+        public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
+            => await Task.FromResult(Content(HttpStatusCode.Accepted, Items[1]));
 
         // DELETE api/<controller>/5
-        public async Task<IHttpActionResult> Delete(int id)
-        {
-            return await Task.Run(() => Ok());
-        }
+        public async Task<IHttpActionResult> DeleteAsync(Guid id) 
+            => await Task.FromResult(Ok());
     }
 }
