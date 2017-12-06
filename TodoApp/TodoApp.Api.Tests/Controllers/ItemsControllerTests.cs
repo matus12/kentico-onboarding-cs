@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,29 +18,36 @@ namespace TodoApp.Api.Tests.Controllers
     [TestFixture]
     internal class ItemsControllerTests
     {
-        private Item[] _items;
         private ItemsController _controller;
-        private readonly Guid _guid1 = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702");
-        private readonly Guid _guid2 = new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141");
-        private readonly Guid _guid3 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
+        private static readonly Guid Guid1 = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702");
+        private static readonly Guid Guid2 = new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141");
+        private static readonly Guid Guid3 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
+
+        private static readonly Item ItemToPost =
+            new Item("itemToPost", new Guid("e6eb4638-38a4-49ac-8aaf-878684397707"));
+
+        private readonly Item[] _items = IteratedItems.ToArray();
+
+        private static IEnumerable<Item> IteratedItems
+        {
+            get
+            {
+                yield return new Item("item0", Guid1);
+                yield return new Item("item1", Guid2);
+                yield return new Item("item2", Guid3);
+            }
+        }
 
         [SetUp]
         public void SetUp()
         {
-            HttpConfiguration _config = new HttpConfiguration();
-            _config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{controller}/{id}",
+            var config = new HttpConfiguration();
+            config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "{id}/test-route/15",
                 defaults: new {id = RouteParameter.Optional});
             _controller = new ItemsController
             {
                 Request = new HttpRequestMessage(),
-                Configuration = _config
-            };
-
-            _items = new[]
-            {
-                new Item("item0", _guid1),
-                new Item("item1", _guid2),
-                new Item("item2", _guid3)
+                Configuration = config
             };
         }
 
@@ -65,7 +73,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetReturnsItemWithSameId()
         {
-            var actionResult = await _controller.GetAsync(_guid1);
+            var actionResult = await _controller.GetAsync(Guid1);
 
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item item);
@@ -80,12 +88,15 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var actionResult =
                 await _controller.PostAsync(new Item("updatedText", new Guid("e6eb4638-38a4-49ac-8aaf-878684397705")));
+            var expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
 
             var createdResult = await actionResult.ExecuteAsync(CancellationToken.None);
+            createdResult.TryGetContentValue(out Item item);
+            var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-            //Assert.That(createdResult.Content.RouteName, Is.EqualTo("DefaultApi"));
-            //Assert.That(createdResult.RouteValues["id"], Is.EqualTo(10));
+            Assert.That(item, Is.EqualTo(ItemToPost).UsingItemEqualityComparer());
+            Assert.That(location, Is.EqualTo(expectedUri));
         }
 
         [Test]
@@ -103,7 +114,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteReturnsOk()
         {
-            var actionResult = await _controller.DeleteAsync(new Guid("e6eb4638-38a4-49ac-8aaf-878684397702"));
+            var actionResult = await _controller.DeleteAsync(Guid1);
+
             var result = await actionResult.ExecuteAsync(CancellationToken.None);
 
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
