@@ -37,11 +37,11 @@ namespace TodoApp.Api.Controllers
         // POST api/<controller>
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
-            UrlHelper helper = new UrlHelper(Request);
-            var route = helper.Route("DefaultApi", new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057" });
-            
+            var helper = new UrlHelper(Request);
+            var route = helper.Route("DefaultApi", new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057"});
+
             return await Task.FromResult(Created(new Uri(route, UriKind.Relative), ItemToPost));
-        } 
+        }
 
         // PUT api/<controller>/5
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
