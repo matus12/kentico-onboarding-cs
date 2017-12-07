@@ -72,6 +72,10 @@
       <Project>{518C0FF7-6AC0-463D-BA12-AF6DE5B556BD}</Project>
       <Name>TodoApp.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TodoApp.DAL\TodoApp.DAL.csproj">
+      <Project>{9e4c792e-1ee1-4d61-971b-f20606587c84}</Project>
+      <Name>TodoApp.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

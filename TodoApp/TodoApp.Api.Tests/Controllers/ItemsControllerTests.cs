@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
-using TodoApp.Api.Models;
 using TodoApp.Api.Tests.Comparers;
+using TodoApp.DAL.Models;
 
 namespace TodoApp.Api.Tests.Controllers
 {
