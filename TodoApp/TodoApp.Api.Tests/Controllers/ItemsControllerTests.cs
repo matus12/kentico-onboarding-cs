@@ -10,6 +10,7 @@ using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
 using TodoApp.DAL.Models;
+using TodoApp.DAL;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -44,7 +45,7 @@ namespace TodoApp.Api.Tests.Controllers
                 RoutesConfig.ApiV1Route,
                 "{id}/test-route/15"
             );
-            _controller = new ItemsController
+            _controller = new ItemsController(new ItemsRepository())
             {
                 Request = new HttpRequestMessage(),
                 Configuration = config

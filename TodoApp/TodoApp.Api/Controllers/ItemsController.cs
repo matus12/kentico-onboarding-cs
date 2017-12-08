@@ -12,12 +12,13 @@ namespace TodoApp.Api.Controllers
     {
         private readonly string _apiRoute;
 
-        public ItemsController()
+        private readonly IItemRepository _repository;
+
+        public ItemsController(IItemRepository repository)
         {
+            _repository = repository;
             _apiRoute = RoutesConfig.ApiV1Route;
         }
-
-        private readonly IItemRepository _repository = new ItemsRepository();
 
         public async Task<IHttpActionResult> GetAsync()
             => await Task.FromResult(Ok(_repository.GetAll()));
