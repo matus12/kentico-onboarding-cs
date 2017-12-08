@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TodoApp.Api\TodoApp.Api.csproj">
-      <Project>{518C0FF7-6AC0-463D-BA12-AF6DE5B556BD}</Project>
+      <Project>{518c0ff7-6ac0-463d-ba12-af6de5b556bd}</Project>
       <Name>TodoApp.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\TodoApp.DAL\TodoApp.DAL.csproj">
