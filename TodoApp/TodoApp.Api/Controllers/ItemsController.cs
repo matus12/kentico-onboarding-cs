@@ -43,9 +43,7 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
             => await Task.FromResult(Content(HttpStatusCode.Accepted, Items[1]));
 
-        public IHttpActionResult DeleteAsync(Guid id)
-        {
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        public async Task<IHttpActionResult> DeleteAsync(Guid id)
+            => await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
     }
 }

@@ -112,7 +112,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteReturnsOk()
         {
-            var actionResult = _controller.DeleteAsync(Guid1);
+            var actionResult = await _controller.DeleteAsync(Guid1);
             var result = await actionResult.ExecuteAsync(CancellationToken.None);
 
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
