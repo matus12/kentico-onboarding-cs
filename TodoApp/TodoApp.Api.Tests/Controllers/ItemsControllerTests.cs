@@ -67,7 +67,7 @@ namespace TodoApp.Api.Tests.Controllers
 
             Assert.That(contentResult.Content, Is.Not.Null);
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(value, Is.EqualTo(_items).AsCollection.UsingItemEqualityComparer());
+            Assert.That(value, Is.EqualTo(_items).AsCollection.UsingItemEqualityComparer(), "Collections are not equal");
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace TodoApp.Api.Tests.Controllers
 
             Assert.That(contentResult.Content, Is.Not.Null);
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(item, Is.EqualTo(_items[0]).UsingItemEqualityComparer());
+            Assert.That(item, Is.EqualTo(_items[0]).UsingItemEqualityComparer(), "Items are not equal");
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace TodoApp.Api.Tests.Controllers
             var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-            Assert.That(item, Is.EqualTo(ItemToPost).UsingItemEqualityComparer());
+            Assert.That(item, Is.EqualTo(ItemToPost).UsingItemEqualityComparer(), "Items are not equal");
             Assert.That(location, Is.EqualTo(expectedUri));
         }
 
@@ -108,7 +108,7 @@ namespace TodoApp.Api.Tests.Controllers
             contentResult.TryGetContentValue(out Item item);
 
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
-            Assert.That(item, Is.EqualTo(_items[1]).UsingItemEqualityComparer());
+            Assert.That(item, Is.EqualTo(_items[1]).UsingItemEqualityComparer(), "Items are not equal");
         }
 
         [Test]
