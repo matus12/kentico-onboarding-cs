@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using NUnit.Framework.Constraints;
 using TodoApp.Api.Models;
 
-namespace TodoApp.Api.Tests.Comparer
+namespace TodoApp.Api.Tests.Comparers
 {
     internal static class ItemEqualityComparerWrapper
     {
         private static Lazy<ItemEqualityComparer> Lazy => new Lazy<ItemEqualityComparer>();
-
-        private static ItemEqualityComparer Comparer => Lazy.Value;
 
         private sealed class ItemEqualityComparer : IEqualityComparer<Item>
         {
@@ -33,6 +31,6 @@ namespace TodoApp.Api.Tests.Comparer
         }
 
         public static EqualConstraint UsingItemEqualityComparer(this EqualConstraint constraint)
-            => constraint.Using(Comparer);
+            => constraint.Using(Lazy.Value);
     }
 }
