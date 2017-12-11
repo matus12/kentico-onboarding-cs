@@ -26,15 +26,12 @@ namespace TodoApp.Api.Controllers
 
         private static readonly Item[] Items = IteratedItems.ToArray();
 
-        // GET api/<controller>
         public async Task<IHttpActionResult> GetAsync()
             => await Task.FromResult(Ok(Items));
 
-        // GET api/<controller>/5
         public async Task<IHttpActionResult> GetAsync(Guid id)
             => await Task.FromResult(Ok(Items[0]));
 
-        // POST api/<controller>
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
             var urlHelper = new UrlHelper(Request);
@@ -43,11 +40,9 @@ namespace TodoApp.Api.Controllers
             return await Task.FromResult(Created(new Uri(route, UriKind.Relative), ItemToPost));
         }
 
-        // PUT api/<controller>/5
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
             => await Task.FromResult(Content(HttpStatusCode.Accepted, Items[1]));
 
-        // DELETE api/<controller>/5
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
             => await Task.FromResult(Ok());
     }
