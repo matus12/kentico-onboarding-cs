@@ -42,8 +42,7 @@ namespace TodoApp.Api.Tests.Controllers
             var config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                 "DefaultApi",
-                "{id}/test-route/15",
-                new {id = RouteParameter.Optional}
+                "{id}/test-route/15"
             );
             _controller = new ItemsController
             {
@@ -87,11 +86,10 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostSetsLocationHeader()
         {
-            var actionResult =
-                await _controller.PostAsync(
-                    new Item("updatedText", new Guid("e6eb4638-38a4-49ac-8aaf-878684397705")));
+            var itemToPost = new Item("updatedText", Guid1);
             const string expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
 
+            var actionResult = await _controller.PostAsync(itemToPost);
             var createdResult = await actionResult.ExecuteAsync(CancellationToken.None);
             createdResult.TryGetContentValue(out Item item);
             var location = createdResult.Headers.Location.ToString();
