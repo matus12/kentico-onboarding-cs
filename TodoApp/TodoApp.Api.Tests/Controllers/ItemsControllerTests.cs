@@ -22,7 +22,7 @@ namespace TodoApp.Api.Tests.Controllers
         private static readonly Guid Guid3 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
 
         private static readonly Item ItemToPost =
-            new Item("itemToPost", new Guid("e6eb4638-38a4-49ac-8aaf-878684397707"));
+            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
         private readonly Item[] _items = IteratedItems.ToArray();
 
@@ -30,9 +30,9 @@ namespace TodoApp.Api.Tests.Controllers
         {
             get
             {
-                yield return new Item("item0", Guid1);
-                yield return new Item("item1", Guid2);
-                yield return new Item("item2", Guid3);
+                yield return new Item {Text = "item0", Id = Guid1};
+                yield return new Item {Text = "item1", Id = Guid2};
+                yield return new Item {Text = "item2", Id = Guid3};
             }
         }
 
@@ -86,7 +86,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostSetsLocationHeader()
         {
-            var itemToPost = new Item("updatedText", Guid1);
+            var itemToPost = new Item {Text = "updatedText", Id = Guid1};
             const string expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
 
             var actionResult = await _controller.PostAsync(itemToPost);
@@ -114,11 +114,11 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteReturnsOk()
         {
-            var actionResult = await _controller.DeleteAsync(Guid1);
+            var actionResult =  _controller.DeleteAsync(Guid1);
 
             var result = await actionResult.ExecuteAsync(CancellationToken.None);
 
-            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
     }
 }

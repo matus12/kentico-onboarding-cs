@@ -2,7 +2,7 @@
 
 namespace TodoApp.Api
 {
-    public static class RoutesConfig
+    internal static class RoutesConfig
     {
         public static void Register(HttpConfiguration config)
         {
