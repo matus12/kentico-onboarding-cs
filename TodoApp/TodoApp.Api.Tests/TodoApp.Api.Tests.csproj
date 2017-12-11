@@ -63,7 +63,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparer\ItemEqualityComparer.cs" />
+    <Compile Include="Comparers\ItemEqualityComparer.cs" />
     <Compile Include="Controllers\ItemsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

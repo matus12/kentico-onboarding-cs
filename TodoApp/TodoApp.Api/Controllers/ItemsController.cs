@@ -11,8 +11,12 @@ namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
     {
+        private readonly string _apiRoute;
+
         private static readonly Item ItemToPost =
             new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
+
+        private static readonly Item[] Items = IteratedItems.ToArray();
 
         private static IEnumerable<Item> IteratedItems
         {
@@ -24,7 +28,10 @@ namespace TodoApp.Api.Controllers
             }
         }
 
-        private static readonly Item[] Items = IteratedItems.ToArray();
+        public ItemsController(string apiRoute)
+        {
+            _apiRoute = apiRoute;
+        }
 
         public async Task<IHttpActionResult> GetAsync()
             => await Task.FromResult(Ok(Items));
@@ -35,7 +42,7 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
             var urlHelper = new UrlHelper(Request);
-            var route = urlHelper.Route(RoutesConfig.ApiV2Route, new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057"});
+            var route = urlHelper.Route(_apiRoute, new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057"});
 
             return await Task.FromResult(Created(new Uri(route, UriKind.Relative), ItemToPost));
         }

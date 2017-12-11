@@ -4,7 +4,7 @@ namespace TodoApp.Api
 {
     internal static class RoutesConfig
     {
-        public static readonly string ApiV2Route = "ApiV2";
+        internal static readonly string ApiV2Route = "ApiV2";
 
         public static void Register(HttpConfiguration config)
         {
