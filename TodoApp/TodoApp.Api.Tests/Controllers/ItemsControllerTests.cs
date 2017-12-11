@@ -61,20 +61,19 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task GetReturnsAllItems()
         {
             var actionResult = await _controller.GetAsync();
-
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item[] value);
 
             Assert.That(contentResult.Content, Is.Not.Null);
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(value, Is.EqualTo(_items).AsCollection.UsingItemEqualityComparer(), "Collections are not equal");
+            Assert.That(value, Is.EqualTo(_items).AsCollection.UsingItemEqualityComparer(),
+                "Collections are not equal");
         }
 
         [Test]
         public async Task GetReturnsItemWithSameId()
         {
             var actionResult = await _controller.GetAsync(Guid1);
-
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item item);
 
@@ -103,7 +102,6 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PutReturnsContentResult()
         {
             var actionResult = await _controller.PutAsync(_items[1].Id, _items[1]);
-
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item item);
 
@@ -114,8 +112,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteReturnsOk()
         {
-            var actionResult =  _controller.DeleteAsync(Guid1);
-
+            var actionResult = _controller.DeleteAsync(Guid1);
             var result = await actionResult.ExecuteAsync(CancellationToken.None);
 
             Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));

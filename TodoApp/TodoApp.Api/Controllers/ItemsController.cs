@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 using System.Web.Http.Routing;
 using TodoApp.Api.Models;
 
@@ -47,7 +45,7 @@ namespace TodoApp.Api.Controllers
 
         public IHttpActionResult DeleteAsync(Guid id)
         {
-            return new StatusCodeResult(HttpStatusCode.NoContent, this);
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }
