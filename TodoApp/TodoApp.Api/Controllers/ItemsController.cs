@@ -37,7 +37,7 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
             var urlHelper = new UrlHelper(Request);
-            var route = urlHelper.Route("DefaultApi", new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057"});
+            var route = urlHelper.Route(RoutesConfig.ApiV2Route, new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057"});
 
             return await Task.FromResult(Created(new Uri(route, UriKind.Relative), ItemToPost));
         }
