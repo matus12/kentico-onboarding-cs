@@ -41,7 +41,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
-                RoutesConfig.ApiV2Route,
+                RoutesConfig.ApiV1Route,
                 "{id}/test-route/15"
             );
             _controller = new ItemsController

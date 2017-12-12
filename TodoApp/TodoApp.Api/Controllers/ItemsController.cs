@@ -30,7 +30,7 @@ namespace TodoApp.Api.Controllers
 
         public ItemsController()
         {
-            _apiRoute = RoutesConfig.ApiV2Route;
+            _apiRoute = RoutesConfig.ApiV1Route;
         }
 
         public async Task<IHttpActionResult> GetAsync()
