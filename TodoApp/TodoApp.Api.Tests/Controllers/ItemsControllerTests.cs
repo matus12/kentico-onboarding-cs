@@ -52,7 +52,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task GetReturnsAllItems()
+        public async Task GetAsync_ReturnsAllItems()
         {
             var actionResult = await _controller.GetAsync();
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
@@ -65,7 +65,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task GetReturnsItemWithSameId()
+        public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
             var actionResult = await _controller.GetAsync(Guid1);
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
@@ -77,12 +77,11 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PostSetsLocationHeader()
+        public async Task PostAsync_NewItem_SetsLocationHeader()
         {
-            var itemToPost = new Item {Text = "updatedText", Id = Guid1};
             const string expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
 
-            var actionResult = await _controller.PostAsync(itemToPost);
+            var actionResult = await _controller.PostAsync(ItemToPost);
             var createdResult = await actionResult.ExecuteAsync(CancellationToken.None);
             createdResult.TryGetContentValue(out Item item);
             var location = createdResult.Headers.Location.ToString();
@@ -93,7 +92,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PutReturnsContentResult()
+        public async Task PutAsync_ExistingId_UpdatedItem_ReturnsContentResult()
         {
             var actionResult = await _controller.PutAsync(_items[1].Id, _items[1]);
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
@@ -104,7 +103,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task DeleteReturnsOk()
+        public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
             var actionResult = await _controller.DeleteAsync(Guid1);
             var result = await actionResult.ExecuteAsync(CancellationToken.None);
