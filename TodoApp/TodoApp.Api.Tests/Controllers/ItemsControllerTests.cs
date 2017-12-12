@@ -41,20 +41,14 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
-                "ApiV2",
+                RoutesConfig.ApiV2Route,
                 "{id}/test-route/15"
             );
-            _controller = new ItemsController("ApiV2")
+            _controller = new ItemsController
             {
                 Request = new HttpRequestMessage(),
                 Configuration = config
             };
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _controller = null;
         }
 
         [Test]

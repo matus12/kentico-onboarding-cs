@@ -28,9 +28,9 @@ namespace TodoApp.Api.Controllers
             }
         }
 
-        public ItemsController(string apiRoute)
+        public ItemsController()
         {
-            _apiRoute = apiRoute;
+            _apiRoute = RoutesConfig.ApiV2Route;
         }
 
         public async Task<IHttpActionResult> GetAsync()
