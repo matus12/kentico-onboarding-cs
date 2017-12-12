@@ -6,5 +6,10 @@ namespace TodoApp.Api.Models
     {
         public Guid Id;
         public string Text;
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}";
+        }
     }
 }
