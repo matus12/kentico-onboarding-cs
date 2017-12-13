@@ -1,10 +1,13 @@
-﻿using System.Web.Http;
+﻿using System.Runtime.CompilerServices;
+using System.Web.Http;
+
+[assembly: InternalsVisibleTo("TodoApp.Api.Tests")]
 
 namespace TodoApp.Api
 {
-    public static class RoutesConfig
+    internal static class RoutesConfig
     {
-        public static readonly string ApiV1Route = "ApiV1";
+        internal static readonly string ApiV1Route = "ApiV1";
 
         public static void Register(HttpConfiguration config)
         {
