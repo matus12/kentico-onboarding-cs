@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Web.Http;
-
-[assembly: InternalsVisibleTo("TodoApp.Api.Tests")]
+﻿using System.Web.Http;
 
 namespace TodoApp.Api
 {
