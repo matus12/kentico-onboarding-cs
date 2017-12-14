@@ -11,6 +11,7 @@ using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
 using TodoApp.DAL.Models;
 using TodoApp.DAL;
+using NSubstitute;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -45,7 +46,13 @@ namespace TodoApp.Api.Tests.Controllers
                 RoutesConfig.ApiV1Route,
                 "{id}/test-route/15"
             );
-            _controller = new ItemsController(new ItemsRepository())
+            var repository = Substitute.For<IItemRepository>();
+            repository.GetAll().Returns(_items);
+            repository.GetById(Guid2).ReturnsForAnyArgs(_items[0]);
+            repository.Add(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            repository.Update(_items[0]).ReturnsForAnyArgs(_items[1]);
+
+            _controller = new ItemsController(repository)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = config
