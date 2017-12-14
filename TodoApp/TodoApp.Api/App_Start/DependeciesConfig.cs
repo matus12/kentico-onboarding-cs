@@ -6,7 +6,7 @@ using Unity.Lifetime;
 
 namespace TodoApp.Api
 {
-    public static class DependenciesConfig
+    internal static class DependenciesConfig
     {
         public static void Register(HttpConfiguration config)
         {

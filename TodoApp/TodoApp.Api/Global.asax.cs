@@ -7,6 +7,7 @@ namespace TodoApp.Api
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(RoutesConfig.Register);
+            GlobalConfiguration.Configure(DependenciesConfig.Register);
         }
     }
 }
