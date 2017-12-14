@@ -9,8 +9,8 @@ using System.Web.Http;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
-using TodoApp.DAL.Models;
-using TodoApp.DAL;
+using TodoApp.Database.Models;
+using TodoApp.Database;
 using NSubstitute;
 
 namespace TodoApp.Api.Tests.Controllers

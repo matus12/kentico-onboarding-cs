@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.DAL.Models
+namespace TodoApp.Database.Models
 {
     public class Item
     {

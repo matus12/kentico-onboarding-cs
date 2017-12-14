@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
-using TodoApp.DAL;
-using TodoApp.DAL.Resolver;
+using TodoApp.Database;
+using TodoApp.Database.Resolver;
 using Unity;
 using Unity.Lifetime;
 

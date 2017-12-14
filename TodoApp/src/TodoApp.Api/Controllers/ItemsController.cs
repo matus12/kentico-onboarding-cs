@@ -3,8 +3,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Routing;
-using TodoApp.DAL;
-using TodoApp.DAL.Models;
+using TodoApp.Database;
+using TodoApp.Database.Models;
 
 namespace TodoApp.Api.Controllers
 {
