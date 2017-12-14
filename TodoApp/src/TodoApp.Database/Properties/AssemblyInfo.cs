@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TodoApp.DAL2")]
+[assembly: AssemblyTitle("TodoApp.Database")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Kentico software s.r.o.")]
-[assembly: AssemblyProduct("TodoApp.DAL2")]
+[assembly: AssemblyProduct("TodoApp.Database")]
 [assembly: AssemblyCopyright("Copyright © Kentico software s.r.o. 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

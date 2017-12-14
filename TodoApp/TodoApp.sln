@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api", "TodoApp.Api\TodoApp.Api.csproj", "{518C0FF7-6AC0-463D-BA12-AF6DE5B556BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api", "src\TodoApp.Api\TodoApp.Api.csproj", "{518C0FF7-6AC0-463D-BA12-AF6DE5B556BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api.Tests", "TodoApp.Api.Tests\TodoApp.Api.Tests.csproj", "{419EB185-7A4A-4AD2-A938-F2A115CD327E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api.Tests", "test\TodoApp.Api.Tests\TodoApp.Api.Tests.csproj", "{419EB185-7A4A-4AD2-A938-F2A115CD327E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.DAL", "TodoApp.DAL\TodoApp.DAL.csproj", "{9E4C792E-1EE1-4D61-971B-F20606587C84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Database", "src\TodoApp.Database\TodoApp.Database.csproj", "{9E4C792E-1EE1-4D61-971B-F20606587C84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EC8B6575-0EF1-47F1-BFBC-79D3C3D207EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A654653C-0C35-405F-8E77-BCF85A5D8BBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +34,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{518C0FF7-6AC0-463D-BA12-AF6DE5B556BD} = {EC8B6575-0EF1-47F1-BFBC-79D3C3D207EB}
+		{419EB185-7A4A-4AD2-A938-F2A115CD327E} = {A654653C-0C35-405F-8E77-BCF85A5D8BBE}
+		{9E4C792E-1EE1-4D61-971B-F20606587C84} = {EC8B6575-0EF1-47F1-BFBC-79D3C3D207EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77AAF6FA-AC20-44DF-927C-CED891738180}
