@@ -11,16 +11,16 @@ namespace TodoApp.DAL
         {
             get
             {
-                yield return new Item("item0", new Guid("e6eb4638-38a4-49ac-8aaf-878684397702"));
-                yield return new Item("item1", new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141"));
-                yield return new Item("item2", new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057"));
+                yield return new Item {Text = "item0", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")};
+                yield return new Item {Text = "item1", Id = new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141")};
+                yield return new Item {Text = "item2", Id = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057")};
             }
         }
 
         private static readonly Item[] Items = IteratedItems.ToArray();
 
         private static readonly Item AddedItem =
-            new Item("itemToPost", new Guid("e6eb4638-38a4-49ac-8aaf-878684397707"));
+            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
         public IEnumerable<Item> GetAll()
         {
