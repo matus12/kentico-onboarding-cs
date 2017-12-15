@@ -112,6 +112,7 @@
     <Compile Include="App_Start\DependeciesConfig.cs" />
     <Compile Include="App_Start\RoutesConfig.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Dependency\DependencyRegisterTypes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -133,6 +134,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TodoApp.Interfaces\TodoApp.Interfaces.csproj">
+      <Project>{dc15b0c8-d724-4eb9-b691-efd24dd43a5b}</Project>
+      <Name>TodoApp.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TodoApp.Database\TodoApp.Database.csproj">
       <Project>{9E4C792E-1EE1-4D61-971B-F20606587C84}</Project>
       <Name>TodoApp.DAL</Name>

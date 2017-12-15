@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http.Routing;
+using TodoApp.Interfaces;
 
 namespace TodoApp.Api
 {
-    public class LocationHelper
+    public class LocationHelper : ILocationHelper
     {
         private readonly UrlHelper _urlHelper;
 
