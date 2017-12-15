@@ -10,14 +10,13 @@ namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
     {
-        private readonly string _apiRoute;
+        private readonly Guid _guidOfPostItem = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707");
 
         private readonly IItemRepository _repository;
 
         public ItemsController(IItemRepository repository)
         {
             _repository = repository;
-            _apiRoute = RoutesConfig.ApiV1Route;
         }
 
         public async Task<IHttpActionResult> GetAsync()
@@ -28,10 +27,9 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
-            var urlHelper = new UrlHelper(Request);
-            var route = urlHelper.Route(_apiRoute, new {id = "45c4fb8b-1cdf-42ca-8a61-67fd7f781057"});
-
-            return await Task.FromResult(Created(new Uri(route, UriKind.Relative), _repository.Add(item)));
+            return await Task.FromResult(Created(
+                new LocationHelper(Request).GetUriLocation(_guidOfPostItem),
+                _repository.Add(item)));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)

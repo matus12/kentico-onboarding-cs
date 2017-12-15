@@ -24,7 +24,7 @@ namespace TodoApp.Api.Tests.Controllers
         private static readonly Guid Guid3 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
 
         private static readonly Item ItemToPost =
-            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
+            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707") };
 
         private readonly Item[] _items = IteratedItems.ToArray();
 
@@ -86,7 +86,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostAsync_NewItem_SetsLocationHeader()
         {
-            const string expectedUri = "/45c4fb8b-1cdf-42ca-8a61-67fd7f781057/test-route/15";
+            const string expectedUri = "/e6eb4638-38a4-49ac-8aaf-878684397707/test-route/15";
 
             var actionResult = await _controller.PostAsync(ItemToPost);
             var createdResult = await actionResult.ExecuteAsync(CancellationToken.None);
