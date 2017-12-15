@@ -2,7 +2,6 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Routing;
 using TodoApp.Database;
 using TodoApp.Database.Models;
 
@@ -26,11 +25,9 @@ namespace TodoApp.Api.Controllers
             => await Task.FromResult(Ok(_repository.GetById(id)));
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
-        {
-            return await Task.FromResult(Created(
+            => await Task.FromResult(Created(
                 new LocationHelper(Request).GetUriLocation(_guidOfPostItem),
                 _repository.Add(item)));
-        }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
             => await Task.FromResult(Content(HttpStatusCode.Accepted, _repository.Update(item)));

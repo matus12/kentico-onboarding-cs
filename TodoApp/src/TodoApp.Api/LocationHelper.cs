@@ -14,9 +14,6 @@ namespace TodoApp.Api
         }
 
         public Uri GetUriLocation(Guid id)
-        {
-            var route = _urlHelper.Route(RoutesConfig.ApiV1Route, new {id = id.ToString()});
-            return new Uri(route, UriKind.Relative);
-        }
+            => new Uri(_urlHelper.Route(RoutesConfig.ApiV1Route, new {id}), UriKind.Relative);
     }
 }
