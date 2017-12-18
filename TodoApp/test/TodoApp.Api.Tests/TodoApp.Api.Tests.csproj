@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Comparers\ItemEqualityComparer.cs" />
     <Compile Include="Controllers\ItemsControllerTests.cs" />
+    <Compile Include="Helpers\LocationHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
