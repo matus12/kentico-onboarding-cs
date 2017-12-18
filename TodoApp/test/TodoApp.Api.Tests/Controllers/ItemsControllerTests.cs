@@ -12,6 +12,7 @@ using TodoApp.Api.Tests.Comparers;
 using TodoApp.Database.Models;
 using TodoApp.Database;
 using NSubstitute;
+using TodoApp.Interfaces;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -52,7 +53,11 @@ namespace TodoApp.Api.Tests.Controllers
             repository.Add(ItemToPost).ReturnsForAnyArgs(ItemToPost);
             repository.Update(_items[0]).ReturnsForAnyArgs(_items[1]);
 
-            _controller = new ItemsController(repository)
+            var helper = Substitute.For<ILocationHelper>();
+            helper.GetUriLocation(new Guid())
+                .ReturnsForAnyArgs(new Uri("/e6eb4638-38a4-49ac-8aaf-878684397707/test-route/15", UriKind.Relative));
+
+            _controller = new ItemsController(repository, helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = config

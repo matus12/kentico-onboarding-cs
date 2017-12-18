@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using TodoApp.Database;
 using TodoApp.Database.Models;
+using TodoApp.Interfaces;
 
 namespace TodoApp.Api.Controllers
 {
@@ -12,10 +13,12 @@ namespace TodoApp.Api.Controllers
         private readonly Guid _guidOfPostItem = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707");
 
         private readonly IItemRepository _repository;
+        private readonly ILocationHelper _locationHelper;
 
-        public ItemsController(IItemRepository repository)
+        public ItemsController(IItemRepository repository, ILocationHelper helper)
         {
             _repository = repository;
+            _locationHelper = helper;
         }
 
         public async Task<IHttpActionResult> GetAsync()
@@ -26,7 +29,7 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
             => await Task.FromResult(Created(
-                new LocationHelper(Request).GetUriLocation(_guidOfPostItem),
+                _locationHelper.GetUriLocation(_guidOfPostItem),
                 _repository.Add(item)));
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
