@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EC8B6575-0EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A654653C-0C35-405F-8E77-BCF85A5D8BBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Interfaces", "TodoApp.Interfaces\TodoApp.Interfaces.csproj", "{DC15B0C8-D724-4EB9-B691-EFD24DD43A5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Interfaces", "src\TodoApp.Interfaces\TodoApp.Interfaces.csproj", "{DC15B0C8-D724-4EB9-B691-EFD24DD43A5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
