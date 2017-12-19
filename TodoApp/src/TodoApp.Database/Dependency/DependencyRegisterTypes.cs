@@ -2,7 +2,7 @@
 using Unity;
 using Unity.Lifetime;
 
-namespace TodoApp.Interfaces.Dependency
+namespace TodoApp.Database.Dependency
 {
     public class DependencyRegisterTypes : IBootstrapper
     {

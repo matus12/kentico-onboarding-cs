@@ -11,7 +11,6 @@ using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
 using TodoApp.Interfaces;
 using NSubstitute;
-using TodoApp.Interfaces;
 using TodoApp.Interfaces.Helpers;
 using TodoApp.Interfaces.Models;
 

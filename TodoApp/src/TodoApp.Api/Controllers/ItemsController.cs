@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TodoApp.Interfaces;
-using TodoApp.Interfaces;
 using TodoApp.Interfaces.Helpers;
 using TodoApp.Interfaces.Models;
 

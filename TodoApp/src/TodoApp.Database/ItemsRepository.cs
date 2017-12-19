@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TodoApp.Interfaces;
 using TodoApp.Interfaces.Models;
 
-namespace TodoApp.Interfaces
+namespace TodoApp.Database
 {
     public class ItemsRepository : IDisposable, IItemRepository
     {
