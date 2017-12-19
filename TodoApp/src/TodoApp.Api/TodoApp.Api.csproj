@@ -112,7 +112,7 @@
     <Compile Include="App_Start\DependeciesConfig.cs" />
     <Compile Include="App_Start\RoutesConfig.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
-    <Compile Include="Dependency\DependencyRegisterTypes.cs" />
+    <Compile Include="Dependency\ApiBootStrapper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -9,7 +9,7 @@ using Unity.Lifetime;
 
 namespace TodoApp.Api.Dependency
 {
-    public class DependencyRegisterTypes : IBootstrapper
+    public class ApiBootStrapper : IBootstrapper
     {
         public IUnityContainer RegisterTypes(IUnityContainer container)
         {
