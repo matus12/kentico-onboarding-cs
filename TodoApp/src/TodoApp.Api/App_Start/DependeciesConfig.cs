@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 using TodoApp.Api.Dependency;
-using TodoApp.Interfaces.Resolver;
+using TodoApp.Contracts.Resolver;
 using Unity;
 
 namespace TodoApp.Api

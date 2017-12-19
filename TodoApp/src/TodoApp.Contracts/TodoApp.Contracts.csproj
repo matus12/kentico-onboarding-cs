@@ -7,8 +7,8 @@
     <ProjectGuid>{DC15B0C8-D724-4EB9-B691-EFD24DD43A5B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TodoApp.Interfaces</RootNamespace>
-    <AssemblyName>TodoApp.Interfaces</AssemblyName>
+    <RootNamespace>TodoApp.Contracts</RootNamespace>
+    <AssemblyName>TodoApp.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

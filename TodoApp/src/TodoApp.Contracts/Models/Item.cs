@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Interfaces.Models
+namespace TodoApp.Contracts.Models
 {
     public class Item
     {

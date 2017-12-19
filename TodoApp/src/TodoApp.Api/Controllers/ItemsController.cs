@@ -2,9 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using TodoApp.Interfaces;
-using TodoApp.Interfaces.Helpers;
-using TodoApp.Interfaces.Models;
+using TodoApp.Contracts;
+using TodoApp.Contracts.Helpers;
+using TodoApp.Contracts.Models;
 
 namespace TodoApp.Api.Controllers
 {

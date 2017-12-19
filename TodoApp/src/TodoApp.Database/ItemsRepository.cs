@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TodoApp.Interfaces;
-using TodoApp.Interfaces.Models;
+using TodoApp.Contracts;
+using TodoApp.Contracts.Models;
 
 namespace TodoApp.Database
 {

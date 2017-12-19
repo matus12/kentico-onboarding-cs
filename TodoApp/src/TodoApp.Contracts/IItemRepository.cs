@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TodoApp.Interfaces.Models;
+using TodoApp.Contracts.Models;
 
-namespace TodoApp.Interfaces
+namespace TodoApp.Contracts
 {
     public interface IItemRepository
     {
