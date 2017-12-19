@@ -4,7 +4,7 @@ using System.Web.Http.Dependencies;
 using Unity;
 using Unity.Exceptions;
 
-namespace TodoApp.Database.Resolver
+namespace TodoApp.Interfaces.Resolver
 {
     public class UnityResolver: IDependencyResolver
     {

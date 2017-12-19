@@ -9,11 +9,11 @@ using System.Web.Http;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
-using TodoApp.Database.Models;
-using TodoApp.Database;
+using TodoApp.Interfaces;
 using NSubstitute;
 using TodoApp.Interfaces;
 using TodoApp.Interfaces.Helpers;
+using TodoApp.Interfaces.Models;
 
 namespace TodoApp.Api.Tests.Controllers
 {

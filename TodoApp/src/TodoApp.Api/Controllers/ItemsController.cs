@@ -2,10 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using TodoApp.Database;
-using TodoApp.Database.Models;
+using TodoApp.Interfaces;
 using TodoApp.Interfaces;
 using TodoApp.Interfaces.Helpers;
+using TodoApp.Interfaces.Models;
 
 namespace TodoApp.Api.Controllers
 {

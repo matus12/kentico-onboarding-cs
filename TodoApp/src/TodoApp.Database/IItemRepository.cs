@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TodoApp.Database.Models;
+using TodoApp.Interfaces.Models;
 
-namespace TodoApp.Database
+namespace TodoApp.Interfaces
 {
     public interface IItemRepository
     {

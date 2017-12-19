@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework.Constraints;
-using TodoApp.Database.Models;
+using TodoApp.Interfaces.Models;
 
 namespace TodoApp.Api.Tests.Comparers
 {
