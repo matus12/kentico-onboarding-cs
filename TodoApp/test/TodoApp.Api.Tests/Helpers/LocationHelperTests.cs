@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Hosting;
 using NSubstitute;
+using TodoApp.Api.Helpers;
 
 namespace TodoApp.Api.Tests.Helpers
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Interfaces
+namespace TodoApp.Interfaces.Helpers
 {
     public interface ILocationHelper
     {

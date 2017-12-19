@@ -13,6 +13,7 @@ using TodoApp.Database.Models;
 using TodoApp.Database;
 using NSubstitute;
 using TodoApp.Interfaces;
+using TodoApp.Interfaces.Helpers;
 
 namespace TodoApp.Api.Tests.Controllers
 {

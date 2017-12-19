@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBootstrapper.cs" />
-    <Compile Include="ILocationHelper.cs" />
+    <Compile Include="Helpers\ILocationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

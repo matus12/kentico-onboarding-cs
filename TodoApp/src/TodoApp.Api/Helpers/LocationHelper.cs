@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http.Routing;
-using TodoApp.Interfaces;
+using TodoApp.Interfaces.Helpers;
 
-namespace TodoApp.Api
+namespace TodoApp.Api.Helpers
 {
     public class LocationHelper : ILocationHelper
     {
