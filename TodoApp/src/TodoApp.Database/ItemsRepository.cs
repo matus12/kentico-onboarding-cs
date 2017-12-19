@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TodoApp.Interfaces;
 using TodoApp.Interfaces.Models;
 
@@ -23,27 +24,27 @@ namespace TodoApp.Database
         private static readonly Item AddedItem =
             new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
-        public IEnumerable<Item> GetAll()
+        public async Task<IEnumerable<Item>> GetAll()
         {
-            return Items;
+            return await Task.FromResult(Items);
         }
 
-        public Item GetById(Guid id)
+        public async Task<Item> GetById(Guid id)
         {
-            return Items[0];
+            return await Task.FromResult(Items[0]);
         }
 
-        public Item Add(Item item)
+        public async Task<Item> Add(Item item)
         {
-            return AddedItem;
+            return await Task.FromResult(AddedItem);
         }
 
-        public Item Update(Item item)
+        public async Task<Item> Update(Item item)
         {
-            return Items[1];
+            return await Task.FromResult(Items[1]);
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
         }
 
