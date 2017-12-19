@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using TodoApp.Api.Dependency;
 using TodoApp.Contracts.Resolver;
+using TodoApp.Database.Dependency;
 using Unity;
 
 namespace TodoApp.Api
@@ -9,9 +10,10 @@ namespace TodoApp.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            var newContainer = new ApiBootStrapper().RegisterTypes(new UnityContainer());
-            var newContainer2 = new Database.Dependency.DatabaseBootStrapper().RegisterTypes(newContainer);
-            config.DependencyResolver = new UnityResolver(newContainer2);
+            var apiDependencyContainer = new ApiBootStrapper().RegisterTypes(new UnityContainer());
+            var apiAndDatabaseDependencyContainer
+                = new DatabaseBootStrapper().RegisterTypes(apiDependencyContainer);
+            config.DependencyResolver = new UnityResolver(apiAndDatabaseDependencyContainer);
         }
     }
 }
