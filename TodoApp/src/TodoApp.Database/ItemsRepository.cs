@@ -7,7 +7,7 @@ using TodoApp.Contracts.Models;
 
 namespace TodoApp.Database
 {
-    public class ItemsRepository : IDisposable, IItemRepository
+    internal class ItemsRepository : IDisposable, IItemRepository
     {
         private static IEnumerable<Item> IteratedItems
         {

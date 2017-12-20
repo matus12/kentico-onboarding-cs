@@ -5,7 +5,7 @@ using TodoApp.Contracts.Helpers;
 
 namespace TodoApp.Api.Helpers
 {
-    public class LocationHelper : ILocationHelper
+    internal class LocationHelper : ILocationHelper
     {
         private readonly UrlHelper _urlHelper;
 
