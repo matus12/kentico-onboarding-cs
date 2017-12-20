@@ -1,6 +1,6 @@
 ﻿using Unity;
 
-namespace TodoApp.Contracts
+namespace TodoApp.Contracts.Dependency
 {
     public interface IBootstrapper
     {
