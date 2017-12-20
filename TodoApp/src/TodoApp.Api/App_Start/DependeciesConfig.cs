@@ -3,6 +3,7 @@ using TodoApp.Api.Dependency;
 using TodoApp.Api.Resolver;
 using TodoApp.Contracts.Dependency;
 using TodoApp.Database.Dependency;
+using TodoApp.Services.Dependency;
 using Unity;
 using System.Configuration;
 

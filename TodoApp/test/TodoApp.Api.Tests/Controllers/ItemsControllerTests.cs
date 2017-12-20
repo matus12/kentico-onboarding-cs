@@ -11,6 +11,7 @@ using NSubstitute;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
+using TodoApp.Contracts.Services;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -40,11 +41,20 @@ namespace TodoApp.Api.Tests.Controllers
         [SetUp]
         public void SetUp()
         {
-            _repository = Substitute.For<IItemRepository>();
+            var config = new HttpConfiguration();
+            config.Routes.MapHttpRoute(
+                RoutesConfig.ApiV1Route,
+                "{id}/test-route/15"
+            );
+            var service = Substitute.For<IItemService>();
+            service.GetAllItems().Returns(_items);
+            service.GetItemById(Guid2).ReturnsForAnyArgs(_items[0]);
+            service.InsertItem(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            service.UpdateItem(Guid1, _items[0]).ReturnsForAnyArgs(_items[1]);
 
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_repository, _helper)
+            _controller = new ItemsController(service, helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
