@@ -8,7 +8,6 @@ using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
 using NSubstitute;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services;
