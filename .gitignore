@@ -8,6 +8,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+TodoApp/src/TodoApp.Api/ConnectionStrings.config
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

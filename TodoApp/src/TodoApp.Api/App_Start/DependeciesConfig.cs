@@ -4,6 +4,7 @@ using TodoApp.Api.Resolver;
 using TodoApp.Contracts.Dependency;
 using TodoApp.Database.Dependency;
 using Unity;
+using System.Configuration;
 
 namespace TodoApp.Api
 {

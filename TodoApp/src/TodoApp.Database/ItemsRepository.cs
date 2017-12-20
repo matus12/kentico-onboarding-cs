@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Models;
 
@@ -9,32 +9,36 @@ namespace TodoApp.Database
 {
     internal class ItemsRepository : IItemRepository
     {
-        private static IEnumerable<Item> IteratedItems
+        private readonly Item _updatedItem =
+            new Item {Text = "item0", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")};
+
+        private readonly IMongoCollection<Item> _collection;
+
+        public ItemsRepository(string connectString)
         {
-            get
-            {
-                yield return new Item {Text = "item0", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")};
-                yield return new Item {Text = "item1", Id = new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141")};
-                yield return new Item {Text = "item2", Id = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057")};
-            }
+            var connectionString = connectString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("todoappdb");
+
+            _collection = database.GetCollection<Item>("items");
         }
 
-        private static readonly Item[] Items = IteratedItems.ToArray();
-
-        private static readonly Item AddedItem =
-            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
-
         public async Task<IEnumerable<Item>> GetAllAsync()
-            => await Task.FromResult(Items);
+            => await _collection.Find(FilterDefinition<Item>.Empty).ToListAsync();
 
         public async Task<Item> GetByIdAsync(Guid id)
-            => await Task.FromResult(Items[0]);
+            => await _collection.Find(item => item.Id == id).FirstAsync();
 
         public async Task<Item> AddAsync(Item item)
-            => await Task.FromResult(AddedItem);
+        {
+            await _collection.InsertOneAsync(item);
+            return item;
+        }
 
         public async Task<Item> UpdateAsync(Item item)
-            => await Task.FromResult(Items[1]);
+        {
+            return await Task.FromResult(_updatedItem);
+        }
 
         public async Task DeleteAsync(Guid id)
             => await Task.CompletedTask;
