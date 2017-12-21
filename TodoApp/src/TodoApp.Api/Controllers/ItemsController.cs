@@ -29,7 +29,11 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
-            if (!_service.ValidateText(item.Text))
+            if (item == null)
+            {
+                return BadRequest("Invalid request message body");
+            }
+            if (!ValidateText(item.Text))
             {
                 return BadRequest("Invalid item text");
             }
@@ -44,6 +48,12 @@ namespace TodoApp.Api.Controllers
         {
             await _service.DeleteItem(id);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private static bool ValidateText(string inputText)
+        {
+            var trimmedText = inputText.Trim();
+            return !string.IsNullOrEmpty(trimmedText) && trimmedText.Length.Equals(inputText.Length);
         }
     }
 }

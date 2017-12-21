@@ -38,11 +38,5 @@ namespace TodoApp.Services
         {
             await _repository.Delete(id);
         }
-
-        public bool ValidateText(string inputText)
-        {
-            var trimmedText = inputText.Trim();
-            return !string.IsNullOrEmpty(trimmedText) && trimmedText.Length.Equals(inputText.Length);
-        }
     }
 }
