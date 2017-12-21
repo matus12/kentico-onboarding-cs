@@ -28,8 +28,14 @@ namespace TodoApp.Api.Controllers
             => Ok(await _service.GetItemById(id));
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
-            => Created(_locationHelper.GetUriLocation(_guidOfPostItem),
+        {
+            if (!_service.ValidateText(item.Text))
+            {
+                return BadRequest("Invalid item text");
+            }
+            return Created(_locationHelper.GetUriLocation(_guidOfPostItem),
                 await _service.InsertItem(item));
+        }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
             => Content(HttpStatusCode.Accepted, await _service.UpdateItem(id, item));

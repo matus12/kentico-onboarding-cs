@@ -16,5 +16,7 @@ namespace TodoApp.Contracts.Services
         Task<Item> UpdateItem(Guid id, Item item);
 
         Task DeleteItem(Guid id);
+
+        bool ValidateText(string inputText);
     }
 }
