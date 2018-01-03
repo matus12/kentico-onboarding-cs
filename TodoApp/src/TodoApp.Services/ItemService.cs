@@ -30,7 +30,7 @@ namespace TodoApp.Services
 
         public async Task<Item> UpdateItem(Guid id, Item item)
         {
-            item.UpDateTime = new DateTime(DateTime.Now.Ticks);
+            item.UpdateTime = new DateTime(DateTime.Now.Ticks);
             return await _repository.Update(item);
         }
 
