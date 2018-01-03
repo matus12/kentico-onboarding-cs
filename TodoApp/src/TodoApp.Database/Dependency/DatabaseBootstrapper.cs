@@ -10,7 +10,7 @@ namespace TodoApp.Database.Dependency
     {
         private readonly string _connectionString;
 
-        public DatabaseBootStrapper(string connectionString)
+        public DatabaseBootstrapper(string connectionString)
         {
             _connectionString = connectionString;
         }
