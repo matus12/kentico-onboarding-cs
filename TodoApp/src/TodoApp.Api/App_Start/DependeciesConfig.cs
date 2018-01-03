@@ -10,9 +10,9 @@ namespace TodoApp.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            var apiDependencyContainer = new ApiBootStrapper().RegisterTypes(new UnityContainer());
+            var apiDependencyContainer = new ApiBootstrapper().RegisterTypes(new UnityContainer());
             var apiAndDatabaseDependencyContainer
-                = new DatabaseBootStrapper().RegisterTypes(apiDependencyContainer);
+                = new DatabaseBootstrapper().RegisterTypes(apiDependencyContainer);
             config.DependencyResolver = new UnityResolver(apiAndDatabaseDependencyContainer);
         }
     }

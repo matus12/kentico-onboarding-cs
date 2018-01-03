@@ -1,7 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web;
 using TodoApp.Api.Helpers;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Dependency;
 using TodoApp.Contracts.Helpers;
 using Unity;
@@ -10,7 +9,7 @@ using Unity.Lifetime;
 
 namespace TodoApp.Api.Dependency
 {
-    internal class ApiBootStrapper : IBootstrapper
+    internal class ApiBootstrapper : IBootstrapper
     {
         public IUnityContainer RegisterTypes(IUnityContainer container)
         {
