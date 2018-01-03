@@ -35,10 +35,8 @@ namespace TodoApp.Database
             return item;
         }
 
-        public async Task<Item> UpdateAsync(Item item)
-        {
-            return await Task.FromResult(_updatedItem);
-        }
+        public async Task<Item> Update(Item item)
+            => await Task.FromResult(_updatedItem);
 
         public async Task DeleteAsync(Guid id)
             => await Task.CompletedTask;

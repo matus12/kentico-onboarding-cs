@@ -35,8 +35,6 @@ namespace TodoApp.Services
         }
 
         public async Task DeleteItem(Guid id)
-        {
-            await _repository.Delete(id);
-        }
+            => await _repository.Delete(id);
     }
 }

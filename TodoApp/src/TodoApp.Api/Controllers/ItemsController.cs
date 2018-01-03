@@ -53,7 +53,8 @@ namespace TodoApp.Api.Controllers
         private static bool ValidateText(string inputText)
         {
             var trimmedText = inputText.Trim();
-            return !string.IsNullOrEmpty(trimmedText) && trimmedText.Length.Equals(inputText.Length);
+            return !string.IsNullOrEmpty(trimmedText)
+                && trimmedText.Length.Equals(inputText.Length);
         }
     }
 }
