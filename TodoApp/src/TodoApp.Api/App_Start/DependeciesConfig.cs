@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Microsoft.Practices.Unity.Configuration;
 using TodoApp.Api.Dependency;
 using TodoApp.Contracts.Dependency;
 using TodoApp.Contracts.Resolver;
