@@ -32,7 +32,7 @@ namespace TodoApp.Api.Controllers
                 await _repository.Add(item));
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
-            => Content(HttpStatusCode.Accepted, await _repository.Update(item));
+            => Ok(await _repository.Update(item));
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
