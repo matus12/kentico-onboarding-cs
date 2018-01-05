@@ -20,6 +20,7 @@ namespace TodoApp.Api.Tests.Controllers
     internal class ItemsControllerTests
     {
         private ItemsController _controller;
+        private IItemRepository _repository;
         private static readonly Guid Guid1 = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702");
         private static readonly Guid Guid2 = new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141");
         private static readonly Guid Guid3 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
@@ -47,17 +48,13 @@ namespace TodoApp.Api.Tests.Controllers
                 RoutesConfig.ApiV1Route,
                 "{id}/test-route/15"
             );
-            var repository = Substitute.For<IItemRepository>();
-            repository.GetAllAsync().Returns(_items);
-            repository.GetByIdAsync(Guid2).ReturnsForAnyArgs(_items[0]);
-            repository.AddAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
-            repository.UpdateAsync(_items[0]).ReturnsForAnyArgs(_items[1]);
+            _repository = Substitute.For<IItemRepository>();
 
             var helper = Substitute.For<ILocationHelper>();
             helper.GetUriLocation(new Guid())
                 .ReturnsForAnyArgs(new Uri("/e6eb4638-38a4-49ac-8aaf-878684397707/test-route/15", UriKind.Relative));
 
-            _controller = new ItemsController(repository, helper)
+            _controller = new ItemsController(_repository, helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = config
@@ -67,6 +64,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ReturnsAllItems()
         {
+            _repository.GetAllAsync().Returns(_items);
             var actionResult = await _controller.GetAsync();
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item[] value);
@@ -79,6 +77,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
+            _repository.GetByIdAsync(Guid2).ReturnsForAnyArgs(_items[0]);
             var actionResult = await _controller.GetAsync(Guid1);
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item item);
@@ -92,6 +91,7 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PostAsync_NewItem_SetsLocationHeader()
         {
             const string expectedUri = "/e6eb4638-38a4-49ac-8aaf-878684397707/test-route/15";
+            _repository.AddAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
 
             var actionResult = await _controller.PostAsync(ItemToPost);
             var createdResult = await actionResult.ExecuteAsync(CancellationToken.None);
@@ -106,11 +106,12 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_ExistingId_UpdatedItem_ReturnsContentResult()
         {
+            _repository.UpdateAsync(_items[0]).ReturnsForAnyArgs(_items[1]);
             var actionResult = await _controller.PutAsync(_items[1].Id, _items[1]);
             var contentResult = await actionResult.ExecuteAsync(CancellationToken.None);
             contentResult.TryGetContentValue(out Item item);
 
-            Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+            Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(item, Is.EqualTo(_items[1]).UsingItemEqualityComparer());
         }
 
