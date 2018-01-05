@@ -7,7 +7,7 @@ using TodoApp.Contracts.Models;
 
 namespace TodoApp.Database
 {
-    internal class ItemsRepository : IDisposable, IItemRepository
+    internal class ItemsRepository : IItemRepository
     {
         private static IEnumerable<Item> IteratedItems
         {
@@ -24,33 +24,28 @@ namespace TodoApp.Database
         private static readonly Item AddedItem =
             new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
-        public async Task<IEnumerable<Item>> GetAll()
+        public async Task<IEnumerable<Item>> GetAllAsync()
         {
             return await Task.FromResult(Items);
         }
 
-        public async Task<Item> GetById(Guid id)
+        public async Task<Item> GetByIdAsync(Guid id)
         {
             return await Task.FromResult(Items[0]);
         }
 
-        public async Task<Item> Add(Item item)
+        public async Task<Item> AddAsync(Item item)
         {
             return await Task.FromResult(AddedItem);
         }
 
-        public async Task<Item> Update(Item item)
+        public async Task<Item> UpdateAsync(Item item)
         {
             return await Task.FromResult(Items[1]);
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -48,10 +48,10 @@ namespace TodoApp.Api.Tests.Controllers
                 "{id}/test-route/15"
             );
             var repository = Substitute.For<IItemRepository>();
-            repository.GetAll().Returns(_items);
-            repository.GetById(Guid2).ReturnsForAnyArgs(_items[0]);
-            repository.Add(ItemToPost).ReturnsForAnyArgs(ItemToPost);
-            repository.Update(_items[0]).ReturnsForAnyArgs(_items[1]);
+            repository.GetAllAsync().Returns(_items);
+            repository.GetByIdAsync(Guid2).ReturnsForAnyArgs(_items[0]);
+            repository.AddAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            repository.UpdateAsync(_items[0]).ReturnsForAnyArgs(_items[1]);
 
             var helper = Substitute.For<ILocationHelper>();
             helper.GetUriLocation(new Guid())

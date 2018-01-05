@@ -22,21 +22,21 @@ namespace TodoApp.Api.Controllers
         }
 
         public async Task<IHttpActionResult> GetAsync()
-            => Ok(await _repository.GetAll());
+            => Ok(await _repository.GetAllAsync());
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
-            => Ok(await _repository.GetById(id));
+            => Ok(await _repository.GetByIdAsync(id));
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
             => Created(_locationHelper.GetUriLocation(_guidOfPostItem),
-                await _repository.Add(item));
+                await _repository.AddAsync(item));
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
-            => Ok(await _repository.Update(item));
+            => Ok(await _repository.UpdateAsync(item));
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            await _repository.Delete(id);
+            await _repository.DeleteAsync(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
