@@ -44,10 +44,7 @@ namespace TodoApp.Api.Tests.Controllers
         public void SetUp()
         {
             var config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(
-                RoutesConfig.ApiV1Route,
-                "{id}/test-route/15"
-            );
+
             _repository = Substitute.For<IItemRepository>();
 
             var helper = Substitute.For<ILocationHelper>();
