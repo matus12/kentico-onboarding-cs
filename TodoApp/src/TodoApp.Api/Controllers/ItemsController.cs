@@ -10,8 +10,6 @@ namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
     {
-        private readonly Guid _guidOfPostItem = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707");
-
         private readonly IItemRepository _repository;
         private readonly ILocationHelper _locationHelper;
 
@@ -28,8 +26,12 @@ namespace TodoApp.Api.Controllers
             => Ok(await _repository.GetByIdAsync(id));
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
-            => Created(_locationHelper.GetUriLocation(_guidOfPostItem),
-                await _repository.AddAsync(item));
+        {
+            var addedItem = await _repository.AddAsync(item);
+
+            return Created(_locationHelper.GetUriLocation(addedItem.Id),
+                addedItem);
+        } 
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
             => Ok(await _repository.UpdateAsync(item));
