@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using TodoApp.Api.Dependency;
+using TodoApp.Api.Resolver;
 using TodoApp.Contracts.Dependency;
-using TodoApp.Contracts.Resolver;
 using TodoApp.Database.Dependency;
 using Unity;
 
