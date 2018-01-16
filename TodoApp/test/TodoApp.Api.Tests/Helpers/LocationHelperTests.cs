@@ -22,16 +22,16 @@ namespace TodoApp.Api.Tests.Helpers
         }
 
         [Test]
-        public void GetUriLocation_newId_ReturnsCorrectUri()
+        public void GetUriLocation_ewId_ReturnsCorrectUri()
         {
             const string id = "5f1570b2-9e59-4281-9bf2-d5ee136ebf21";
             var httpConfiguration = new HttpConfiguration();
             httpConfiguration.Routes.MapHttpRoute(
                 RoutesConfig.ApiV1Route,
-                "api/v1/items/{id}"
+                "api/v1/elephant/items/{id}"
             );
             _requestMessage.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, httpConfiguration);
-            var expectedUri = new Uri("/api/v1/items/" + id, UriKind.Relative);
+            var expectedUri = new Uri("/api/v1/elephant/items/" + id, UriKind.Relative);
 
             var result = _locationHelper.GetUriLocation(new Guid(id));
 
