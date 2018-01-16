@@ -6,9 +6,10 @@ using Unity.Exceptions;
 
 namespace TodoApp.Api.Resolver
 {
-    public class UnityResolver: IDependencyResolver
+    public class UnityResolver : IDependencyResolver
     {
         protected IUnityContainer Container;
+        private bool _disposed;
 
         public UnityResolver(IUnityContainer container)
         {
@@ -47,7 +48,26 @@ namespace TodoApp.Api.Resolver
 
         public void Dispose()
         {
-            Container.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            if (disposing)
+            {
+                Container.Dispose();
+            }
+            _disposed = true;
+        }
+
+        ~UnityResolver()
+        {
+            Dispose(false);
         }
     }
 }
