@@ -25,27 +25,21 @@ namespace TodoApp.Database
             new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
         public async Task<IEnumerable<Item>> GetAllAsync()
-        {
-            return await Task.FromResult(Items);
-        }
+            => await Task.FromResult(Items);
 
         public async Task<Item> GetByIdAsync(Guid id)
-        {
-            return await Task.FromResult(Items[0]);
-        }
+            => await Task.FromResult(Items[0]);
 
         public async Task<Item> AddAsync(Item item)
-        {
-            return await Task.FromResult(AddedItem);
-        }
+            => await Task.FromResult(AddedItem);
 
         public async Task<Item> UpdateAsync(Item item)
-        {
-            return await Task.FromResult(Items[1]);
-        }
+            => await Task.FromResult(Items[1]);
+
 
         public async Task DeleteAsync(Guid id)
         {
+            await Task.FromResult(0);
         }
     }
 }

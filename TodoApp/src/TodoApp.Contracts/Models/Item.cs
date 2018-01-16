@@ -8,8 +8,6 @@ namespace TodoApp.Contracts.Models
         public string Text;
 
         public override string ToString()
-        {
-            return $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}";
-        }
+            => $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}";
     }
 }
