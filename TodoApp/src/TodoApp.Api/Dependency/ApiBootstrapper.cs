@@ -12,13 +12,10 @@ namespace TodoApp.Api.Dependency
     internal class ApiBootstrapper : IBootstrapper
     {
         public IUnityContainer RegisterTypes(IUnityContainer container)
-        {
-            container
+            => container
                 .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
                 .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(),
                     InjectMessage());
-            return container;
-        }
 
         private static InjectionFactory InjectMessage()
             => new InjectionFactory(unityContainer
