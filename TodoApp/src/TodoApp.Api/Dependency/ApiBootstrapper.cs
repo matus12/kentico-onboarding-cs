@@ -16,9 +16,12 @@ namespace TodoApp.Api.Dependency
             container
                 .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
                 .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(),
-                    new InjectionFactory(unityContainer =>
-                        (HttpRequestMessage) HttpContext.Current.Items["MS_HttpRequestMessage"]));
+                    InjectMessage());
             return container;
         }
+
+        private static InjectionFactory InjectMessage()
+            => new InjectionFactory(unityContainer
+                => (HttpRequestMessage) HttpContext.Current.Items["MS_HttpRequestMessage"]);
     }
 }
