@@ -22,7 +22,7 @@ namespace TodoApp.Api.Tests.Helpers
         }
 
         [Test]
-        public void GetUriLocation_ewId_ReturnsCorrectUri()
+        public void GetUriLocation_NewId_ReturnsCorrectUri()
         {
             const string id = "5f1570b2-9e59-4281-9bf2-d5ee136ebf21";
             var httpConfiguration = new HttpConfiguration();

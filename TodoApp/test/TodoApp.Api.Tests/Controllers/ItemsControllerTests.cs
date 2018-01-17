@@ -21,6 +21,7 @@ namespace TodoApp.Api.Tests.Controllers
     {
         private ItemsController _controller;
         private IItemRepository _repository;
+        private ILocationHelper _helper;
         private static readonly Guid Guid0 = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702");
         private static readonly Guid Guid1 = new Guid("a5d4b549-bdd3-4ec2-8210-ff42926aa141");
         private static readonly Guid Guid2 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
@@ -51,10 +52,9 @@ namespace TodoApp.Api.Tests.Controllers
 
             _repository = Substitute.For<IItemRepository>();
 
-            var helper = Substitute.For<ILocationHelper>();
-            helper.GetUriLocation(Arg.Any<Guid>()).Returns(Uri);
+            _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_repository, helper)
+            _controller = new ItemsController(_repository, _helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = config
@@ -92,6 +92,7 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
             _repository.AddAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            _helper.GetUriLocation(Arg.Any<Guid>()).Returns(Uri);
 
             var (createdResult, item) = await GetResultFromAction(await _controller.PostAsync(ItemToPost));
             var location = createdResult.Headers.Location.ToString();
@@ -123,9 +124,9 @@ namespace TodoApp.Api.Tests.Controllers
 
         private static async Task<(HttpResponseMessage message, Item item)> GetResultFromAction(IHttpActionResult actionResult)
         {
-            var result = await actionResult.ExecuteAsync(CancellationToken.None);
-            Console.WriteLine(result.TryGetContentValue(out Item item));
-            return (result, item);
+            var responseMessage = await actionResult.ExecuteAsync(CancellationToken.None);
+            Console.WriteLine(responseMessage.TryGetContentValue(out Item item));
+            return (responseMessage, item);
         }
     }
 }
