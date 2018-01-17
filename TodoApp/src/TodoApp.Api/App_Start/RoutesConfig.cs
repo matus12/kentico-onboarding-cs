@@ -8,8 +8,6 @@ namespace TodoApp.Api
 
         public static void Register(HttpConfiguration config)
         {
-            config.MapHttpAttributeRoutes();
-
             config.Routes.MapHttpRoute(
                 name: ApiV1Route,
                 routeTemplate: "api/v1/{controller}/{id}",

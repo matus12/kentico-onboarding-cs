@@ -14,8 +14,7 @@ namespace TodoApp.Api.Dependency
         public IUnityContainer RegisterTypes(IUnityContainer container)
             => container
                 .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
-                .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(),
-                    InjectMessage());
+                .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), InjectMessage());
 
         private static InjectionFactory InjectMessage()
             => new InjectionFactory(unityContainer
