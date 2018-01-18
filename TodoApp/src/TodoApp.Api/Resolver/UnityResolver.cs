@@ -6,26 +6,20 @@ using Unity.Exceptions;
 
 namespace TodoApp.Api.Resolver
 {
-    internal sealed class UnityResolver : IDependencyResolver
+    public class UnityResolver: IDependencyResolver
     {
-        private readonly IUnityContainer _container;
-        private bool _disposed;
+        protected IUnityContainer Container;
 
         public UnityResolver(IUnityContainer container)
         {
-            _container = container ?? throw new ArgumentNullException(nameof(container));
+            Container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public object GetService(Type serviceType)
         {
             try
             {
-                return _container.Resolve(serviceType);
-            }
-            catch (ResolutionFailedException)
-                when (serviceType?.FullName?.StartsWith("TodoApp") == true)
-            {
-                throw;
+                return Container.Resolve(serviceType);
             }
             catch (ResolutionFailedException)
             {
@@ -33,11 +27,11 @@ namespace TodoApp.Api.Resolver
             }
         }
 
-            public IEnumerable<object> GetServices(Type serviceType)
+        public IEnumerable<object> GetServices(Type serviceType)
         {
             try
             {
-                return _container.ResolveAll(serviceType);
+                return Container.ResolveAll(serviceType);
             }
             catch (ResolutionFailedException)
             {
@@ -47,20 +41,13 @@ namespace TodoApp.Api.Resolver
 
         public IDependencyScope BeginScope()
         {
-            var child = _container.CreateChildContainer();
+            var child = Container.CreateChildContainer();
             return new UnityResolver(child);
         }
 
         public void Dispose()
         {
-            if (_disposed)
-            {
-                return;
-            }
-
-            _container.Dispose();
-
-            _disposed = true;
+            Container.Dispose();
         }
     }
 }
