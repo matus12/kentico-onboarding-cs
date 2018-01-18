@@ -22,10 +22,10 @@ namespace TodoApp.Api.Controllers
         }
 
         public async Task<IHttpActionResult> GetAsync()
-            => Ok(await _service.GetAllItems());
+            => Ok(await _service.GetAllItemsAsync());
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
-            => Ok(await _service.GetItemById(id));
+            => Ok(await _service.GetItemByIdAsync(id));
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
@@ -38,15 +38,15 @@ namespace TodoApp.Api.Controllers
                 return BadRequest("Invalid item text");
             }
             return Created(_locationHelper.GetUriLocation(_guidOfPostItem),
-                await _service.InsertItem(item));
+                await _service.InsertItemAsync(item));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
-            => Content(HttpStatusCode.Accepted, await _service.UpdateItem(id, item));
+            => Ok(await _service.UpdateItemAsync(item));
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            await _service.DeleteItem(id);
+            await _service.DeleteItemAsync(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
 

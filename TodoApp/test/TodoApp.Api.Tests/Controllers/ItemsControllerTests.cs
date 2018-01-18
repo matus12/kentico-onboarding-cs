@@ -8,7 +8,6 @@ using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Comparers;
 using NSubstitute;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services;
@@ -35,26 +34,17 @@ namespace TodoApp.Api.Tests.Controllers
         };
 
         private ItemsController _controller;
-        private IItemRepository _repository;
+        private IItemService _service;
         private ILocationHelper _helper;
 
         [SetUp]
         public void SetUp()
         {
-            var config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(
-                RoutesConfig.ApiV1Route,
-                "{id}/test-route/15"
-            );
-            var service = Substitute.For<IItemService>();
-            service.GetAllItems().Returns(_items);
-            service.GetItemById(Guid2).ReturnsForAnyArgs(_items[0]);
-            service.InsertItem(ItemToPost).ReturnsForAnyArgs(ItemToPost);
-            service.UpdateItem(Guid1, _items[0]).ReturnsForAnyArgs(_items[1]);
+            _service = Substitute.For<IItemService>();
 
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(service, helper)
+            _controller = new ItemsController(_service, _helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -64,7 +54,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ReturnsAllItems()
         {
-            _repository.GetAllAsync().Returns(_items);
+            _service.GetAllItemsAsync().Returns(_items);
 
             var (contentResult, items) = await GetResultFromAction<Item[]>(controller => controller.GetAsync());
 
@@ -76,8 +66,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _repository.GetByIdAsync(Arg.Any<Guid>()).Returns(_items[1]);
-            _repository.GetByIdAsync(Guid0).Returns(_items[0]);  
+            _service.GetItemByIdAsync(Arg.Any<Guid>()).Returns(_items[1]);
+            _service.GetItemByIdAsync(Guid0).Returns(_items[0]);  
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -89,7 +79,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
-            _repository.AddAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            _service.InsertItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
             _helper.GetUriLocation(Arg.Any<Guid>()).Returns(Uri);
 
             var (createdResult, item) = await GetResultFromAction<Item>(controller => controller.PostAsync(ItemToPost));
@@ -103,7 +93,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_ItemToUpdateWithExistingId_ReturnsUpdatedItem()
         {
-            _repository.UpdateAsync(_items[0]).ReturnsForAnyArgs(_items[1]);
+            _service.UpdateItemAsync(_items[0]).ReturnsForAnyArgs(_items[1]);
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.PutAsync(_items[1].Id, _items[1]));
 
@@ -116,7 +106,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid0));
 
-            await _repository.Received(1).DeleteAsync(Arg.Any<Guid>());
+            await _service.Received(1).DeleteItemAsync(Arg.Any<Guid>());
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 

@@ -9,14 +9,15 @@ using Unity.Lifetime;
 
 namespace TodoApp.Api.Dependency
 {
-    internal class ApiBootStrapper : IBootstrapper
+    internal class ApiBootstrapper : IBootstrapper
     {
         public IUnityContainer RegisterTypes(IUnityContainer container)
-        {
-            container.RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager());
-            container.RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(),
-                new InjectionFactory(unityContainer => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"]));
-            return container;
-        }
+            => container
+                .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
+                .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), InjectMessage());
+
+        private static InjectionFactory InjectMessage()
+            => new InjectionFactory(unityContainer
+                => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"]);
     }
 }

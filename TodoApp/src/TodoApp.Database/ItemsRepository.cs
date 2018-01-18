@@ -14,9 +14,8 @@ namespace TodoApp.Database
 
         private readonly IMongoCollection<Item> _collection;
 
-        public ItemsRepository(string connectString)
+        public ItemsRepository(string connectionString)
         {
-            var connectionString = connectString;
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("todoappdb");
 
@@ -35,7 +34,7 @@ namespace TodoApp.Database
             return item;
         }
 
-        public async Task<Item> Update(Item item)
+        public async Task<Item> UpdateAsync(Item item)
             => await Task.FromResult(_updatedItem);
 
         public async Task DeleteAsync(Guid id)

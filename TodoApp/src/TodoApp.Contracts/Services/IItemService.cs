@@ -7,14 +7,14 @@ namespace TodoApp.Contracts.Services
 {
     public interface IItemService
     {
-        Task<IEnumerable<Item>> GetAllItems();
+        Task<IEnumerable<Item>> GetAllItemsAsync();
 
-        Task<Item> GetItemById(Guid id);
+        Task<Item> GetItemByIdAsync(Guid id);
 
-        Task<Item> InsertItem(Item item);
+        Task<Item> InsertItemAsync(Item item);
 
-        Task<Item> UpdateItem(Guid id, Item item);
+        Task<Item> UpdateItemAsync(Item item);
 
-        Task DeleteItem(Guid id);
+        Task DeleteItemAsync(Guid id);
     }
 }

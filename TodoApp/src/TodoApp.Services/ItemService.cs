@@ -16,25 +16,25 @@ namespace TodoApp.Services
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Item>> GetAllItems()
-            => await _repository.GetAll();
+        public async Task<IEnumerable<Item>> GetAllItemsAsync()
+            => await _repository.GetAllAsync();
 
-        public async Task<Item> GetItemById(Guid id)
-            => await _repository.GetById(id);
+        public async Task<Item> GetItemByIdAsync(Guid id)
+            => await _repository.GetByIdAsync(id);
 
-        public async Task<Item> InsertItem(Item item)
+        public async Task<Item> InsertItemAsync(Item item)
         {
             item.CreateTime = new DateTime(DateTime.Now.Ticks);
-            return await _repository.Add(item);
+            return await _repository.AddAsync(item);
         }
 
-        public async Task<Item> UpdateItem(Guid id, Item item)
+        public async Task<Item> UpdateItemAsync(Item item)
         {
             item.UpdateTime = new DateTime(DateTime.Now.Ticks);
-            return await _repository.Update(item);
+            return await _repository.UpdateAsync(item);
         }
 
-        public async Task DeleteItem(Guid id)
-            => await _repository.Delete(id);
+        public async Task DeleteItemAsync(Guid id)
+            => await _repository.DeleteAsync(id);
     }
 }
