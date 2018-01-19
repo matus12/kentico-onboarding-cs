@@ -6,20 +6,26 @@ using Unity.Exceptions;
 
 namespace TodoApp.Api.Resolver
 {
-    public class UnityResolver: IDependencyResolver
+    internal sealed class UnityResolver : IDependencyResolver
     {
-        protected IUnityContainer Container;
+        private readonly IUnityContainer _container;
+        private bool _disposed;
 
         public UnityResolver(IUnityContainer container)
         {
-            Container = container ?? throw new ArgumentNullException(nameof(container));
+            _container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public object GetService(Type serviceType)
         {
             try
             {
-                return Container.Resolve(serviceType);
+                return _container.Resolve(serviceType);
+            }
+            catch (ResolutionFailedException)
+                when (serviceType?.FullName?.StartsWith("TodoApp") == true)
+            {
+                throw;
             }
             catch (ResolutionFailedException)
             {
@@ -31,7 +37,7 @@ namespace TodoApp.Api.Resolver
         {
             try
             {
-                return Container.ResolveAll(serviceType);
+                return _container.ResolveAll(serviceType);
             }
             catch (ResolutionFailedException)
             {
@@ -41,13 +47,20 @@ namespace TodoApp.Api.Resolver
 
         public IDependencyScope BeginScope()
         {
-            var child = Container.CreateChildContainer();
+            var child = _container.CreateChildContainer();
             return new UnityResolver(child);
         }
 
         public void Dispose()
         {
-            Container.Dispose();
+            if (_disposed)
+            {
+                return;
+            }
+
+            _container.Dispose();
+
+            _disposed = true;
         }
     }
 }
