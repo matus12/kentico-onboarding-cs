@@ -79,7 +79,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
-            _service.InsertItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            _service.AddItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
             _helper.GetUriLocation(Arg.Any<Guid>()).Returns(Uri);
 
             var (createdResult, item) = await GetResultFromAction<Item>(controller => controller.PostAsync(ItemToPost));

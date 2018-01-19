@@ -22,7 +22,7 @@ namespace TodoApp.Services
         public async Task<Item> GetItemByIdAsync(Guid id)
             => await _repository.GetByIdAsync(id);
 
-        public async Task<Item> InsertItemAsync(Item item)
+        public async Task<Item> AddItemAsync(Item item)
         {
             item.CreateTime = new DateTime(DateTime.Now.Ticks);
             return await _repository.AddAsync(item);

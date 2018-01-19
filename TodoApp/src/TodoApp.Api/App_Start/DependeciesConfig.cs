@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Web.Http;
+﻿using System.Web.Http;
 using TodoApp.Api.Dependency;
 using TodoApp.Api.Resolver;
 using TodoApp.Contracts.Dependency;
@@ -17,20 +15,12 @@ namespace TodoApp.Api
             var apiDependencyContainer = new UnityContainer()
                 .Register<ApiBootstrapper>()
                 .Register<ServicesBootstrapper>()
-                .Register<DatabaseBootstrapper>(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                .Register<DatabaseBootstrapper>();
             config.DependencyResolver = new UnityResolver(apiDependencyContainer);
         }
 
-        private static IUnityContainer Register<TBootstrapper>(this IUnityContainer container,
-            string connectionString = null)
+        private static IUnityContainer Register<TBootstrapper>(this IUnityContainer container)
             where TBootstrapper : IBootstrapper, new()
-        {
-            if (connectionString == null)
-            {
-                return new TBootstrapper().RegisterTypes(container);
-            }
-            var bootstrapper = (TBootstrapper) Activator.CreateInstance(typeof(TBootstrapper), connectionString);
-            return bootstrapper.RegisterTypes(container);
-        } 
+            => new TBootstrapper().RegisterTypes(container);
     }
 }

@@ -38,7 +38,7 @@ namespace TodoApp.Api.Controllers
                 return BadRequest("Invalid item text");
             }
             return Created(_locationHelper.GetUriLocation(_guidOfPostItem),
-                await _service.InsertItemAsync(item));
+                await _service.AddItemAsync(item));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)

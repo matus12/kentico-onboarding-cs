@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Web;
 using TodoApp.Api.Helpers;
+using TodoApp.Contracts;
 using TodoApp.Contracts.Dependency;
 using TodoApp.Contracts.Helpers;
 using Unity;
@@ -14,6 +15,7 @@ namespace TodoApp.Api.Dependency
         public IUnityContainer RegisterTypes(IUnityContainer container)
             => container
                 .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
+                .RegisterType<IDbConnection, DbConnection>(new HierarchicalLifetimeManager())
                 .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), InjectMessage());
 
         private static InjectionFactory InjectMessage()

@@ -11,7 +11,7 @@ namespace TodoApp.Contracts.Services
 
         Task<Item> GetItemByIdAsync(Guid id);
 
-        Task<Item> InsertItemAsync(Item item);
+        Task<Item> AddItemAsync(Item item);
 
         Task<Item> UpdateItemAsync(Item item);
 

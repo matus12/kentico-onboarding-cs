@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Dependency\IBootstrapper.cs" />
     <Compile Include="Helpers\ILocationHelper.cs" />
+    <Compile Include="IDbConnection.cs" />
     <Compile Include="IItemRepository.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
