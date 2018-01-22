@@ -10,6 +10,7 @@ namespace TodoApp.Services.Dependency
         public IUnityContainer RegisterTypes(IUnityContainer container)
             => container
                 .RegisterType<IItemService, ItemService>(new HierarchicalLifetimeManager())
-                .RegisterType<IDateTimeService, DateTimeService>(new HierarchicalLifetimeManager());
+                .RegisterType<IDateTimeService, DateTimeService>(new HierarchicalLifetimeManager())
+                .RegisterType<IGuidService, GuidService>(new HierarchicalLifetimeManager());
     }
 }
