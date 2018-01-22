@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
@@ -32,16 +33,15 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
-            if (item == null)
+            var itemValidation = ValidateItem(item);
+            if (itemValidation != null)
             {
-                return BadRequest("Invalid request message body");
+                return itemValidation;
             }
-            if (!ValidateText(item.Text))
-            {
-                return BadRequest("Invalid item text");
-            }
-            return Created(_locationHelper.GetUriLocation(_guidOfPostItem),
-                await _service.AddItemAsync(item));
+            var location = _locationHelper.GetUriLocation(_guidOfPostItem);
+            var addedItem = await _service.AddItemAsync(item);
+
+            return Created(location, addedItem);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
@@ -51,6 +51,15 @@ namespace TodoApp.Api.Controllers
         {
             await _repository.DeleteAsync(id);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private BadRequestErrorMessageResult ValidateItem(Item item)
+        {
+            if (item == null)
+            {
+                return BadRequest("Invalid request message body");
+            }
+            return !ValidateText(item.Text) ? BadRequest("Invalid item text") : null;
         }
 
         private static bool ValidateText(string inputText)
