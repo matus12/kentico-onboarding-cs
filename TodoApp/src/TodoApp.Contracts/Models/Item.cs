@@ -10,6 +10,9 @@ namespace TodoApp.Contracts.Models
         public DateTime UpdateTime;
 
         public override string ToString()
-            => $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}";
+            => $"{nameof(Id)}: {Id}," +
+               $" {nameof(Text)}: {Text}," +
+               $" {nameof(CreateTime)}: {CreateTime}," +
+               $" {nameof(UpdateTime)}: {UpdateTime}";
     }
 }

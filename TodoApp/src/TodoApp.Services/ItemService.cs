@@ -10,10 +10,12 @@ namespace TodoApp.Services
     internal class ItemService : IItemService
     {
         private readonly IItemRepository _repository;
+        private readonly IDateTimeService _dateTimeService;
 
-        public ItemService(IItemRepository repository)
+        public ItemService(IItemRepository repository, IDateTimeService dateTimeService)
         {
             _repository = repository;
+            _dateTimeService = dateTimeService;
         }
 
         public async Task<IEnumerable<Item>> GetAllItemsAsync()
@@ -24,13 +26,13 @@ namespace TodoApp.Services
 
         public async Task<Item> AddItemAsync(Item item)
         {
-            item.CreateTime = new DateTime(DateTime.Now.Ticks);
+            item.CreateTime = _dateTimeService.GetCurrentDateTime();
             return await _repository.AddAsync(item);
         }
 
         public async Task<Item> UpdateItemAsync(Item item)
         {
-            item.UpdateTime = new DateTime(DateTime.Now.Ticks);
+            item.UpdateTime = _dateTimeService.GetCurrentDateTime();
             return await _repository.UpdateAsync(item);
         }
 

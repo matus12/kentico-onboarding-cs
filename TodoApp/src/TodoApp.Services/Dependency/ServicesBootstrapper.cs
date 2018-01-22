@@ -8,6 +8,8 @@ namespace TodoApp.Services.Dependency
     public class ServicesBootstrapper : IBootstrapper
     {
         public IUnityContainer RegisterTypes(IUnityContainer container)
-            => container.RegisterType<IItemService, ItemService>(new HierarchicalLifetimeManager());
+            => container
+                .RegisterType<IItemService, ItemService>(new HierarchicalLifetimeManager())
+                .RegisterType<IDateTimeService, DateTimeService>(new HierarchicalLifetimeManager());
     }
 }

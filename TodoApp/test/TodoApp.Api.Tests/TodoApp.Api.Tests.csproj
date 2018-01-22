@@ -79,6 +79,7 @@
     <Compile Include="Controllers\ItemsControllerTests.cs" />
     <Compile Include="Helpers\LocationHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ItemServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TodoApp.Api\TodoApp.Api.csproj">
@@ -92,6 +93,10 @@
     <ProjectReference Include="..\..\src\TodoApp.Contracts\TodoApp.Contracts.csproj">
       <Project>{DC15B0C8-D724-4EB9-B691-EFD24DD43A5B}</Project>
       <Name>TodoApp.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\TodoApp.Services\TodoApp.Services.csproj">
+      <Project>{72650603-b413-4756-acb8-f9a4ad2470fd}</Project>
+      <Name>TodoApp.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
