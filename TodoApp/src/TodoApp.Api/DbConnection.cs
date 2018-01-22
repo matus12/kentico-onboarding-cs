@@ -5,10 +5,11 @@ namespace TodoApp.Api
 {
     public class DbConnection : IDbConnection
     {
+        public string DbConnectionString { get; }
+
         public DbConnection()
         {
             DbConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
-        public string DbConnectionString { get; }
     }
 }
