@@ -33,6 +33,7 @@ namespace TodoApp.Database
         public async Task<Item> AddAsync(Item item)
         {
             await _collection.InsertOneAsync(item);
+
             return item;
         }
 

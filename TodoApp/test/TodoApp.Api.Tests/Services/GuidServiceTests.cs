@@ -6,7 +6,7 @@ using TodoApp.Services;
 
 namespace TodoApp.Api.Tests.Services
 {
-    public class GuidServiceTests
+    internal class GuidServiceTests
     {
         private IGuidService _guidService;
 

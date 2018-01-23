@@ -2,7 +2,6 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
@@ -12,7 +11,8 @@ namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
     {
-        private readonly Guid _guidOfPostItem = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707");
+        private const string InvalidRequestBody = "Invalid request message body";
+        private const string InvalidText = "Invalid item text";
 
         private readonly IItemService _service;
         private readonly IItemRepository _repository;
@@ -33,13 +33,13 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
-            var itemValidation = ValidateItem(item);
-            if (itemValidation != null)
+            var errorMessage = ValidateItem(item);
+            if (errorMessage != null)
             {
-                return itemValidation;
+                return BadRequest(errorMessage);
             }
-            var location = _locationHelper.GetUriLocation(_guidOfPostItem);
             var addedItem = await _service.AddItemAsync(item);
+            var location = _locationHelper.GetUriLocation(addedItem.Id);
 
             return Created(location, addedItem);
         }
@@ -50,21 +50,24 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private BadRequestErrorMessageResult ValidateItem(Item item)
+        private static string ValidateItem(Item item)
         {
             if (item == null)
             {
-                return BadRequest("Invalid request message body");
+                return InvalidRequestBody;
             }
-            return !ValidateText(item.Text) ? BadRequest("Invalid item text") : null;
+
+            return !ValidateText(item.Text) ? InvalidText : null;
         }
 
         private static bool ValidateText(string inputText)
         {
             var trimmedText = inputText.Trim();
+
             return !string.IsNullOrEmpty(trimmedText)
                 && trimmedText.Length.Equals(inputText.Length);
         }

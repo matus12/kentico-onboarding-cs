@@ -22,6 +22,7 @@ namespace TodoApp.Services
         {
             item.CreateTime = _dateTimeService.GetCurrentDateTime();
             item.Id = _guidService.GenerateGuid();
+
             return await _repository.AddAsync(item);
         }
     }
