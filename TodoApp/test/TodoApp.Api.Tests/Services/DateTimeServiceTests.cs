@@ -21,9 +21,17 @@ namespace TodoApp.Api.Tests.Services
             var expectedDateTime = DateTime.Now;
 
             var time = _dateTimeService.GetCurrentDateTime();
-            Console.WriteLine(time.Ticks - expectedDateTime.Ticks);
 
             Assert.That(time.Ticks - expectedDateTime.Ticks, Is.LessThan(50000));
+        }
+
+        [Test]
+        public void GetCurrentDateTime_ReturnsDifferentTimeWhenCalledTwice()
+        {
+            var time0 = _dateTimeService.GetCurrentDateTime();
+            var time1 = _dateTimeService.GetCurrentDateTime();
+
+            Assert.That(time1, Is.GreaterThan(time0));
         }
     }
 }
