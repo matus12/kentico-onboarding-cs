@@ -15,18 +15,22 @@ namespace TodoApp.Api.Tests.Services
     {
         private IItemService _service;
         private IDateTimeService _dateTimeService;
+        private IGuidService _guidService;
         private IItemRepository _repository;
         private DateTime _currentTime;
+        private Guid _guid;
 
         [SetUp]
         public void SetUp()
         {
             _repository = Substitute.For<IItemRepository>();
             _dateTimeService = Substitute.For<IDateTimeService>();
+            _guidService = Substitute.For<IGuidService>();
 
-            _service = new ItemService(_repository, _dateTimeService);
+            _service = new ItemService(_repository, _dateTimeService, _guidService);
 
             _currentTime = DateTime.Now;
+            _guid = new Guid("6548b7f6-d35c-4075-90d5-3a17e101f2c4");
         }
 
         [Test]
@@ -34,27 +38,18 @@ namespace TodoApp.Api.Tests.Services
         {
             const string newItemText = "new item";
             _dateTimeService.GetCurrentDateTime().Returns(_currentTime);
-            var expectedItem = new Item {Text = newItemText, CreateTime = _currentTime};
+            _guidService.GenerateGuid().Returns(_guid);
+            var expectedItem = new Item
+            {
+                Id = _guid,
+                Text = newItemText,
+                CreateTime = _currentTime
+            };
             _repository.AddAsync(expectedItem).Returns(expectedItem);
             var newItem = new Item {Text = newItemText};
             _repository.AddAsync(newItem).Returns(newItem);
 
             var testItem = await _service.AddItemAsync(newItem);
-
-            Assert.That(testItem, Is.EqualTo(expectedItem).UsingItemEqualityComparer());
-        }
-
-        [Test]
-        public async Task UpdateItemAsync_ItemBeingUpdated_ReturnsUpdatedItem()
-        {
-            const string updatedItemText = "updated text";
-            _dateTimeService.GetCurrentDateTime().Returns(_currentTime);
-            var expectedItem = new Item {Text = updatedItemText, UpdateTime = _currentTime};
-            _repository.UpdateAsync(expectedItem).Returns(expectedItem);
-            var itemToUpdate = new Item {Text = updatedItemText };
-            _repository.UpdateAsync(itemToUpdate).Returns(itemToUpdate);
-
-            var testItem = await _service.UpdateItemAsync(itemToUpdate);
 
             Assert.That(testItem, Is.EqualTo(expectedItem).UsingItemEqualityComparer());
         }

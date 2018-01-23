@@ -5,7 +5,6 @@ namespace TodoApp.Services
 {
     internal class GuidService : IGuidService
     {
-        public Guid GenerateGuid()
-            => Guid.NewGuid();
+        public Guid GenerateGuid() => Guid.NewGuid();
     }
 }
