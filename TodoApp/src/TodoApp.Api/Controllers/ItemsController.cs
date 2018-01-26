@@ -29,7 +29,13 @@ namespace TodoApp.Api.Controllers
             => Ok(await _repository.GetAllAsync());
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
-            => Ok(await _repository.GetByIdAsync(id));
+        {
+            if (!ValidateGuid(id))
+            {
+                return BadRequest("Empty id");
+            }
+            return Ok(await _repository.GetByIdAsync(id));
+        }
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
@@ -53,6 +59,8 @@ namespace TodoApp.Api.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        private static bool ValidateGuid(Guid id) => id != Guid.Empty;
 
         private static string ValidateItem(Item item)
         {
