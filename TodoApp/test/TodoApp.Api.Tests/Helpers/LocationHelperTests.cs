@@ -28,10 +28,10 @@ namespace TodoApp.Api.Tests.Helpers
             var httpConfiguration = new HttpConfiguration();
             httpConfiguration.Routes.MapHttpRoute(
                 RoutesConfig.ApiV1Route,
-                "api/v1/elephant/items/{id}"
+                "api/v1/items/{id}/elephant"
             );
             _requestMessage.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, httpConfiguration);
-            var expectedUri = new Uri("/api/v1/elephant/items/" + id, UriKind.Relative);
+            var expectedUri = new Uri("/api/v1/items/" + id + "/elephant", UriKind.Relative);
 
             var result = _locationHelper.GetUriLocation(new Guid(id));
 
