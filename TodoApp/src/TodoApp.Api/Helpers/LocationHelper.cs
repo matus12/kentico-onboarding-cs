@@ -9,9 +9,9 @@ namespace TodoApp.Api.Helpers
     {
         private readonly UrlHelper _urlHelper;
 
-        public LocationHelper(HttpRequestMessage requestMessage)
+        public LocationHelper(UrlHelper urlHelper)
         {
-            _urlHelper = new UrlHelper(requestMessage);
+            _urlHelper = urlHelper;
         }
 
         public Uri GetUriLocation(Guid id)

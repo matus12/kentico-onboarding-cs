@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web;
+using System.Web.Http.Routing;
 using TodoApp.Api.Helpers;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Dependency;
@@ -16,10 +17,13 @@ namespace TodoApp.Api.Dependency
             => container
                 .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
                 .RegisterType<IDbConnection, DbConnection>(new HierarchicalLifetimeManager())
-                .RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), InjectMessage());
+                .RegisterType<UrlHelper>(new HierarchicalLifetimeManager(), InjectUrlHelper());
 
-        private static InjectionFactory InjectMessage()
+        private static InjectionFactory InjectUrlHelper()
             => new InjectionFactory(unityContainer
-                => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"]);
+                => new UrlHelper(GetRequestMessage()));
+
+        private static HttpRequestMessage GetRequestMessage()
+            => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];
     }
 }
