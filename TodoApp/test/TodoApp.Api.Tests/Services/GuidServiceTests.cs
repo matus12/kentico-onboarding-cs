@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Linq;
 using NUnit.Framework;
 using TodoApp.Contracts.Services;
 using TodoApp.Services;
@@ -16,24 +16,29 @@ namespace TodoApp.Api.Tests.Services
             _guidService = new GuidService();
         }
         [Test]
-        public void GenerateGuid_ReturnsValidGuid()
+        public void GenerateGuid_ReturnsNonEmptyGuid()
         {
-            const string guidPattern = @"^[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$";
-            var regex = new Regex(guidPattern, RegexOptions.IgnoreCase);
-
             var generatedGuid = _guidService.GenerateGuid();
             Console.WriteLine(generatedGuid.ToString());
             
-            Assert.That(regex.Match(generatedGuid.ToString()).Success, Is.True);
+            Assert.That(generatedGuid, Is.Not.EqualTo(Guid.Empty));
         }
 
         [Test]
         public void GenerateGuid_ReturnsUniqueGuid()
         {
-            var generatedGuid0 = _guidService.GenerateGuid();
-            var generatedGuid1 = _guidService.GenerateGuid();
+            const int numberOfGeneratedGuids = 150;
 
-            Assert.That(generatedGuid0, Is.Not.EqualTo(generatedGuid1));
+            var generatedGuids = Enumerable
+                .Repeat<Func<Guid>>(() => _guidService.GenerateGuid(), numberOfGeneratedGuids)
+                .Select(oneGuidFactory => oneGuidFactory());
+            var nonUniqueGuids = generatedGuids
+                .GroupBy(guid => guid)
+                .Where(group => group.Skip(1).Any())
+                .Select(group => group.Key)
+                .ToArray();
+
+            Assert.That(nonUniqueGuids, Is.Empty, () => "Each of following GUIDs was present more than once");
         }
     }
 }
