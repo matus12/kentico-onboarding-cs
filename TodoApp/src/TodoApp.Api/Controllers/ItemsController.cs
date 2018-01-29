@@ -34,7 +34,13 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest("Empty id");
             }
-            return Ok(await _repository.GetByIdAsync(id));
+            var item = await _repository.GetByIdAsync(id);
+            if (item == null)
+            {
+                return BadRequest("Item with given id doesn't exist");
+            }
+
+            return Ok(item);
         }
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)

@@ -28,7 +28,7 @@ namespace TodoApp.Database
             => await _collection.Find(FilterDefinition<Item>.Empty).ToListAsync();
 
         public async Task<Item> GetByIdAsync(Guid id)
-            => await _collection.Find(item => item.Id == id).FirstAsync();
+            => await _collection.Find(item => item.Id == id).FirstOrDefaultAsync();
 
         public async Task<Item> AddAsync(Item item)
         {
