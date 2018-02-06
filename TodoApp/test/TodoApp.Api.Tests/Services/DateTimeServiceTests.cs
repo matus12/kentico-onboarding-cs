@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using NUnit.Framework;
 using TodoApp.Contracts.Services;
+using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services;
+using TodoApp.Services.Factories;
 
 namespace TodoApp.Api.Tests.Services
 {

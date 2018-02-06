@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DateTimeService.cs" />
+    <Compile Include="Factories\DateTimeService.cs" />
     <Compile Include="ServicesBootstrapper.cs" />
-    <Compile Include="GuidService.cs" />
+    <Compile Include="Factories\GuidService.cs" />
     <Compile Include="ItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

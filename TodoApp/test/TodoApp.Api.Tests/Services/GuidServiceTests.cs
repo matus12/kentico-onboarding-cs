@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using TodoApp.Contracts.Services;
+using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services;
 
 namespace TodoApp.Api.Tests.Services

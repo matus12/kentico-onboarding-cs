@@ -6,6 +6,7 @@ using TodoApp.Contracts.Services;
 using NSubstitute;
 using TodoApp.Api.Tests.Comparers;
 using TodoApp.Contracts.Models;
+using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services;
 
 namespace TodoApp.Api.Tests.Services
