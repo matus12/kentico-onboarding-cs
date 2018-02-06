@@ -6,13 +6,13 @@ namespace TodoApp.Contracts.Models
     {
         public Guid Id;
         public string Text;
-        public DateTime CreateTime;
-        public DateTime UpdateTime;
+        public DateTime CreatedAt;
+        public DateTime ModifiedAt;
 
         public override string ToString()
             => $"{nameof(Id)}: {Id}," +
                $" {nameof(Text)}: {Text}," +
-               $" {nameof(CreateTime)}: {CreateTime}," +
-               $" {nameof(UpdateTime)}: {UpdateTime}";
+               $" {nameof(CreatedAt)}: {CreatedAt}," +
+               $" {nameof(ModifiedAt)}: {ModifiedAt}";
     }
 }

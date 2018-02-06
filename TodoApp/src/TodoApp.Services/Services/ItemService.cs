@@ -22,8 +22,8 @@ namespace TodoApp.Services.Services
         public async Task<Item> AddItemAsync(Item item)
         {
             var currentTime = _timeService.GetCurrentDateTime();
-            item.CreateTime = currentTime;
-            item.UpdateTime = currentTime;
+            item.CreatedAt = currentTime;
+            item.ModifiedAt = currentTime;
             item.Id = _guidService.GenerateGuid();
 
             return await _repository.AddAsync(item);

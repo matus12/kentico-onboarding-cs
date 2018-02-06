@@ -45,7 +45,7 @@ namespace TodoApp.Api.Tests.Services
             {
                 Id = _guid,
                 Text = newItemText,
-                CreateTime = _currentTime
+                CreatedAt = _currentTime
             };
             _repository.AddAsync(expectedItem).Returns(expectedItem);
             var newItem = new Item {Text = newItemText};

@@ -23,8 +23,8 @@ namespace TodoApp.Api.Tests.Comparers
                 }
                 return x.Text == y.Text &&
                        x.Id == y.Id &&
-                       x.CreateTime == y.CreateTime &&
-                       x.UpdateTime == y.UpdateTime;
+                       x.CreatedAt == y.CreatedAt &&
+                       x.ModifiedAt == y.ModifiedAt;
             }
 
             public int GetHashCode(Item obj)
