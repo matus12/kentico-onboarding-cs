@@ -35,14 +35,14 @@ namespace TodoApp.Api.Tests.Controllers
         };
 
         private ItemsController _controller;
-        private IItemService _service;
+        private IAddItemService _service;
         private IItemRepository _repository;
         private ILocationHelper _helper;
 
         [SetUp]
         public void SetUp()
         {
-            _service = Substitute.For<IItemService>();
+            _service = Substitute.For<IAddItemService>();
             _repository = Substitute.For<IItemRepository>();
             _helper = Substitute.For<ILocationHelper>();
 

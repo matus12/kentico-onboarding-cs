@@ -6,13 +6,13 @@ using TodoApp.Contracts.Services.Factories;
 
 namespace TodoApp.Services.Services
 {
-    internal class ItemService : IItemService
+    internal class AddItemService : IAddItemService
     {
         private readonly IItemRepository _repository;
         private readonly ITimeService _timeService;
         private readonly IGuidService _guidService;
 
-        public ItemService(IItemRepository repository, ITimeService timeService, IGuidService guidService)
+        public AddItemService(IItemRepository repository, ITimeService timeService, IGuidService guidService)
         {
             _repository = repository;
             _timeService = timeService;

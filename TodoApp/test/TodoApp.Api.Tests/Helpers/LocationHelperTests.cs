@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
 using NSubstitute;
 using TodoApp.Api.Helpers;

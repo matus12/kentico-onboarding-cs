@@ -14,11 +14,11 @@ namespace TodoApp.Api.Controllers
         private const string InvalidRequestBody = "Invalid request message body";
         private const string InvalidText = "Invalid item text";
 
-        private readonly IItemService _service;
+        private readonly IAddItemService _service;
         private readonly IItemRepository _repository;
         private readonly ILocationHelper _locationHelper;
 
-        public ItemsController(IItemService service, IItemRepository repository, ILocationHelper helper)
+        public ItemsController(IAddItemService service, IItemRepository repository, ILocationHelper helper)
         {
             _service = service;
             _repository = repository;

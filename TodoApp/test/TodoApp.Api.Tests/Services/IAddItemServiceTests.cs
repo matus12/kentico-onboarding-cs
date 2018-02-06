@@ -7,15 +7,14 @@ using NSubstitute;
 using TodoApp.Api.Tests.Comparers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services.Factories;
-using TodoApp.Services;
 using TodoApp.Services.Services;
 
 namespace TodoApp.Api.Tests.Services
 {
     [TestFixture]
-    internal class ItemServiceTests
+    internal class IAddItemServiceTests
     {
-        private IItemService _service;
+        private IAddItemService _service;
         private ITimeService _timeService;
         private IGuidService _guidService;
         private IItemRepository _repository;
@@ -29,7 +28,7 @@ namespace TodoApp.Api.Tests.Services
             _timeService = Substitute.For<ITimeService>();
             _guidService = Substitute.For<IGuidService>();
 
-            _service = new ItemService(_repository, _timeService, _guidService);
+            _service = new AddItemService(_repository, _timeService, _guidService);
 
             _currentTime = DateTime.Now;
             _guid = new Guid("6548b7f6-d35c-4075-90d5-3a17e101f2c4");

@@ -67,7 +67,7 @@
     <Compile Include="Services\Factories\TimeService.cs" />
     <Compile Include="ServicesBootstrapper.cs" />
     <Compile Include="Services\Factories\GuidService.cs" />
-    <Compile Include="Services\ItemService.cs" />
+    <Compile Include="Services\AddItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
