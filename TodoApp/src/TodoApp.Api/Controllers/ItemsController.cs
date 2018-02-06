@@ -13,6 +13,7 @@ namespace TodoApp.Api.Controllers
     {
         private const string InvalidRequestBody = "Invalid request message body";
         private const string InvalidText = "Invalid item text";
+        private const string IdCantBeSet = "Id of item can't be set";
 
         private readonly IAddItemService _service;
         private readonly IItemRepository _repository;
@@ -73,6 +74,11 @@ namespace TodoApp.Api.Controllers
             if (item == null)
             {
                 return InvalidRequestBody;
+            }
+
+            if (item.Id != Guid.Empty)
+            {
+                return IdCantBeSet;
             }
 
             return !ValidateText(item.Text) ? InvalidText : null;
