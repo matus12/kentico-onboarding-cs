@@ -37,13 +37,11 @@ namespace TodoApp.Api.Tests.Services
         [Test]
         public void GetCurrentDateTime_ReturnsDifferentTimeWhenCalledTwice()
         {
-            var pause = new ManualResetEvent(false);
-
             var time0 = _timeService.GetCurrentDateTime();
-            pause.WaitOne(1000);
+            Thread.Sleep(50);
             var time1 = _timeService.GetCurrentDateTime();
 
-            Assert.That(time1, Is.GreaterThan(time0));
+            Assert.That(time1.Ticks, Is.EqualTo(time0.Ticks).Within(600000));
         }
     }
 }
