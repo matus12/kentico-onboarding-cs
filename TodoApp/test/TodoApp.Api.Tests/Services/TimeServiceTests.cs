@@ -9,9 +9,9 @@ using TodoApp.Services.Factories;
 
 namespace TodoApp.Api.Tests.Services
 {
-    internal class DateTimeServiceTests
+    internal class TimeServiceTests
     {
-        private IDateTimeService _dateTimeService;
+        private ITimeService _timeService;
 
         private static IEnumerable<DateTime> MaxMinDateTimes
         {
@@ -25,13 +25,13 @@ namespace TodoApp.Api.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            _dateTimeService = new DateTimeService();    
+            _timeService = new TimeService();    
         }
 
         [TestCaseSource(nameof(MaxMinDateTimes))]
         public void GetCurrentDateTime_ReturnsCorrectDateTime(DateTime testTime)
         {
-            var time = _dateTimeService.GetCurrentDateTime();
+            var time = _timeService.GetCurrentDateTime();
 
             Assert.That(time.Ticks, Is.Not.EqualTo(testTime).Within(50000));
         }
@@ -41,9 +41,9 @@ namespace TodoApp.Api.Tests.Services
         {
             var pause = new ManualResetEvent(false);
 
-            var time0 = _dateTimeService.GetCurrentDateTime();
+            var time0 = _timeService.GetCurrentDateTime();
             pause.WaitOne(1000);
-            var time1 = _dateTimeService.GetCurrentDateTime();
+            var time1 = _timeService.GetCurrentDateTime();
 
             Assert.That(time1, Is.GreaterThan(time0));
         }

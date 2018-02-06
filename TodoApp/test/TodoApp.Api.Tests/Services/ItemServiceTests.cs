@@ -15,7 +15,7 @@ namespace TodoApp.Api.Tests.Services
     internal class ItemServiceTests
     {
         private IItemService _service;
-        private IDateTimeService _dateTimeService;
+        private ITimeService _timeService;
         private IGuidService _guidService;
         private IItemRepository _repository;
         private DateTime _currentTime;
@@ -25,10 +25,10 @@ namespace TodoApp.Api.Tests.Services
         public void SetUp()
         {
             _repository = Substitute.For<IItemRepository>();
-            _dateTimeService = Substitute.For<IDateTimeService>();
+            _timeService = Substitute.For<ITimeService>();
             _guidService = Substitute.For<IGuidService>();
 
-            _service = new ItemService(_repository, _dateTimeService, _guidService);
+            _service = new ItemService(_repository, _timeService, _guidService);
 
             _currentTime = DateTime.Now;
             _guid = new Guid("6548b7f6-d35c-4075-90d5-3a17e101f2c4");
@@ -38,7 +38,7 @@ namespace TodoApp.Api.Tests.Services
         public async Task AddItemAsync_NewItem_ReturnsSavedItem()
         {
             const string newItemText = "new item";
-            _dateTimeService.GetCurrentDateTime().Returns(_currentTime);
+            _timeService.GetCurrentDateTime().Returns(_currentTime);
             _guidService.GenerateGuid().Returns(_guid);
             var expectedItem = new Item
             {

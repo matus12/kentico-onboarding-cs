@@ -79,7 +79,7 @@
     <Compile Include="Controllers\ItemsControllerTests.cs" />
     <Compile Include="Helpers\LocationHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DateTimeServiceTests.cs" />
+    <Compile Include="Services\TimeServiceTests.cs" />
     <Compile Include="Services\GuidServiceTests.cs" />
     <Compile Include="Services\ItemServiceTests.cs" />
   </ItemGroup>
