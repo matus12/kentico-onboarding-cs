@@ -37,7 +37,7 @@ namespace TodoApp.Api.Controllers
             var item = await _repository.GetByIdAsync(id);
             if (item == null)
             {
-                return BadRequest("Item with given id doesn't exist");
+                return NotFound();
             }
 
             return Ok(item);
