@@ -4,7 +4,7 @@ using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services;
 using TodoApp.Contracts.Services.Factories;
 
-namespace TodoApp.Services
+namespace TodoApp.Services.Services
 {
     internal class ItemService : IItemService
     {

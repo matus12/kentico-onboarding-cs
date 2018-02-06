@@ -8,6 +8,7 @@ using TodoApp.Api.Tests.Comparers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services;
+using TodoApp.Services.Services;
 
 namespace TodoApp.Api.Tests.Services
 {

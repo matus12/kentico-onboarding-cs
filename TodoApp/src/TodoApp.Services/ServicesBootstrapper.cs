@@ -1,7 +1,8 @@
 ﻿using TodoApp.Contracts;
 using TodoApp.Contracts.Services;
 using TodoApp.Contracts.Services.Factories;
-using TodoApp.Services.Factories;
+using TodoApp.Services.Services;
+using TodoApp.Services.Services.Factories;
 using Unity;
 using Unity.Lifetime;
 

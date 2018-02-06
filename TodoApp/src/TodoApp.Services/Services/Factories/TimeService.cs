@@ -1,7 +1,7 @@
 ﻿using System;
 using TodoApp.Contracts.Services.Factories;
 
-namespace TodoApp.Services.Factories
+namespace TodoApp.Services.Services.Factories
 {
     internal class TimeService : ITimeService
     {
