@@ -16,7 +16,7 @@ namespace TodoApp.Api.Dependency
         public IUnityContainer RegisterTypes(IUnityContainer container)
             => container
                 .RegisterType<ILocationHelper, LocationHelper>(new HierarchicalLifetimeManager())
-                .RegisterType<IDbConnection, DbConnection>(new HierarchicalLifetimeManager())
+                .RegisterType<IDbConnection, DbConnection>(new ContainerControlledLifetimeManager())
                 .RegisterType<UrlHelper>(new HierarchicalLifetimeManager(), InjectUrlHelper());
 
         private static InjectionFactory InjectUrlHelper()

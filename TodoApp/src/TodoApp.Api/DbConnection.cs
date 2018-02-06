@@ -3,7 +3,7 @@ using TodoApp.Contracts;
 
 namespace TodoApp.Api
 {
-    public class DbConnection : IDbConnection
+    internal class DbConnection : IDbConnection
     {
         public string DbConnectionString { get; }
 
