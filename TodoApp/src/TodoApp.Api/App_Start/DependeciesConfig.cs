@@ -1,9 +1,8 @@
 ﻿using System.Web.Http;
-using TodoApp.Api.Dependency;
 using TodoApp.Api.Resolver;
-using TodoApp.Contracts.Dependency;
-using TodoApp.Database.Dependency;
-using TodoApp.Services.Dependency;
+using TodoApp.Contracts;
+using TodoApp.Database;
+using TodoApp.Services;
 using Unity;
 
 namespace TodoApp.Api

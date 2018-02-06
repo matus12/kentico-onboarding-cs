@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DateTimeService.cs" />
-    <Compile Include="Dependency\ServicesBootstrapper.cs" />
+    <Compile Include="ServicesBootstrapper.cs" />
     <Compile Include="GuidService.cs" />
     <Compile Include="ItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,5 +79,6 @@
       <Name>TodoApp.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

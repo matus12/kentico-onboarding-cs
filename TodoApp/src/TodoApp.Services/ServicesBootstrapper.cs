@@ -1,9 +1,9 @@
-﻿using TodoApp.Contracts.Dependency;
+﻿using TodoApp.Contracts;
 using TodoApp.Contracts.Services;
 using Unity;
 using Unity.Lifetime;
 
-namespace TodoApp.Services.Dependency
+namespace TodoApp.Services
 {
     public class ServicesBootstrapper : IBootstrapper
     {

@@ -1,9 +1,8 @@
 ﻿using TodoApp.Contracts;
-using TodoApp.Contracts.Dependency;
 using Unity;
 using Unity.Lifetime;
 
-namespace TodoApp.Database.Dependency
+namespace TodoApp.Database
 {
     public class DatabaseBootstrapper : IBootstrapper
     {

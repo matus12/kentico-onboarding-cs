@@ -53,7 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dependency\IBootstrapper.cs" />
+    <Compile Include="IBootstrapper.cs" />
     <Compile Include="Helpers\ILocationHelper.cs" />
     <Compile Include="IDbConnection.cs" />
     <Compile Include="IItemRepository.cs" />

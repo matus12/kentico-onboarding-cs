@@ -3,13 +3,12 @@ using System.Web;
 using System.Web.Http.Routing;
 using TodoApp.Api.Helpers;
 using TodoApp.Contracts;
-using TodoApp.Contracts.Dependency;
 using TodoApp.Contracts.Helpers;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 
-namespace TodoApp.Api.Dependency
+namespace TodoApp.Api
 {
     internal class ApiBootstrapper : IBootstrapper
     {
