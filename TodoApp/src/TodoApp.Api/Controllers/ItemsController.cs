@@ -7,6 +7,7 @@ using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services;
 
+
 namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
@@ -31,9 +32,11 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            if (!ValidateGuid(id))
+            ValidateGuid(id);
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Empty id");
+                return BadRequest(ModelState);
             }
             var item = await _repository.GetByIdAsync(id);
             if (item == null)
@@ -67,7 +70,13 @@ namespace TodoApp.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private static bool ValidateGuid(Guid id) => id != Guid.Empty;
+        private void ValidateGuid(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                ModelState.AddModelError("Empty guid", "Id can't be empty");
+            }
+        }
 
         private static string ValidateItem(Item item)
         {
