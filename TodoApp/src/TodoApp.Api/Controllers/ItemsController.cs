@@ -7,7 +7,6 @@ using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services;
 
-
 namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController

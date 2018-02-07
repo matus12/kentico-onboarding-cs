@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -27,6 +28,16 @@ namespace TodoApp.Api.Tests.Controllers
         private static readonly Item ItemToPost =
             new Item { Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707") };
 
+        private static IEnumerable<Item> InvalidItems
+        {
+            get
+            {
+                yield return null;
+                yield return new Item {Text = " invalid text  "};
+                yield return new Item {Text = "validText", Id = new Guid("67c77bb1-1c3c-4776-a9bd-b1707ea304c4")};
+            }
+        }
+
         private readonly Item[] _items =
         {
             new Item {Text = "item0", Id = Guid0},
@@ -38,6 +49,8 @@ namespace TodoApp.Api.Tests.Controllers
         private IAddItemService _service;
         private IItemRepository _repository;
         private ILocationHelper _helper;
+
+
 
         [SetUp]
         public void SetUp()
@@ -79,6 +92,16 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
+        public async Task GetAsync_EmptyId_ReturnsBadRequest()
+        {
+            _controller.ModelState.Clear();
+
+            var response = await GetResultFromAction(controller => controller.GetAsync(Guid.Empty));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
             _service.AddItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
@@ -90,6 +113,16 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
             Assert.That(item, Is.EqualTo(ItemToPost).UsingItemEqualityComparer());
             Assert.That(location, Is.EqualTo(UriString));
+        }
+
+        [TestCaseSource(nameof(InvalidItems))]
+        public async Task PostAsync_InvalidItem_ReturnsBadRequest(Item item)
+        {
+            _controller.ModelState.Clear();
+
+            var response = await GetResultFromAction(controller => controller.PostAsync(item));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [Test]
