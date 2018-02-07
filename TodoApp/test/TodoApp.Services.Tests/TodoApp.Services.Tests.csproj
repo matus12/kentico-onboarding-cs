@@ -74,10 +74,6 @@
       <Project>{72650603-b413-4756-acb8-f9a4ad2470fd}</Project>
       <Name>TodoApp.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TodoApp.Api.Tests\TodoApp.Api.Tests.csproj">
-      <Project>{419eb185-7a4a-4ad2-a938-f2a115cd327e}</Project>
-      <Name>TodoApp.Api.Tests</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
