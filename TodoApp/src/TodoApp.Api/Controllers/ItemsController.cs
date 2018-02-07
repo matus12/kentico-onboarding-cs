@@ -12,9 +12,10 @@ namespace TodoApp.Api.Controllers
 {
     public class ItemsController : ApiController
     {
-        private const string InvalidRequestBody = "Invalid request message body";
+        private const string InvalidRequestBody = "Message body can't be empty";
         private const string InvalidText = "Invalid item text";
-        private const string IdCantBeSet = "Id of item can't be set";
+        private const string NonEmptyId = "Id of item can't be set";
+        private const string EmptyId = "Id can't be empty";
 
         private readonly IAddItemService _service;
         private readonly IItemRepository _repository;
@@ -49,10 +50,11 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
         {
-            var errorMessage = ValidateItem(item);
-            if (errorMessage != null)
+            ValidatePostArguments(item);
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest(errorMessage);
+                return BadRequest(ModelState);
             }
             var addedItem = await _service.AddItemAsync(item);
             var location = _locationHelper.GetUriLocation(addedItem.Id);
@@ -74,26 +76,34 @@ namespace TodoApp.Api.Controllers
         {
             if (id == Guid.Empty)
             {
-                ModelState.AddModelError("Empty guid", "Id can't be empty");
+                ModelState.AddModelError("EmptyGuid", EmptyId);
             }
         }
 
-        private static string ValidateItem(Item item)
+        private void ValidatePostArguments(Item item)
         {
             if (item == null)
             {
-                return InvalidRequestBody;
+                ModelState.AddModelError("NullItem", InvalidRequestBody);
+                return;
             }
 
-            if (item.Id != Guid.Empty)
-            {
-                return IdCantBeSet;
-            }
-
-            return !ValidateText(item.Text) ? InvalidText : null;
+            ValidateItem(item);
         }
 
-        private static bool ValidateText(string inputText)
+        private void ValidateItem(Item item)
+        {
+            if (item.Id != Guid.Empty)
+            {
+                ModelState.AddModelError("NonEmptyGuid", NonEmptyId);
+            }
+            if (!IsTextValid(item.Text))
+            {
+                ModelState.AddModelError("InvalidText", InvalidText);
+            }
+        }
+
+        private static bool IsTextValid(string inputText)
         {
             var trimmedText = inputText.Trim();
 
