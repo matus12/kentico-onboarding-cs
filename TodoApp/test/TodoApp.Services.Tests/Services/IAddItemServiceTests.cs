@@ -1,15 +1,15 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using TodoApp.Contracts;
-using TodoApp.Contracts.Services;
 using NSubstitute;
-using TodoApp.Api.Tests.Comparers;
+using NUnit.Framework;
+using TodoApp.Contracts;
 using TodoApp.Contracts.Models;
+using TodoApp.Contracts.Services;
 using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services.Services;
+using TodoApp.Services.Tests.Comparers;
 
-namespace TodoApp.Api.Tests.Services
+namespace TodoApp.Services.Tests.Services
 {
     [TestFixture]
     internal class AddItemServiceTests
