@@ -46,20 +46,20 @@ namespace TodoApp.Api.Tests.Controllers
         };
 
         private ItemsController _controller;
-        private IAddItemService _service;
+        private IAddItemService _addItemService;
+        private IGetItemByIdService _getItemByIdService;
         private IItemRepository _repository;
         private ILocationHelper _helper;
-
-
 
         [SetUp]
         public void SetUp()
         {
-            _service = Substitute.For<IAddItemService>();
+            _addItemService = Substitute.For<IAddItemService>();
+            _getItemByIdService = Substitute.For<IGetItemByIdService>();
             _repository = Substitute.For<IItemRepository>();
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_service, _repository, _helper)
+            _controller = new ItemsController(_addItemService, _getItemByIdService, _repository, _helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -81,8 +81,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _repository.GetByIdAsync(Arg.Any<Guid>()).Returns(_items[1]);
-            _repository.GetByIdAsync(Guid0).Returns(_items[0]);
+            _getItemByIdService.GetItemByIdAsync(Arg.Any<Guid>()).Returns(new RetrievedItem{WasFound = true, Item = _items[1]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem{WasFound = true, Item = _items[0]});
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -102,12 +102,24 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
+        public async Task GetAsync_NonExistentId_ReturnsNotFound()
+        {
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {WasFound = false});
+
+            var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
+
+            Assert.That(contentResult, Is.Not.Null);
+            Assert.That(item, Is.EqualTo(null));
+            Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        [Test]
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
-            _service.AddItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
+            _addItemService.AddItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
             _helper.GetUriLocation(Arg.Any<Guid>()).Returns(Uri);
 
-            var (createdResult, item) = await GetResultFromAction<Item>(controller => controller.PostAsync(ItemToPost));
+            var (createdResult, item) = await GetResultFromAction<Item>(controller => controller.PostAsync(new Item{Text = "itemToPost"}));
             var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
