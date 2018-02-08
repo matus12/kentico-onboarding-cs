@@ -42,7 +42,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             new Item {Text = "item0", Id = Guid0},
             new Item {Text = "item1", Id = Guid1},
-            new Item {Text = "item2", Id = Guid2},
+            new Item {Text = "item2", Id = Guid2}
         };
 
         private ItemsController _controller;
@@ -81,7 +81,6 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Arg.Any<Guid>()).Returns(new RetrievedItem{WasFound = true, Item = _items[1]});
             _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem{WasFound = true, Item = _items[0]});
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
