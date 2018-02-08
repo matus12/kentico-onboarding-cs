@@ -44,9 +44,8 @@ namespace TodoApp.Services.Tests.Services
                 CreatedAt = currentTime,
                 ModifiedAt = currentTime
             };
-            _repository.AddAsync(expectedItem).Returns(expectedItem);
             var newItem = new Item {Text = newItemText};
-            _repository.AddAsync(newItem).Returns(newItem);
+            _repository.AddAsync(Arg.Any<Item>()).Returns(expectedItem);
 
             var testItem = await _service.AddItemAsync(newItem);
 
