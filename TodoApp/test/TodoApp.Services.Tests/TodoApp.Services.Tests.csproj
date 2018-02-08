@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Comparers\ItemEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GetItemByIdServiceTests.cs" />
     <Compile Include="Services\GuidServiceTests.cs" />
     <Compile Include="Services\IAddItemServiceTests.cs" />
     <Compile Include="Services\TimeServiceTests.cs" />

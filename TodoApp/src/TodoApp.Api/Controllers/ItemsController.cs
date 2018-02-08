@@ -16,15 +16,21 @@ namespace TodoApp.Api.Controllers
         private const string NonEmptyId = "Id of item can't be set";
         private const string EmptyId = "Id can't be empty";
 
-        private readonly IAddItemService _service;
+        private readonly IAddItemService _addItemService;
+        private readonly IGetItemByIdService _getItemByIdService;
         private readonly IItemRepository _repository;
         private readonly ILocationHelper _locationHelper;
 
-        public ItemsController(IAddItemService service, IItemRepository repository, ILocationHelper helper)
+        public ItemsController(
+            IAddItemService addItemService,
+            IGetItemByIdService getItemByIdService,
+            IItemRepository repository,
+            ILocationHelper helper)
         {
-            _service = service;
+            _addItemService = addItemService;
             _repository = repository;
             _locationHelper = helper;
+            _getItemByIdService = getItemByIdService;
         }
 
         public async Task<IHttpActionResult> GetAsync()
@@ -38,13 +44,13 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var item = await _repository.GetByIdAsync(id);
-            if (item == null)
+            var retrievedItem = await _getItemByIdService.GetItemByIdAsync(id);
+            if (!retrievedItem.WasFound)
             {
                 return NotFound();
             }
 
-            return Ok(item);
+            return Ok(retrievedItem.Item);
         }
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
@@ -55,7 +61,7 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var addedItem = await _service.AddItemAsync(item);
+            var addedItem = await _addItemService.AddItemAsync(item);
             var location = _locationHelper.GetUriLocation(addedItem.Id);
 
             return Created(location, addedItem);
