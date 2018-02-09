@@ -4,7 +4,7 @@ using NUnit.Framework;
 using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services.Services.Factories;
 
-namespace TodoApp.Services.Tests.Services
+namespace TodoApp.Services.Tests.Services.Factories
 {
     internal class GuidServiceTests
     {
@@ -19,7 +19,6 @@ namespace TodoApp.Services.Tests.Services
         public void GenerateGuid_ReturnsNonEmptyGuid()
         {
             var generatedGuid = _guidService.GenerateGuid();
-            Console.WriteLine(generatedGuid.ToString());
             
             Assert.That(generatedGuid, Is.Not.EqualTo(Guid.Empty));
         }

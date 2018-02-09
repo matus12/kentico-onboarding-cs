@@ -5,7 +5,7 @@ using NUnit.Framework;
 using TodoApp.Contracts.Services.Factories;
 using TodoApp.Services.Services.Factories;
 
-namespace TodoApp.Services.Tests.Services
+namespace TodoApp.Services.Tests.Services.Factories
 {
     internal class TimeServiceTests
     {
