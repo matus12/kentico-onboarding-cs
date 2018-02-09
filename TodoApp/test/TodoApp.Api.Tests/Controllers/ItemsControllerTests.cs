@@ -115,8 +115,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
-            _addItemService.AddItemAsync(ItemToPost).ReturnsForAnyArgs(ItemToPost);
-            _helper.GetUriLocation(Arg.Any<Guid>()).Returns(Uri);
+            _addItemService.AddItemAsync(Arg.Is<Item>(value => value.Text == ItemToPost.Text)).Returns(ItemToPost);
+            _helper.GetUriLocation(ItemToPost.Id).Returns(Uri);
 
             var (createdResult, item) = await GetResultFromAction<Item>(controller => controller.PostAsync(new Item{Text = "itemToPost"}));
             var location = createdResult.Headers.Location.ToString();
@@ -139,7 +139,10 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_ItemToUpdateWithExistingId_ReturnsUpdatedItem()
         {
-           _repository.UpdateAsync(_items[0]).ReturnsForAnyArgs(_items[1]);
+           _repository.UpdateAsync(Arg.Is<Item>(value 
+               => value.Id == _items[1].Id 
+               && value.Text == _items[1].Text))
+               .Returns(_items[1]);
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.PutAsync(_items[1].Id, _items[1]));
 
@@ -152,7 +155,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid0));
 
-            await _repository.Received(1).DeleteAsync(Arg.Any<Guid>());
+            await _repository.Received(1).DeleteAsync(Guid0);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
