@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\Factories\TimeService.cs" />
+    <Compile Include="Services\Helpers\TimeService.cs" />
     <Compile Include="ServicesBootstrapper.cs" />
-    <Compile Include="Services\Factories\GuidService.cs" />
+    <Compile Include="Services\Helpers\GuidService.cs" />
     <Compile Include="Services\AddItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GetItemByIdService.cs" />

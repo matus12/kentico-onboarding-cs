@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using NUnit.Framework;
 using TodoApp.Contracts.Services.Factories;
-using TodoApp.Services.Services.Factories;
+using TodoApp.Services.Services.Helpers;
 
-namespace TodoApp.Services.Tests.Services.Factories
+namespace TodoApp.Services.Tests.Services.Helpers
 {
     internal class TimeServiceTests
     {

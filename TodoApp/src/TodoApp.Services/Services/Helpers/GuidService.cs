@@ -1,7 +1,7 @@
 ﻿using System;
 using TodoApp.Contracts.Services.Factories;
 
-namespace TodoApp.Services.Services.Factories
+namespace TodoApp.Services.Services.Helpers
 {
     internal class GuidService : IGuidService
     {
