@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Factories;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
@@ -31,6 +30,7 @@ namespace TodoApp.Services.Services
             {
                 return retrievedItem;
             }
+
             var itemToUpdate = new Item
             {
                 Id = item.Id,

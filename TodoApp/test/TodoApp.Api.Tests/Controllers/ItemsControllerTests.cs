@@ -41,8 +41,8 @@ namespace TodoApp.Api.Tests.Controllers
             get
             {
                 yield return null;
-                yield return new Item { Text = " invalid text  ", Id = Guid1 };
-                yield return new Item { Text = "validText", Id = Guid0 };
+                yield return new Item {Text = " invalid text  ", Id = Guid1};
+                yield return new Item {Text = "validText", Id = Guid0};
             }
         }
 
@@ -52,9 +52,9 @@ namespace TodoApp.Api.Tests.Controllers
             get
             {
                 yield return null;
-                yield return new Item { Text = " invalid text  " };
-                yield return new Item { Text = "validText", Id = Guid0 };
-                yield return new Item { Text = "validText", Id = Guid.Empty };
+                yield return new Item {Text = " invalid text  "};
+                yield return new Item {Text = "validText", Id = Guid0};
+                yield return new Item {Text = "validText", Id = Guid.Empty};
             }
         }
 
@@ -74,11 +74,18 @@ namespace TodoApp.Api.Tests.Controllers
             _repository = Substitute.For<IItemRepository>();
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_addItemService, _getItemByIdService, _updateItemService, _repository, _helper)
-            {
-                Request = new HttpRequestMessage(),
-                Configuration = new HttpConfiguration()
-            };
+            _controller =
+                new ItemsController(
+                    _addItemService,
+                    _getItemByIdService,
+                    _updateItemService,
+                    _repository,
+                    _helper
+                )
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
         }
 
         [Test]
@@ -96,7 +103,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> { Entity = Items[0] });
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> {Entity = Items[0]});
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -151,9 +158,9 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_ItemToUpdateWithExistingId_ReturnsUpdatedItem()
         {
-            _repository.UpdateAsync(Arg.Is<Item>(value
+            _updateItemService.UpdateItemAsync(Arg.Is<Item>(value
                     => AreIdsEqual(value)))
-                .Returns(Items[1]);
+                .Returns(new RetrievedEntity<Item> {Entity = Items[1]});
 
             var (contentResult, item) =
                 await GetResultFromAction<Item>(controller => controller.PutAsync(Items[1].Id, Items[1]));

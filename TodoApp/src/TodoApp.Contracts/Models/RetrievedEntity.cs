@@ -4,7 +4,9 @@ namespace TodoApp.Contracts.Models
 {
     public class RetrievedEntity<TEntity>
     {
-        private const string NullItem = "Entity is null";
+        private const string NullItem =
+            "Cannot retrieve entity that was not found. " +
+            "Check WasFound property to ensure that entity was found";
         private TEntity _entity;
 
         public TEntity Entity

@@ -15,6 +15,7 @@ namespace TodoApp.Services.Tests.Factories
         {
             _guidFactory = new GuidFactory();
         }
+
         [Test]
         public void GenerateGuid_ReturnsNonEmptyGuid()
         {

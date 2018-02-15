@@ -61,6 +61,7 @@
     <Compile Include="Factories\GuidFactoryTests.cs" />
     <Compile Include="Services\AddItemServiceTests.cs" />
     <Compile Include="Factories\TimeFactoryTests.cs" />
+    <Compile Include="Services\UpdateItemServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

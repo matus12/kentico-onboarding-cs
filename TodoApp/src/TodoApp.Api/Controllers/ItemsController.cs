@@ -114,9 +114,19 @@ namespace TodoApp.Api.Controllers
                 return;
             }
 
-            if (!IsTextValid(item.Text))
+            ValidatePutItem(item);
+        }
+
+        private void ValidatePutItem(Item item)
+        {
+            if (item.Id == Guid.Empty)
             {
                 ModelState.AddModelError(nameof(Item.Id), EmptyId);
+            }
+
+            if (!IsTextValid(item.Text))
+            {
+                ModelState.AddModelError(nameof(Item.Text), InvalidText);
             }
         }
 
