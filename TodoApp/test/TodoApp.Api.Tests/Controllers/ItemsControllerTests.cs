@@ -27,7 +27,7 @@ namespace TodoApp.Api.Tests.Controllers
         private static readonly Guid Guid2 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
 
         private static readonly Item ItemToPost =
-            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
+            new Item { Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707") };
 
         private static readonly Item[] Items =
         {
@@ -36,13 +36,25 @@ namespace TodoApp.Api.Tests.Controllers
             new Item {Text = "item2", Id = Guid2}
         };
 
-        private static IEnumerable<Item> InvalidItems
+        private static IEnumerable<Item> InvalidPostItems
         {
             get
             {
                 yield return null;
-                yield return new Item {Text = " invalid text  "};
-                yield return new Item {Text = "validText", Id = new Guid("67c77bb1-1c3c-4776-a9bd-b1707ea304c4")};
+                yield return new Item { Text = " invalid text  ", Id = Guid1 };
+                yield return new Item { Text = "validText", Id = Guid0 };
+            }
+        }
+
+        private static IEnumerable<Item> InvalidPutItems
+
+        {
+            get
+            {
+                yield return null;
+                yield return new Item { Text = " invalid text  " };
+                yield return new Item { Text = "validText", Id = Guid0 };
+                yield return new Item { Text = "validText", Id = Guid.Empty };
             }
         }
 
@@ -82,7 +94,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> { Entity = Items[0]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> { Entity = Items[0] });
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -118,7 +130,7 @@ namespace TodoApp.Api.Tests.Controllers
             _helper.GetUriLocation(ItemToPost.Id).Returns(Uri);
 
             var (createdResult, item) =
-                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item {Text = "itemToPost"}));
+                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item { Text = "itemToPost" }));
             var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
@@ -126,7 +138,7 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(location, Is.EqualTo(UriString));
         }
 
-        [TestCaseSource(nameof(InvalidItems))]
+        [TestCaseSource(nameof(InvalidPostItems))]
         public async Task PostAsync_InvalidItem_ReturnsBadRequest(Item item)
         {
             var response = await GetResultFromAction(controller => controller.PostAsync(item));
@@ -146,6 +158,14 @@ namespace TodoApp.Api.Tests.Controllers
 
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(item, Is.EqualTo(Items[1]).UsingItemEqualityComparer());
+        }
+
+        [TestCaseSource(nameof(InvalidPutItems))]
+        public async Task PutAsync_InvalidItem_ReturnsBadRequest(Item item)
+        {
+            var response = await GetResultFromAction(controller => controller.PutAsync(Guid1, item));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [Test]
@@ -179,6 +199,6 @@ namespace TodoApp.Api.Tests.Controllers
             var responseMessage = await actionResult.ExecuteAsync(CancellationToken.None);
 
             return responseMessage;
-        }  
+        }
     }
 }
