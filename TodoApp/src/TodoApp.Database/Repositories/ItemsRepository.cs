@@ -39,6 +39,6 @@ namespace TodoApp.Database.Repositories
             => await _collection.FindOneAndReplaceAsync(item => item.Id == updatedItem.Id, updatedItem);
 
         public async Task DeleteAsync(Guid id)
-            => await Task.CompletedTask;
+            => await _collection.DeleteOneAsync(item => item.Id == id);
     }
 }
