@@ -70,6 +70,7 @@
     <Compile Include="Services\AddItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GetItemByIdService.cs" />
+    <Compile Include="Services\UpdateItemService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

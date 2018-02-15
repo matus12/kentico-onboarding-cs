@@ -61,6 +61,7 @@ namespace TodoApp.Api.Tests.Controllers
         private ItemsController _controller;
         private IAddItemService _addItemService;
         private IGetItemByIdService _getItemByIdService;
+        private IUpdateItemService _updateItemService;
         private IItemRepository _repository;
         private ILocationHelper _helper;
 
@@ -69,10 +70,11 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _addItemService = Substitute.For<IAddItemService>();
             _getItemByIdService = Substitute.For<IGetItemByIdService>();
+            _updateItemService = Substitute.For<IUpdateItemService>();
             _repository = Substitute.For<IItemRepository>();
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_addItemService, _getItemByIdService, _repository, _helper)
+            _controller = new ItemsController(_addItemService, _getItemByIdService, _updateItemService, _repository, _helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
