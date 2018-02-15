@@ -152,6 +152,26 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(item, Is.EqualTo(_items[1]).UsingItemEqualityComparer());
         }
 
+        [TestCaseSource(nameof(InvalidItems))]
+        public async Task PutAsync_InvalidItem_ReturnsBadRequest(Item item)
+        {
+            _controller.ModelState.Clear();
+
+            var response = await GetResultFromAction(controller => controller.PutAsync(Guid0, item));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PutAsync_NotMatchingIds_ReturnsBadRequest()
+        {
+            _controller.ModelState.Clear();
+
+            var response = await GetResultFromAction(controller => controller.PutAsync(Guid1, _items[0]));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
         [Test]
         public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
