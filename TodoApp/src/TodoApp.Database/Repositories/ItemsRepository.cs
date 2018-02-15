@@ -47,6 +47,6 @@ namespace TodoApp.Database.Repositories
         }
 
         public async Task DeleteAsync(Guid id)
-            => await Task.CompletedTask;
+            => await _collection.DeleteOneAsync(item => item.Id == id);
     }
 }
