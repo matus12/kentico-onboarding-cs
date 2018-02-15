@@ -35,7 +35,7 @@ namespace TodoApp.Api.Tests.Controllers
             {
                 yield return null;
                 yield return new Item {Text = " invalid text  "};
-                yield return new Item {Text = "validText", Id = new Guid("67c77bb1-1c3c-4776-a9bd-b1707ea304c4")};
+                yield return new Item {Text = "validText", Id = Guid0};
             }
         }
 
@@ -49,6 +49,7 @@ namespace TodoApp.Api.Tests.Controllers
         private ItemsController _controller;
         private IAddItemService _addItemService;
         private IGetItemByIdService _getItemByIdService;
+        private IUpdateItemService _updateItemService;
         private IItemRepository _repository;
         private ILocationHelper _helper;
 
@@ -57,10 +58,11 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _addItemService = Substitute.For<IAddItemService>();
             _getItemByIdService = Substitute.For<IGetItemByIdService>();
+            _updateItemService = Substitute.For<IUpdateItemService>();
             _repository = Substitute.For<IItemRepository>();
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_addItemService, _getItemByIdService, _repository, _helper)
+            _controller = new ItemsController(_addItemService, _getItemByIdService, _updateItemService, _repository, _helper)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -157,17 +159,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _controller.ModelState.Clear();
 
-            var response = await GetResultFromAction(controller => controller.PutAsync(Guid0, item));
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-        }
-
-        [Test]
-        public async Task PutAsync_NotMatchingIds_ReturnsBadRequest()
-        {
-            _controller.ModelState.Clear();
-
-            var response = await GetResultFromAction(controller => controller.PutAsync(Guid1, _items[0]));
+            var response = await GetResultFromAction(controller => controller.PutAsync(Guid1, item));
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }

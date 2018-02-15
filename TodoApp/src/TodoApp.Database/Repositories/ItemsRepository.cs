@@ -37,8 +37,14 @@ namespace TodoApp.Database.Repositories
             return item;
         }
 
-        public async Task<Item> UpdateAsync(Item item)
-            => await Task.FromResult(_updatedItem);
+        public async Task<Item> UpdateAsync(Guid id, Item updatedItem)
+        {
+            var itemToUpdate = await _collection.Find(item => item.Id == id).FirstAsync();
+            await _collection.ReplaceOneAsync(item => item.Id == id, updatedItem);
+            itemToUpdate.ModifiedAt = updatedItem.ModifiedAt;
+
+            return itemToUpdate;
+        }
 
         public async Task DeleteAsync(Guid id)
             => await Task.CompletedTask;

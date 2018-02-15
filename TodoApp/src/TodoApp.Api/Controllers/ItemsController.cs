@@ -15,22 +15,26 @@ namespace TodoApp.Api.Controllers
         private const string InvalidText = "Invalid item text";
         private const string NonEmptyId = "Id of item can't be set";
         private const string EmptyId = "Id can't be empty";
+        private const string InvalidIds = "Id in url and body does not match";
 
         private readonly IAddItemService _addItemService;
         private readonly IGetItemByIdService _getItemByIdService;
+        private readonly IUpdateItemService _updateItemService;
         private readonly IItemRepository _repository;
         private readonly ILocationHelper _locationHelper;
 
         public ItemsController(
             IAddItemService addItemService,
             IGetItemByIdService getItemByIdService,
+            IUpdateItemService updateItemService,
             IItemRepository repository,
             ILocationHelper helper)
         {
             _addItemService = addItemService;
+            _getItemByIdService = getItemByIdService;
+            _updateItemService = updateItemService;
             _repository = repository;
             _locationHelper = helper;
-            _getItemByIdService = getItemByIdService;
         }
 
         public async Task<IHttpActionResult> GetAsync()
@@ -71,7 +75,16 @@ namespace TodoApp.Api.Controllers
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, [FromBody] Item item)
-            => Ok(await _repository.UpdateAsync(item));
+        {
+            ValidatePutArguments(id, item);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _updateItemService.UpdateItemAsync(id, item));
+        }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
@@ -80,11 +93,23 @@ namespace TodoApp.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private void ValidateGuid(Guid id)
+        private void ValidatePutArguments(Guid id, Item item)
         {
-            if (id == Guid.Empty)
+            if (item == null)
             {
-                ModelState.AddModelError("EmptyGuid", EmptyId);
+                ModelState.AddModelError("NullItem", InvalidRequestBody);
+                return;
+            }
+
+            if (item.Id != id)
+            {
+                ModelState.AddModelError("NonMatchingIds", InvalidIds);
+                return;
+            }
+
+            if (!IsTextValid(item.Text))
+            {
+                ModelState.AddModelError("InvalidText", InvalidText);
             }
         }
 
@@ -96,18 +121,27 @@ namespace TodoApp.Api.Controllers
                 return;
             }
 
-            ValidateItem(item);
+            ValidatePostItem(item);
         }
 
-        private void ValidateItem(Item item)
+        private void ValidatePostItem(Item item)
         {
             if (item.Id != Guid.Empty)
             {
                 ModelState.AddModelError("NonEmptyGuid", NonEmptyId);
             }
+
             if (!IsTextValid(item.Text))
             {
                 ModelState.AddModelError("InvalidText", InvalidText);
+            }
+        }
+
+        private void ValidateGuid(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                ModelState.AddModelError("EmptyGuid", EmptyId);
             }
         }
 
