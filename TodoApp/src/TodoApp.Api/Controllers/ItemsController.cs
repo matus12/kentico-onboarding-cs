@@ -82,8 +82,14 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var updatedItem = await _updateItemService.UpdateItemAsync(id, item);
 
-            return Ok(await _updateItemService.UpdateItemAsync(id, item));
+            if (updatedItem.WasFound)
+            {
+                return Ok(updatedItem.Item);
+            }
+
+            return NotFound();
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)

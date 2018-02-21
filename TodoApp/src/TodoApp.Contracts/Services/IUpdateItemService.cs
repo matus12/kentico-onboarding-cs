@@ -6,6 +6,6 @@ namespace TodoApp.Contracts.Services
 {
     public interface IUpdateItemService
     {
-        Task<Item> UpdateItemAsync(Guid id, Item item);
+        Task<RetrievedItem> UpdateItemAsync(Guid id, Item item);
     }
 }

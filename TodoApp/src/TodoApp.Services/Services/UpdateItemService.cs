@@ -11,15 +11,25 @@ namespace TodoApp.Services.Services
     {
         private readonly IItemRepository _repository;
         private readonly ITimeService _timeService;
+        private readonly IGetItemByIdService _getItemByIdService;
 
-        public UpdateItemService(IItemRepository repository, ITimeService timeService)
+        public UpdateItemService(
+            IItemRepository repository,
+            ITimeService timeService,
+            IGetItemByIdService getItemByIdService)
         {
             _repository = repository;
             _timeService = timeService;
+            _getItemByIdService = getItemByIdService;
         }
 
-        public Task<Item> UpdateItemAsync(Guid id, Item item)
+        public async Task<RetrievedItem> UpdateItemAsync(Guid id, Item item)
         {
+            var retrievedItem = await _getItemByIdService.GetItemByIdAsync(id);
+            if (!retrievedItem.WasFound)
+            {
+                return retrievedItem;
+            }
             var itemToUpdate = new Item
             {
                 Id = id,
@@ -27,9 +37,9 @@ namespace TodoApp.Services.Services
                 CreatedAt = item.CreatedAt,
                 ModifiedAt = _timeService.GetCurrentDateTime()
             };
-            var updatedItem = _repository.UpdateAsync(id, itemToUpdate);
+            retrievedItem.Item = await _repository.UpdateAsync(id, itemToUpdate);
 
-            return updatedItem;
+            return retrievedItem;
         }
     }
 }

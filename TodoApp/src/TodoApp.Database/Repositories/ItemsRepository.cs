@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using TodoApp.Contracts.Models;
@@ -10,8 +11,6 @@ namespace TodoApp.Database.Repositories
     internal class ItemsRepository : IItemRepository
     {
         private const string CollectionName = "items";
-        private readonly Item _updatedItem =
-            new Item {Text = "item0", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")};
 
         private readonly IMongoCollection<Item> _collection;
 
@@ -39,9 +38,11 @@ namespace TodoApp.Database.Repositories
 
         public async Task<Item> UpdateAsync(Guid id, Item updatedItem)
         {
-            var itemToUpdate = await _collection.Find(item => item.Id == id).FirstAsync();
+            var itemToUpdate = await _collection.Find(item => item.Id == id).FirstOrDefaultAsync(CancellationToken.None);
+
             await _collection.ReplaceOneAsync(item => item.Id == id, updatedItem);
             itemToUpdate.ModifiedAt = updatedItem.ModifiedAt;
+            itemToUpdate.Text = updatedItem.Text;
 
             return itemToUpdate;
         }
