@@ -29,8 +29,8 @@ namespace TodoApp.Services.Services
                 CreatedAt = currentTime,
                 ModifiedAt = currentTime
             };
-            var it = await _repository.AddAsync(newItem);
-            return it;
+            var addedItem = await _repository.AddAsync(newItem);
+            return addedItem;
         }
     }
 }
