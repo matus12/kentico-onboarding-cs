@@ -82,7 +82,7 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var updatedItem = await _updateItemService.UpdateItemAsync(id, item);
+            var updatedItem = await _updateItemService.UpdateItemAsync(item);
 
             if (updatedItem.WasFound)
             {

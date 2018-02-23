@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using TodoApp.Contracts.Models;
@@ -36,16 +35,8 @@ namespace TodoApp.Database.Repositories
             return item;
         }
 
-        public async Task<Item> UpdateAsync(Guid id, Item updatedItem)
-        {
-            var itemToUpdate = await _collection.Find(item => item.Id == id).FirstOrDefaultAsync(CancellationToken.None);
-
-            await _collection.ReplaceOneAsync(item => item.Id == id, updatedItem);
-            itemToUpdate.ModifiedAt = updatedItem.ModifiedAt;
-            itemToUpdate.Text = updatedItem.Text;
-
-            return itemToUpdate;
-        }
+        public async Task<Item> UpdateAsync(Item updatedItem)
+            => await _collection.FindOneAndReplaceAsync(item => item.Id == updatedItem.Id, updatedItem);
 
         public async Task DeleteAsync(Guid id)
             => await _collection.DeleteOneAsync(item => item.Id == id);

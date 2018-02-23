@@ -143,9 +143,17 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_ItemToUpdateWithExistingId_ReturnsUpdatedItem()
         {
+<<<<<<< HEAD
             _repository.UpdateAsync(Arg.Is<Item>(value
                     => AreIdsEqual(value)))
                 .Returns(_items[1]);
+=======
+            var retrievedItem = new RetrievedItem {WasFound = true, Item = _items[1]};
+           _updateItemService.UpdateItemAsync(
+               Arg.Is<Item>(value => value.Id == _items[1].Id
+               && value.Text == _items[1].Text))
+               .Returns(retrievedItem);
+>>>>>>> KA-236 Refactor update service
 
             var (contentResult, item) =
                 await GetResultFromAction<Item>(controller => controller.PutAsync(_items[1].Id, _items[1]));

@@ -63,7 +63,7 @@ namespace TodoApp.Services.Tests.Services
                 }
             };
             _getItemByIdService.GetItemByIdAsync(Arg.Any<Guid>()).Returns(new RetrievedItem { WasFound = true, Item = itemBeforeUpdate });
-            _repository.UpdateAsync(Arg.Any<Guid>(), Arg.Is<Item>(value
+            _repository.UpdateAsync(Arg.Is<Item>(value
                 => value.Id == itemToUpdate.Id
                    && value.Text == itemToUpdate.Text
                    && value.CreatedAt == itemToUpdate.CreatedAt
@@ -76,7 +76,7 @@ namespace TodoApp.Services.Tests.Services
                 ModifiedAt = currentTime
             });
 
-            var testItem = await _updateItemService.UpdateItemAsync(guid, itemToUpdate);
+            var testItem = await _updateItemService.UpdateItemAsync(itemToUpdate);
 
             Assert.That(testItem.Item, Is.EqualTo(expectedItem.Item).UsingItemEqualityComparer());
             Assert.That(testItem.WasFound, Is.EqualTo(expectedItem.WasFound));

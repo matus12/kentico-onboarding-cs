@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Services;
@@ -16,28 +15,30 @@ namespace TodoApp.Services.Services
         public UpdateItemService(
             IItemRepository repository,
             ITimeService timeService,
-            IGetItemByIdService getItemByIdService)
+            IGetItemByIdService getItemByIdService
+        )
         {
             _repository = repository;
             _timeService = timeService;
             _getItemByIdService = getItemByIdService;
         }
 
-        public async Task<RetrievedItem> UpdateItemAsync(Guid id, Item item)
+        public async Task<RetrievedItem> UpdateItemAsync(Item item)
         {
-            var retrievedItem = await _getItemByIdService.GetItemByIdAsync(id);
+            var retrievedItem = await _getItemByIdService.GetItemByIdAsync(item.Id);
             if (!retrievedItem.WasFound)
             {
                 return retrievedItem;
             }
             var itemToUpdate = new Item
             {
-                Id = id,
+                Id = item.Id,
                 Text = item.Text,
-                CreatedAt = item.CreatedAt,
+                CreatedAt = retrievedItem.Item.CreatedAt,
                 ModifiedAt = _timeService.GetCurrentDateTime()
             };
-            retrievedItem.Item = await _repository.UpdateAsync(id, itemToUpdate);
+            await _repository.UpdateAsync(itemToUpdate);
+            retrievedItem.Item = itemToUpdate;
 
             return retrievedItem;
         }
