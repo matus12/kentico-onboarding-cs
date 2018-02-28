@@ -10,7 +10,6 @@ namespace TodoApp.Database
     internal class ItemsRepository : IItemRepository
     {
         private const string CollectionName = "items";
-        private const string DatabaseName = "todoappdb";
         private readonly Item _updatedItem =
             new Item {Text = "item0", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")};
 
@@ -18,8 +17,9 @@ namespace TodoApp.Database
 
         public ItemsRepository(IDbConnection connection)
         {
-            var client = new MongoClient(connection.DbConnectionString);
-            var database = client.GetDatabase(DatabaseName);
+            var mongoUrl = MongoUrl.Create(connection.DbConnectionString);
+            var client = new MongoClient(mongoUrl);
+            var database = client.GetDatabase(mongoUrl.DatabaseName);
 
             _collection = database.GetCollection<Item>(CollectionName);
         }

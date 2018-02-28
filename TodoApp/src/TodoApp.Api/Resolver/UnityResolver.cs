@@ -63,7 +63,7 @@ namespace TodoApp.Api.Resolver
             catch (ResolutionFailedException)
                 when (ExcludedTypes.Contains(serviceType?.FullName))
             {
-                return new List<object>();
+                return Enumerable.Empty<object>();
             }
         }
 
