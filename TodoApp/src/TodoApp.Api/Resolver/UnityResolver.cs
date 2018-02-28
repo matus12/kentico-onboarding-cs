@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
+using System.Web.Http.Controllers;
 using System.Web.Http.Dependencies;
+using System.Web.Http.Dispatcher;
+using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Hosting;
+using System.Web.Http.Metadata;
 using Unity;
 using Unity.Exceptions;
 
@@ -9,28 +15,20 @@ namespace TodoApp.Api.Resolver
 {
     internal sealed class UnityResolver : IDependencyResolver
     {
-        private const string HostBufferPolicySelectorException = "System.Web.Http.Hosting.IHostBufferPolicySelector";
-        private const string HttpControllerSelectorException = "System.Web.Http.Dispatcher.IHttpControllerSelector";
-        private const string HttpControllerActivatorException = "System.Web.Http.Dispatcher.IHttpControllerActivator";
-        private const string HttpActionSelectorException = "System.Web.Http.Controllers.IHttpActionSelector";
-        private const string HttpActionInvokerException = "System.Web.Http.Controllers.IHttpActionInvoker";
-        private const string ExceptionHandlerException = "System.Web.Http.ExceptionHandling.IExceptionHandler";
-        private const string ContentNegotiatorException = "System.Net.Http.Formatting.IContentNegotiator";
-        private const string ModelMetadataProviderException = "System.Web.Http.Metadata.ModelMetadataProvider";
         private const string ModelValidatorCacheException = "System.Web.Http.Validation.IModelValidatorCache";
 
-        private static IEnumerable<string> Exceptions
+        private static IEnumerable<string> ExcludedTypes
         {
             get
             {
-                yield return HostBufferPolicySelectorException;
-                yield return HttpControllerSelectorException;
-                yield return HttpControllerActivatorException;
-                yield return HttpActionSelectorException;
-                yield return HttpActionInvokerException;
-                yield return ExceptionHandlerException;
-                yield return ContentNegotiatorException;
-                yield return ModelMetadataProviderException;
+                yield return typeof(IHostBufferPolicySelector).FullName;
+                yield return typeof(IHttpControllerSelector).FullName;
+                yield return typeof(IHttpControllerActivator).FullName;
+                yield return typeof(IHttpActionSelector).FullName;
+                yield return typeof(IHttpActionInvoker).FullName;
+                yield return typeof(IExceptionHandler).FullName;
+                yield return typeof(IContentNegotiator).FullName;
+                yield return typeof(ModelMetadataProvider).FullName;
                 yield return ModelValidatorCacheException;
             }
         }
@@ -50,13 +48,9 @@ namespace TodoApp.Api.Resolver
                 return _container.Resolve(serviceType);
             }
             catch (ResolutionFailedException)
-                when (Exceptions.Contains(serviceType?.FullName))
+                when (ExcludedTypes.Contains(serviceType?.FullName))
             {
                 return null;
-            }
-            catch (ResolutionFailedException)
-            {
-                throw;
             }
         }
 
@@ -67,13 +61,9 @@ namespace TodoApp.Api.Resolver
                 return _container.ResolveAll(serviceType);
             }
             catch (ResolutionFailedException)
-                when (Exceptions.Contains(serviceType?.FullName))
+                when (ExcludedTypes.Contains(serviceType?.FullName))
             {
                 return new List<object>();
-            }
-            catch (ResolutionFailedException)
-            {
-                throw;
             }
         }
 
