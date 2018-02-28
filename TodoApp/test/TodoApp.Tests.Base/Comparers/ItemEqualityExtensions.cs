@@ -22,10 +22,8 @@ namespace TodoApp.Tests.Base.Comparers
                 {
                     return false;
                 }
-                return x.Text == y.Text &&
-                       x.Id == y.Id &&
-                       x.CreatedAt == y.CreatedAt &&
-                       x.ModifiedAt == y.ModifiedAt;
+
+                return ItemIdentifierEqualityComparer(x, y);
             }
 
             public int GetHashCode(Item obj)
@@ -36,5 +34,11 @@ namespace TodoApp.Tests.Base.Comparers
 
         public static EqualConstraint UsingItemEqualityComparer(this EqualConstraint constraint)
             => constraint.Using(LazyItemEqualityComparer.Value);
+
+        public static bool ItemIdentifierEqualityComparer(this Item item1, Item item2) =>
+            item1.Text == item2.Text &&
+            item1.Id == item2.Id &&
+            item1.CreatedAt == item2.CreatedAt &&
+            item1.ModifiedAt == item2.ModifiedAt;
     }
 }

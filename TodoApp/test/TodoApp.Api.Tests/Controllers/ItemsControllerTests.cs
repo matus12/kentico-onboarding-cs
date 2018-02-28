@@ -116,11 +116,11 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostAsync_NewItem_SetsLocationHeaderReturnsItemToPost()
         {
-            _addItemService.AddItemAsync(Arg.Is<Item>(value => value.Text == ItemToPost.Text)).Returns(ItemToPost);
+            _addItemService.AddItemAsync(Arg.Is<Item>(value => AreTextsEqual(value))).Returns(ItemToPost);
             _helper.GetUriLocation(ItemToPost.Id).Returns(Uri);
 
             var (createdResult, item) =
-                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item {Text = "itemToPost"}));
+                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item { Text = "itemToPost" }));
             var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
@@ -142,7 +142,7 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PutAsync_ItemToUpdateWithExistingId_ReturnsUpdatedItem()
         {
             _repository.UpdateAsync(Arg.Is<Item>(value
-                    => value.Id == _items[1].Id))
+                    => AreIdsEqual(value)))
                 .Returns(_items[1]);
 
             var (contentResult, item) =
@@ -176,5 +176,11 @@ namespace TodoApp.Api.Tests.Controllers
             var responseMessage = await actionResult.ExecuteAsync(CancellationToken.None);
             return responseMessage;
         }
+
+        private bool AreIdsEqual(Item value)
+            => value.Id == _items[1].Id;
+
+        private static bool AreTextsEqual(Item value)
+            => value.Text == ItemToPost.Text;
     }
 }
