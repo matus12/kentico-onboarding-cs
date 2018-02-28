@@ -13,6 +13,7 @@ using NSubstitute;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
+using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 
 namespace TodoApp.Api.Tests.Controllers

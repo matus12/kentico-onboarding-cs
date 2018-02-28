@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using TodoApp.Contracts;
 using TodoApp.Contracts.Models;
+using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 
 namespace TodoApp.Services.Services

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Models;
+using TodoApp.Contracts.Repositories;
 
-namespace TodoApp.Database
+namespace TodoApp.Database.Repositories
 {
     internal class ItemsRepository : IItemRepository
     {

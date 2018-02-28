@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseBootstrapper.cs" />
-    <Compile Include="ItemsRepository.cs" />
+    <Compile Include="Repositories\ItemsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

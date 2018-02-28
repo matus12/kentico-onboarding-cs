@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
-using TodoApp.Contracts;
+using TodoApp.Contracts.Repositories;
 
-namespace TodoApp.Api
+namespace TodoApp.Api.Repositories
 {
     internal class DbConnection : IDbConnection
     {
