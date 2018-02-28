@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Contracts.Services.Factories
+namespace TodoApp.Contracts.Factories
 {
     public interface IGuidService
     {

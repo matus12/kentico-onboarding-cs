@@ -59,9 +59,9 @@
     <Compile Include="Comparers\ItemEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GetItemByIdServiceTests.cs" />
-    <Compile Include="Services\Helpers\GuidServiceTests.cs" />
+    <Compile Include="Factories\GuidServiceTests.cs" />
     <Compile Include="Services\AddItemServiceTests.cs" />
-    <Compile Include="Services\Helpers\TimeServiceTests.cs" />
+    <Compile Include="Factories\TimeServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
-using TodoApp.Contracts.Services.Factories;
-using TodoApp.Services.Services.Helpers;
+using TodoApp.Contracts.Factories;
+using TodoApp.Services.Factories;
 
-namespace TodoApp.Services.Tests.Services.Helpers
+namespace TodoApp.Services.Tests.Factories
 {
     internal class GuidServiceTests
     {
