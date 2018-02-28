@@ -120,7 +120,7 @@ namespace TodoApp.Api.Tests.Controllers
             _helper.GetUriLocation(ItemToPost.Id).Returns(Uri);
 
             var (createdResult, item) =
-                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item { Text = "itemToPost" }));
+                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item {Text = "itemToPost"}));
             var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
@@ -166,6 +166,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var responseMessage = await GetResultFromAction(actionSelector);
             responseMessage.TryGetContentValue(out TPayload item);
+
             return (responseMessage, item);
         }
 
@@ -174,6 +175,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var actionResult = await actionSelector(_controller);
             var responseMessage = await actionResult.ExecuteAsync(CancellationToken.None);
+
             return responseMessage;
         }
 

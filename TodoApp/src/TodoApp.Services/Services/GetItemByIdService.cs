@@ -18,6 +18,7 @@ namespace TodoApp.Services.Services
         public async Task<RetrievedItem> GetItemByIdAsync(Guid id)
         {
             var retrievedItem = await _repository.GetByIdAsync(id);
+
             return retrievedItem == null
                 ? new RetrievedItem {WasFound = false}
                 : new RetrievedItem {WasFound = true, Item = retrievedItem};

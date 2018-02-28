@@ -14,6 +14,7 @@ namespace TodoApp.Services.Tests.Services
     {
         private IItemRepository _repository;
         private IGetItemByIdService _getItemByIdService;
+
         [SetUp]
         public void SetUp()
         {
