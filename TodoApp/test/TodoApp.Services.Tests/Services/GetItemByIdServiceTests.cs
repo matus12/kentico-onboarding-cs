@@ -44,19 +44,7 @@ namespace TodoApp.Services.Tests.Services
 
             var testItem = await _getItemByIdService.GetItemByIdAsync(id);
 
-            Assert.That(testItem.WasFound, Is.EqualTo(true));
             Assert.That(testItem.Item, Is.EqualTo(expectedItem.Item));
-        }
-
-        [Test]
-        public async Task GetItemByIdAsync_NonExistingId_ReturnsItemWithFalseStatus()
-        {
-            var id = new Guid("44e506f7-c42b-42e5-823c-a5f1cf2e16f9");
-            _repository.GetByIdAsync(id).Returns(null as Item);
-
-            var testItem = await _getItemByIdService.GetItemByIdAsync(id);
-
-            Assert.That(testItem.WasFound, Is.EqualTo(false));
         }
     }
 }

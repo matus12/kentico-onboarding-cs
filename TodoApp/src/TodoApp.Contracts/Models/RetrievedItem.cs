@@ -2,7 +2,8 @@
 {
     public class RetrievedItem
     {
-        public bool WasFound;
-        public Item Item;
+        public Item Item { get; set; }
+
+        public bool WasFound { get; set; }
     }
 }
