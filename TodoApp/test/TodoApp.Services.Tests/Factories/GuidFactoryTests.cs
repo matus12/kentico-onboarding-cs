@@ -6,14 +6,14 @@ using TodoApp.Services.Factories;
 
 namespace TodoApp.Services.Tests.Factories
 {
-    internal class GuidServiceTests
+    internal class GuidFactoryTests
     {
-        private IGuidService _guidService;
+        private IGuidFactory _guidService;
 
         [SetUp]
         public void SetUp()
         {
-            _guidService = new GuidService();
+            _guidService = new GuidFactory();
         }
         [Test]
         public void GenerateGuid_ReturnsNonEmptyGuid()

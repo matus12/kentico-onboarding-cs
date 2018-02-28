@@ -16,16 +16,16 @@ namespace TodoApp.Services.Tests.Services
     internal class AddItemServiceTests
     {
         private IAddItemService _service;
-        private ITimeService _timeService;
-        private IGuidService _guidService;
+        private ITimeFactory _timeService;
+        private IGuidFactory _guidService;
         private IItemRepository _repository;
 
         [SetUp]
         public void SetUp()
         {
             _repository = Substitute.For<IItemRepository>();
-            _timeService = Substitute.For<ITimeService>();
-            _guidService = Substitute.For<IGuidService>();
+            _timeService = Substitute.For<ITimeFactory>();
+            _guidService = Substitute.For<IGuidFactory>();
 
             _service = new AddItemService(_repository, _timeService, _guidService);
         }

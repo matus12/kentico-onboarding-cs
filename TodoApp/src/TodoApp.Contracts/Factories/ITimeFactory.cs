@@ -2,7 +2,7 @@
 
 namespace TodoApp.Contracts.Factories
 {
-    public interface ITimeService
+    public interface ITimeFactory
     {
         DateTime GetCurrentDateTime();
     }

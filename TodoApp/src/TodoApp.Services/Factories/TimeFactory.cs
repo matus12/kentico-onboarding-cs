@@ -3,7 +3,7 @@ using TodoApp.Contracts.Factories;
 
 namespace TodoApp.Services.Factories
 {
-    internal class TimeService : ITimeService
+    internal class TimeFactory : ITimeFactory
     {
         public DateTime GetCurrentDateTime() => DateTime.Now;
     }

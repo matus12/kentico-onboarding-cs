@@ -2,7 +2,7 @@
 
 namespace TodoApp.Contracts.Factories
 {
-    public interface IGuidService
+    public interface IGuidFactory
     {
         Guid GenerateGuid();
     }

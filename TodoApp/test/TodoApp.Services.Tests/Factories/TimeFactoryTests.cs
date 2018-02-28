@@ -7,9 +7,9 @@ using TodoApp.Services.Factories;
 
 namespace TodoApp.Services.Tests.Factories
 {
-    internal class TimeServiceTests
+    internal class TimeFactoryTests
     {
-        private ITimeService _timeService;
+        private ITimeFactory _timeService;
 
         private static IEnumerable<DateTime> MaxMinDateTimes
         {
@@ -23,7 +23,7 @@ namespace TodoApp.Services.Tests.Factories
         [SetUp]
         public void SetUp()
         {
-            _timeService = new TimeService();    
+            _timeService = new TimeFactory();    
         }
 
         [TestCaseSource(nameof(MaxMinDateTimes))]
