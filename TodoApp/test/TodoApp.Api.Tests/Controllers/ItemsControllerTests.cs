@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -8,13 +7,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
-using TodoApp.Api.Tests.Comparers;
 using NSubstitute;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Helpers;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
+using TodoApp.Tests.Base.Comparers;
 
 namespace TodoApp.Api.Tests.Controllers
 {

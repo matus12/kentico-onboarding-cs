@@ -75,7 +75,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparers\ItemEqualityExtensions.cs" />
     <Compile Include="Controllers\ItemsControllerTests.cs" />
     <Compile Include="Helpers\LocationHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +95,10 @@
     <ProjectReference Include="..\..\src\TodoApp.Services\TodoApp.Services.csproj">
       <Project>{72650603-b413-4756-acb8-f9a4ad2470fd}</Project>
       <Name>TodoApp.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TodoApp.Tests.Base\TodoApp.Tests.Base.csproj">
+      <Project>{77af3fa2-11fb-4397-9aa4-a6645baa1104}</Project>
+      <Name>TodoApp.Tests.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

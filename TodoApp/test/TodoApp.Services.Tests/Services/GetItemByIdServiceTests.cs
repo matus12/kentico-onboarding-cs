@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using NSubstitute;
 using TodoApp.Contracts.Services;
 using NUnit.Framework;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Services.Services;

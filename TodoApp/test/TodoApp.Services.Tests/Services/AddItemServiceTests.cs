@@ -2,13 +2,12 @@
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
-using TodoApp.Contracts;
 using TodoApp.Contracts.Factories;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Services.Services;
-using TodoApp.Services.Tests.Comparers;
+using TodoApp.Tests.Base.Comparers;
 
 namespace TodoApp.Services.Tests.Services
 {

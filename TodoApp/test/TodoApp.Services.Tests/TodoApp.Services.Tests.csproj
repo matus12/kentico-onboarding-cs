@@ -56,7 +56,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparers\ItemEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GetItemByIdServiceTests.cs" />
     <Compile Include="Factories\GuidFactoryTests.cs" />
@@ -74,6 +73,10 @@
     <ProjectReference Include="..\..\src\TodoApp.Services\TodoApp.Services.csproj">
       <Project>{72650603-b413-4756-acb8-f9a4ad2470fd}</Project>
       <Name>TodoApp.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TodoApp.Tests.Base\TodoApp.Tests.Base.csproj">
+      <Project>{77af3fa2-11fb-4397-9aa4-a6645baa1104}</Project>
+      <Name>TodoApp.Tests.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

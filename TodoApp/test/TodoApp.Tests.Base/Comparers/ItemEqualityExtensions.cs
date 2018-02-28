@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using NUnit.Framework.Constraints;
 using TodoApp.Contracts.Models;
 
-namespace TodoApp.Api.Tests.Comparers
+namespace TodoApp.Tests.Base.Comparers
 {
     internal static class ItemEqualityExtensions
     {
         private static Lazy<ItemEqualityComparer> LazyItemEqualityComparer => new Lazy<ItemEqualityComparer>();
 
+        // ReSharper disable once ClassNeverInstantiated.Local
         private sealed class ItemEqualityComparer : IEqualityComparer<Item>
         {
             public bool Equals(Item x, Item y)
