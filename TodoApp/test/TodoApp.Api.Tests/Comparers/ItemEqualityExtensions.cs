@@ -5,7 +5,7 @@ using TodoApp.Contracts.Models;
 
 namespace TodoApp.Api.Tests.Comparers
 {
-    internal static class ItemEqualityComparerWrapper
+    internal static class ItemEqualityExtensions
     {
         private static Lazy<ItemEqualityComparer> LazyItemEqualityComparer => new Lazy<ItemEqualityComparer>();
 

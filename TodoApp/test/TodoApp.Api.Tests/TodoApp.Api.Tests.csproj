@@ -75,7 +75,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparers\ItemEqualityComparer.cs" />
+    <Compile Include="Comparers\ItemEqualityExtensions.cs" />
     <Compile Include="Controllers\ItemsControllerTests.cs" />
     <Compile Include="Helpers\LocationHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
