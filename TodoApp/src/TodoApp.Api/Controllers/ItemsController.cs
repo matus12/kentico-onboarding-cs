@@ -84,12 +84,15 @@ namespace TodoApp.Api.Controllers
             }
             var updatedItem = await _updateItemService.UpdateItemAsync(item);
 
-            if (updatedItem.WasFound)
+            try
             {
                 return Ok(updatedItem.Item);
             }
-
-            return NotFound();
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)

@@ -9,7 +9,7 @@ namespace TodoApp.Contracts.Models
         {
             get
             {
-                if (!_wasFound)
+                if (!WasFound)
                 {
                     throw new InvalidOperationException();
                 }
@@ -19,11 +19,6 @@ namespace TodoApp.Contracts.Models
             set => _item = value;
         }
 
-        private bool _wasFound;
-
-        public bool WasFound
-        {
-            set => _wasFound = value;
-        }
+        public bool WasFound { get; set; }
     }
 }
