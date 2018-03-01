@@ -1,9 +1,29 @@
-﻿namespace TodoApp.Contracts.Models
+﻿using System;
+
+namespace TodoApp.Contracts.Models
 {
     public class RetrievedItem
     {
-        public Item Item { get; set; }
+        private Item _item;
+        public Item Item
+        {
+            get
+            {
+                if (!_wasFound)
+                {
+                    throw new InvalidOperationException();
+                }
 
-        public bool WasFound { get; set; }
+                return _item;
+            }
+            set => _item = value;
+        }
+
+        private bool _wasFound;
+
+        public bool WasFound
+        {
+            set => _wasFound = value;
+        }
     }
 }

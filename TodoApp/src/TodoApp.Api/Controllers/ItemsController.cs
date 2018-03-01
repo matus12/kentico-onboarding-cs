@@ -45,12 +45,15 @@ namespace TodoApp.Api.Controllers
                 return BadRequest(ModelState);
             }
             var retrievedItem = await _getItemByIdService.GetItemByIdAsync(id);
-            if (!retrievedItem.WasFound)
+
+            try
+            {
+                return Ok(retrievedItem.Item);
+            }
+            catch (InvalidOperationException)
             {
                 return NotFound();
             }
-
-            return Ok(retrievedItem.Item);
         }
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
