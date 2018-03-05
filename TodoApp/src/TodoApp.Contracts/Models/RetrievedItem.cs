@@ -5,17 +5,13 @@ namespace TodoApp.Contracts.Models
     public class RetrievedItem
     {
         private Item _item;
+
         public Item Item
         {
-            get
-            {
-                if (!WasFound)
-                {
-                    throw new InvalidOperationException();
-                }
+            get => WasFound
+                ? _item
+                : throw new InvalidOperationException();
 
-                return _item;
-            }
             set => _item = value;
         }
 
