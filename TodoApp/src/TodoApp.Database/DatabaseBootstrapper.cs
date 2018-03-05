@@ -9,6 +9,6 @@ namespace TodoApp.Database
     public class DatabaseBootstrapper : IBootstrapper
     {
         public IUnityContainer RegisterTypes(IUnityContainer container)
-            => container.RegisterType<IItemRepository, ItemsRepository>(new HierarchicalLifetimeManager());
+            => container.RegisterType<IItemRepository, ItemsRepository>(new ContainerControlledLifetimeManager());
     }
 }
