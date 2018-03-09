@@ -84,7 +84,7 @@ namespace TodoApp.Api.Controllers
         {
             if (id == Guid.Empty)
             {
-                ModelState.AddModelError("EmptyGuid", EmptyId);
+                ModelState.AddModelError(nameof(Item.Id), EmptyId);
             }
         }
 
@@ -103,12 +103,12 @@ namespace TodoApp.Api.Controllers
         {
             if (item.Id != Guid.Empty)
             {
-                ModelState.AddModelError("NonEmptyGuid", NonEmptyId);
+                ModelState.AddModelError(nameof(Item.Id), NonEmptyId);
             }
 
             if (!IsTextValid(item.Text))
             {
-                ModelState.AddModelError("InvalidText", InvalidText);
+                ModelState.AddModelError(nameof(Item.Text), InvalidText);
             }
         }
 
