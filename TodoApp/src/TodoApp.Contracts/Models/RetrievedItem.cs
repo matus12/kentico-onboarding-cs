@@ -15,6 +15,6 @@ namespace TodoApp.Contracts.Models
             set => _item = value;
         }
 
-        public bool WasFound { get; set; }
+        public bool WasFound => _item != null;
     }
 }

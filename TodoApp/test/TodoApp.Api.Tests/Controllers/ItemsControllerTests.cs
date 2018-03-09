@@ -82,7 +82,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {WasFound = true, Item = Items[0]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {Item = Items[0]});
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -102,7 +102,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_NonExistentId_ReturnsNotFound()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {WasFound = false});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem ());
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 

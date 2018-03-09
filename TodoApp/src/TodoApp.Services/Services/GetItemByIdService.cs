@@ -20,8 +20,8 @@ namespace TodoApp.Services.Services
             var retrievedItem = await _repository.GetByIdAsync(id);
 
             return retrievedItem == null
-                ? new RetrievedItem {WasFound = false}
-                : new RetrievedItem {WasFound = true, Item = retrievedItem};
+                ? new RetrievedItem ()
+                : new RetrievedItem {Item = retrievedItem};
         }
     }
 }

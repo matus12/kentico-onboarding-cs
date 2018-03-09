@@ -37,7 +37,6 @@ namespace TodoApp.Services.Tests.Services
             };
             var expectedItem = new RetrievedItem
             {
-                WasFound = true,
                 Item = item
             };
             _repository.GetByIdAsync(id).Returns(item);
