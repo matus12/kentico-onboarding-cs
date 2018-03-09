@@ -33,7 +33,8 @@ namespace TodoApp.Services.Tests.Services
         public async Task AddItemAsync_NewItem_ReturnsSavedItem()
         {
             const string newItemText = "new item";
-            var currentTime = new DateTime(2018, 2, 5, 15, 0, 24);
+            var currentTime = 
+                new DateTime(year: 2018, month: 2, day: 5, hour: 15, minute: 0, second: 24);
             var guid = new Guid("6548b7f6-d35c-4075-90d5-3a17e101f2c4");
             _timeService.GetCurrentDateTime().Returns(currentTime);
             _guidService.GenerateGuid().Returns(guid);
