@@ -29,6 +29,13 @@ namespace TodoApp.Api.Tests.Controllers
         private static readonly Item ItemToPost =
             new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
+        private static readonly Item[] Items =
+        {
+            new Item {Text = "item0", Id = Guid0},
+            new Item {Text = "item1", Id = Guid1},
+            new Item {Text = "item2", Id = Guid2}
+        };
+
         private static IEnumerable<Item> InvalidItems
         {
             get
@@ -38,13 +45,6 @@ namespace TodoApp.Api.Tests.Controllers
                 yield return new Item {Text = "validText", Id = new Guid("67c77bb1-1c3c-4776-a9bd-b1707ea304c4")};
             }
         }
-
-        private readonly Item[] _items =
-        {
-            new Item {Text = "item0", Id = Guid0},
-            new Item {Text = "item1", Id = Guid1},
-            new Item {Text = "item2", Id = Guid2}
-        };
 
         private ItemsController _controller;
         private IAddItemService _addItemService;
@@ -70,32 +70,30 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ReturnsAllItems()
         {
-            _repository.GetAllAsync().Returns(_items);
+            _repository.GetAllAsync().Returns(Items);
 
             var (contentResult, items) = await GetResultFromAction<Item[]>(controller => controller.GetAsync());
 
             Assert.That(contentResult.Content, Is.Not.Null);
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(items, Is.EqualTo(_items).AsCollection.UsingItemEqualityComparer());
+            Assert.That(items, Is.EqualTo(Items).AsCollection.UsingItemEqualityComparer());
         }
 
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {WasFound = true, Item = _items[0]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {WasFound = true, Item = Items[0]});
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
             Assert.That(contentResult.Content, Is.Not.Null);
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(item, Is.EqualTo(_items[0]).UsingItemEqualityComparer());
+            Assert.That(item, Is.EqualTo(Items[0]).UsingItemEqualityComparer());
         }
 
         [Test]
         public async Task GetAsync_EmptyId_ReturnsBadRequest()
         {
-            _controller.ModelState.Clear();
-
             var response = await GetResultFromAction(controller => controller.GetAsync(Guid.Empty));
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
@@ -131,8 +129,6 @@ namespace TodoApp.Api.Tests.Controllers
         [TestCaseSource(nameof(InvalidItems))]
         public async Task PostAsync_InvalidItem_ReturnsBadRequest(Item item)
         {
-            _controller.ModelState.Clear();
-
             var response = await GetResultFromAction(controller => controller.PostAsync(item));
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
@@ -143,13 +139,13 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _repository.UpdateAsync(Arg.Is<Item>(value
                     => AreIdsEqual(value)))
-                .Returns(_items[1]);
+                .Returns(Items[1]);
 
             var (contentResult, item) =
-                await GetResultFromAction<Item>(controller => controller.PutAsync(_items[1].Id, _items[1]));
+                await GetResultFromAction<Item>(controller => controller.PutAsync(Items[1].Id, Items[1]));
 
             Assert.That(contentResult.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(item, Is.EqualTo(_items[1]).UsingItemEqualityComparer());
+            Assert.That(item, Is.EqualTo(Items[1]).UsingItemEqualityComparer());
         }
 
         [Test]
@@ -180,7 +176,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         private bool AreIdsEqual(Item value)
-            => value.Id == _items[1].Id;
+            => value.Id == Items[1].Id;
 
         private static bool AreTextsEqual(Item value)
             => value.Text == ItemToPost.Text;
