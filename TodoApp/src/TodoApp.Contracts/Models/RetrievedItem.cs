@@ -2,19 +2,22 @@
 
 namespace TodoApp.Contracts.Models
 {
-    public class RetrievedItem
+    public class RetrievedEntity<TEntity>
     {
-        private Item _item;
+        private const string NullItem = "Entity is null";
+        private TEntity _entity;
 
-        public Item Item
+        public TEntity Entity
         {
             get => WasFound
-                ? _item
-                : throw new InvalidOperationException();
+                ? _entity
+                : throw new InvalidOperationException(NullItem);
 
-            set => _item = value;
+            set => _entity = value;
         }
 
-        public bool WasFound => _item != null;
+        public static readonly RetrievedEntity<TEntity> NotFound = new RetrievedEntity<TEntity>();
+        
+        public bool WasFound => _entity != null;
     }
 }

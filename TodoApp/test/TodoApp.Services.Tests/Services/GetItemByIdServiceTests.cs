@@ -36,15 +36,15 @@ namespace TodoApp.Services.Tests.Services
                 CreatedAt = time,
                 ModifiedAt = time
             };
-            var expectedItem = new RetrievedItem
+            var expectedItem = new RetrievedEntity<>
             {
-                Item = item
+                Entity = item
             };
             _repository.GetByIdAsync(id).Returns(item);
 
             var testItem = await _getItemByIdService.GetItemByIdAsync(id);
 
-            Assert.That(testItem.Item, Is.EqualTo(expectedItem.Item));
+            Assert.That(testItem.Entity, Is.EqualTo(expectedItem.Entity));
         }
 
         [Test]

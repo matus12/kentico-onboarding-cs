@@ -49,7 +49,7 @@ namespace TodoApp.Api.Controllers
 
             if (retrievedItem.WasFound)
             {
-                return Ok(retrievedItem.Item);
+                return Ok(retrievedItem.Entity);
             }
 
             return NotFound();

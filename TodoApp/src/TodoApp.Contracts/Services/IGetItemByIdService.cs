@@ -6,6 +6,6 @@ namespace TodoApp.Contracts.Services
 {
     public interface IGetItemByIdService
     {
-        Task<RetrievedItem> GetItemByIdAsync(Guid id);
+        Task<RetrievedEntity<Item>> GetItemByIdAsync(Guid id);
     }
 }

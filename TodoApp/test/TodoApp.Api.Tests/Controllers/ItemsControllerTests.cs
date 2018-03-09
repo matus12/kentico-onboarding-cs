@@ -82,7 +82,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem {Item = Items[0]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> { Entity = Items[0]});
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -102,7 +102,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_NonExistentId_ReturnsNotFound()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedItem ());
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>());
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -157,6 +157,12 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
+        private static bool AreIdsEqual(Item value)
+            => value.Id == Items[1].Id;
+
+        private static bool AreTextsEqual(Item value)
+            => value.Text == ItemToPost.Text;
+
         private async Task<(HttpResponseMessage message, TPayload item)> GetResultFromAction<TPayload>(
             Func<ItemsController, Task<IHttpActionResult>> actionSelector)
         {
@@ -173,12 +179,6 @@ namespace TodoApp.Api.Tests.Controllers
             var responseMessage = await actionResult.ExecuteAsync(CancellationToken.None);
 
             return responseMessage;
-        }
-
-        private bool AreIdsEqual(Item value)
-            => value.Id == Items[1].Id;
-
-        private static bool AreTextsEqual(Item value)
-            => value.Text == ItemToPost.Text;
+        }  
     }
 }

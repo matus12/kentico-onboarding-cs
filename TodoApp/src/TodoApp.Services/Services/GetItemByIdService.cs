@@ -15,13 +15,13 @@ namespace TodoApp.Services.Services
             _repository = repository;
         }
 
-        public async Task<RetrievedItem> GetItemByIdAsync(Guid id)
+        public async Task<RetrievedEntity<Item>> GetItemByIdAsync(Guid id)
         {
             var retrievedItem = await _repository.GetByIdAsync(id);
 
             return retrievedItem == null
-                ? new RetrievedItem ()
-                : new RetrievedItem {Item = retrievedItem};
+                ? new RetrievedEntity<Item>()
+                : new RetrievedEntity<Item> {Entity = retrievedItem};
         }
     }
 }
