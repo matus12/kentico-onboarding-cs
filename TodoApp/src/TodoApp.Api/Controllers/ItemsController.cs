@@ -44,16 +44,15 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var retrievedItem = await _getItemByIdService.GetItemByIdAsync(id);
 
-            try
+            if (retrievedItem.WasFound)
             {
                 return Ok(retrievedItem.Item);
             }
-            catch (InvalidOperationException)
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
@@ -64,6 +63,7 @@ namespace TodoApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var addedItem = await _addItemService.AddItemAsync(item);
             var location = _locationHelper.GetUriLocation(addedItem.Id);
 
@@ -105,6 +105,7 @@ namespace TodoApp.Api.Controllers
             {
                 ModelState.AddModelError("NonEmptyGuid", NonEmptyId);
             }
+
             if (!IsTextValid(item.Text))
             {
                 ModelState.AddModelError("InvalidText", InvalidText);
@@ -116,7 +117,7 @@ namespace TodoApp.Api.Controllers
             var trimmedText = inputText.Trim();
 
             return !string.IsNullOrEmpty(trimmedText)
-                && trimmedText.Length.Equals(inputText.Length);
+                   && trimmedText.Length.Equals(inputText.Length);
         }
     }
 }
