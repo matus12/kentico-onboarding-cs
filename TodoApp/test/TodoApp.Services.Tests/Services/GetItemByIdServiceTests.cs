@@ -36,7 +36,7 @@ namespace TodoApp.Services.Tests.Services
                 CreatedAt = time,
                 ModifiedAt = time
             };
-            var expectedItem = new RetrievedEntity<>
+            var expectedItem = new RetrievedEntity<Item>
             {
                 Entity = item
             };
