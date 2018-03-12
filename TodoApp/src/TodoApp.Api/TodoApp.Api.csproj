@@ -109,10 +109,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ApiFormatConfig.cs" />
     <Compile Include="App_Start\DependeciesConfig.cs" />
     <Compile Include="App_Start\RoutesConfig.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
-    <Compile Include="Dependency\ApiBootstrapper.cs" />
+    <Compile Include="Repositories\DbConnection.cs" />
+    <Compile Include="ApiBootstrapper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -130,6 +132,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="ConnectionStrings.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -142,6 +145,10 @@
     <ProjectReference Include="..\TodoApp.Database\TodoApp.Database.csproj">
       <Project>{9E4C792E-1EE1-4D61-971B-F20606587C84}</Project>
       <Name>TodoApp.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TodoApp.Services\TodoApp.Services.csproj">
+      <Project>{72650603-b413-4756-acb8-f9a4ad2470fd}</Project>
+      <Name>TodoApp.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

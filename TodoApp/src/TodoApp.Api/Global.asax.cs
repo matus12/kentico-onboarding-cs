@@ -8,6 +8,7 @@ namespace TodoApp.Api
         {
             GlobalConfiguration.Configure(RoutesConfig.Register);
             GlobalConfiguration.Configure(DependenciesConfig.Register);
+            GlobalConfiguration.Configure(ApiFormatConfig.Register);
         }
     }
 }
