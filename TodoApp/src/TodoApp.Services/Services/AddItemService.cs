@@ -9,22 +9,22 @@ namespace TodoApp.Services.Services
     internal class AddItemService : IAddItemService
     {
         private readonly IItemRepository _repository;
-        private readonly ITimeFactory _timeService;
-        private readonly IGuidFactory _guidService;
+        private readonly ITimeFactory _timeFactory;
+        private readonly IGuidFactory _guidFactory;
 
-        public AddItemService(IItemRepository repository, ITimeFactory timeService, IGuidFactory guidService)
+        public AddItemService(IItemRepository repository, ITimeFactory timeFactory, IGuidFactory guidFactory)
         {
             _repository = repository;
-            _timeService = timeService;
-            _guidService = guidService;
+            _timeFactory = timeFactory;
+            _guidFactory = guidFactory;
         }
 
         public async Task<Item> AddItemAsync(Item item)
         {
-            var currentTime = _timeService.GetCurrentDateTime();
+            var currentTime = _timeFactory.GetCurrentDateTime();
             var newItem = new Item
             {
-                Id = _guidService.GenerateGuid(),
+                Id = _guidFactory.GenerateGuid(),
                 Text = item.Text,
                 CreatedAt = currentTime,
                 ModifiedAt = currentTime
