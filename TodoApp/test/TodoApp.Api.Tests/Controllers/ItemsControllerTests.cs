@@ -13,6 +13,7 @@ using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Tests.Base.Comparers;
+
 // ReSharper disable UnusedMember.Local
 
 namespace TodoApp.Api.Tests.Controllers
@@ -28,7 +29,7 @@ namespace TodoApp.Api.Tests.Controllers
         private static readonly Guid Guid2 = new Guid("45c4fb8b-1cdf-42ca-8a61-67fd7f781057");
 
         private static readonly Item ItemToPost =
-            new Item { Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707") };
+            new Item {Text = "itemToPost", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397707")};
 
         private static readonly Item[] Items =
         {
@@ -104,7 +105,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> {Entity = Items[0]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>(Items[0]));
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -124,7 +125,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_NonExistentId_ReturnsNotFound()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>());
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>(null));
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -140,7 +141,7 @@ namespace TodoApp.Api.Tests.Controllers
             _helper.GetUriLocation(ItemToPost.Id).Returns(Uri);
 
             var (createdResult, item) =
-                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item { Text = "itemToPost" }));
+                await GetResultFromAction<Item>(controller => controller.PostAsync(new Item {Text = "itemToPost"}));
             var location = createdResult.Headers.Location.ToString();
 
             Assert.That(createdResult.StatusCode, Is.EqualTo(HttpStatusCode.Created));
@@ -161,7 +162,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _updateItemService.UpdateItemAsync(Arg.Is<Item>(value
                     => AreIdsEqual(value)))
-                .Returns(new RetrievedEntity<Item> {Entity = Items[1]});
+                .Returns(new RetrievedEntity<Item>(Items[1]));
 
             var (contentResult, item) =
                 await GetResultFromAction<Item>(controller => controller.PutAsync(Items[1].Id, Items[1]));

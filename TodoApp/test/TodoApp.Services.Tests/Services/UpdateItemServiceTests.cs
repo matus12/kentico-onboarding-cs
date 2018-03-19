@@ -8,6 +8,7 @@ using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Services.Services;
 using TodoApp.Tests.Base.Comparers;
+
 // ReSharper disable ArgumentsStyleLiteral
 
 namespace TodoApp.Services.Tests.Services
@@ -54,18 +55,15 @@ namespace TodoApp.Services.Tests.Services
                 Text = updatedText,
                 CreatedAt = creationTime
             };
-            var expectedItem = new RetrievedEntity<Item>
+            var expectedItem = new RetrievedEntity<Item>(new Item
             {
-                Entity = new Item
-                {
-                    Id = guid,
-                    Text = updatedText,
-                    CreatedAt = creationTime,
-                    ModifiedAt = currentTime
-                }
-            };
+                Id = guid,
+                Text = updatedText,
+                CreatedAt = creationTime,
+                ModifiedAt = currentTime
+            });
             _getItemByIdService.GetItemByIdAsync(guid)
-                .Returns(new RetrievedEntity<Item> {Entity = itemBeforeUpdate});
+                .Returns(new RetrievedEntity<Item>(itemBeforeUpdate));
             _repository.UpdateAsync(Arg.Is<Item>(value
                 => value.ItemIdentifierEqualityComparer(itemToUpdate)
             )).Returns(new Item
@@ -74,7 +72,7 @@ namespace TodoApp.Services.Tests.Services
                 Text = updatedText,
                 CreatedAt = creationTime
             });
-            
+
             var testItem = await _updateItemService.UpdateItemAsync(itemToUpdate);
 
             Assert.That(testItem.Entity, Is.EqualTo(expectedItem.Entity).UsingItemEqualityComparer());

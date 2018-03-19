@@ -39,9 +39,8 @@ namespace TodoApp.Services.Services
                 ModifiedAt = _timeFactory.GetCurrentDateTime()
             };
             await _repository.UpdateAsync(itemToUpdate);
-            retrievedItem.Entity = itemToUpdate;
 
-            return retrievedItem;
+            return new RetrievedEntity<Item>(itemToUpdate);
         }
     }
 }

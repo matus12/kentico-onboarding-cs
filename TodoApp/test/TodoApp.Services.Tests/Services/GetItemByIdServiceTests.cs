@@ -6,6 +6,7 @@ using NUnit.Framework;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Services.Services;
+// ReSharper disable ArgumentsStyleLiteral
 
 namespace TodoApp.Services.Tests.Services
 {
@@ -36,10 +37,7 @@ namespace TodoApp.Services.Tests.Services
                 CreatedAt = time,
                 ModifiedAt = time
             };
-            var expectedItem = new RetrievedEntity<Item>
-            {
-                Entity = item
-            };
+            var expectedItem = new RetrievedEntity<Item>(item);
             _repository.GetByIdAsync(id).Returns(item);
 
             var testItem = await _getItemByIdService.GetItemByIdAsync(id);
