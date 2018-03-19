@@ -182,6 +182,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>(Items[0]));
+
             var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid0));
 
             await _repository.Received(1).DeleteAsync(Guid0);

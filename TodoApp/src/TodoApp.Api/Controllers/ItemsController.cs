@@ -95,6 +95,13 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
+            var itemToDelete = await _getItemByIdService.GetItemByIdAsync(id);
+
+            if (!itemToDelete.WasFound)
+            {
+                return NotFound();
+            }
+
             await _repository.DeleteAsync(id);
 
             return StatusCode(HttpStatusCode.NoContent);
