@@ -4,7 +4,6 @@ using System.Threading;
 using NUnit.Framework;
 using TodoApp.Contracts.Factories;
 using TodoApp.Services.Factories;
-// ReSharper disable UnusedMember.Local
 
 namespace TodoApp.Services.Tests.Factories
 {
@@ -14,6 +13,7 @@ namespace TodoApp.Services.Tests.Factories
 
         private static IEnumerable<DateTime> MaxMinDateTimes
         {
+            // ReSharper disable once UnusedMember.Local
             get
             {
                 yield return DateTime.MaxValue;

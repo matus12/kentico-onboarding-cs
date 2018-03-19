@@ -11,9 +11,9 @@ namespace TodoApp.Api
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                ApiV1Route,
-                "api/v1/{controller}/{id}",
-                new {id = RouteParameter.Optional}
+                name: ApiV1Route,
+                routeTemplate: "api/v1/{controller}/{id}",
+                defaults: new {id = RouteParameter.Optional}
             );
         }
     }

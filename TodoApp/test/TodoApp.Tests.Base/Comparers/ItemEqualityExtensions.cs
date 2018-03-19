@@ -27,10 +27,8 @@ namespace TodoApp.Tests.Base.Comparers
                 return AreItemsEqual(x, y);
             }
 
-            public int GetHashCode(Item obj)
-            {
-                return obj.Text.GetHashCode() ^ obj.Id.GetHashCode();
-            }
+            public int GetHashCode(Item obj) 
+                => obj.Text.GetHashCode() ^ obj.Id.GetHashCode();
 
             private static bool AreItemsEqual(Item item1, Item item2)
                 => item1.Text == item2.Text &&
