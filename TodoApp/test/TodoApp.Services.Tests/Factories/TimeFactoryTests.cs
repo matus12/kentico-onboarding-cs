@@ -9,10 +9,11 @@ namespace TodoApp.Services.Tests.Factories
 {
     internal class TimeFactoryTests
     {
-        private ITimeFactory _timeService;
+        private ITimeFactory _timeFactory;
 
         private static IEnumerable<DateTime> MaxMinDateTimes
         {
+            // ReSharper disable once UnusedMember.Local
             get
             {
                 yield return DateTime.MaxValue;
@@ -23,13 +24,13 @@ namespace TodoApp.Services.Tests.Factories
         [SetUp]
         public void SetUp()
         {
-            _timeService = new TimeFactory();    
+            _timeFactory = new TimeFactory();    
         }
 
         [TestCaseSource(nameof(MaxMinDateTimes))]
         public void GetCurrentDateTime_ReturnsCorrectDateTime(DateTime testTime)
         {
-            var time = _timeService.GetCurrentDateTime();
+            var time = _timeFactory.GetCurrentDateTime();
 
             Assert.That(time.Ticks, Is.Not.EqualTo(testTime).Within(50000));
         }
@@ -37,9 +38,9 @@ namespace TodoApp.Services.Tests.Factories
         [Test]
         public void GetCurrentDateTime_ReturnsDifferentTimeWhenCalledTwice()
         {
-            var time0 = _timeService.GetCurrentDateTime();
+            var time0 = _timeFactory.GetCurrentDateTime();
             Thread.Sleep(50);
-            var time1 = _timeService.GetCurrentDateTime();
+            var time1 = _timeFactory.GetCurrentDateTime();
 
             Assert.That(time1.Ticks, Is.EqualTo(time0.Ticks).Within(600000));
         }

@@ -7,9 +7,7 @@ namespace TodoApp.Api.Repositories
     {
         public string DbConnectionString { get; }
 
-        public DbConnection()
-        {
-            DbConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        }
+        public DbConnection() 
+            => DbConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
     }
 }

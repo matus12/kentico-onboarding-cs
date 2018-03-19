@@ -10,8 +10,6 @@ namespace TodoApp.Database.Repositories
     internal class ItemsRepository : IItemRepository
     {
         private const string CollectionName = "items";
-        private readonly Item _updatedItem =
-            new Item {Text = "item0", Id = new Guid("e6eb4638-38a4-49ac-8aaf-878684397702")};
 
         private readonly IMongoCollection<Item> _collection;
 
@@ -37,10 +35,10 @@ namespace TodoApp.Database.Repositories
             return item;
         }
 
-        public async Task<Item> UpdateAsync(Item item)
-            => await Task.FromResult(_updatedItem);
+        public async Task<Item> UpdateAsync(Item updatedItem)
+            => await _collection.FindOneAndReplaceAsync(item => item.Id == updatedItem.Id, updatedItem);
 
         public async Task DeleteAsync(Guid id)
-            => await Task.CompletedTask;
+            => await _collection.DeleteOneAsync(item => item.Id == id);
     }
 }

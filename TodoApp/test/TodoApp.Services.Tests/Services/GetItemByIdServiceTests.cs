@@ -6,6 +6,7 @@ using NUnit.Framework;
 using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Services.Services;
+// ReSharper disable ArgumentsStyleLiteral
 
 namespace TodoApp.Services.Tests.Services
 {
@@ -26,7 +27,7 @@ namespace TodoApp.Services.Tests.Services
         [Test]
         public async Task GetItemByIdAsync_ExistingId_ReturnsCorrectItem()
         {
-            var time = 
+            var time =
                 new DateTime(year: 2018, month: 5, day: 4, hour: 3, minute: 2, second: 1);
             var id = new Guid("44e506f7-c42b-42e5-823c-a5f1cf2e16f9");
             var item = new Item
@@ -36,10 +37,7 @@ namespace TodoApp.Services.Tests.Services
                 CreatedAt = time,
                 ModifiedAt = time
             };
-            var expectedItem = new RetrievedEntity<Item>
-            {
-                Entity = item
-            };
+            var expectedItem = new RetrievedEntity<Item>(item);
             _repository.GetByIdAsync(id).Returns(item);
 
             var testItem = await _getItemByIdService.GetItemByIdAsync(id);
@@ -50,7 +48,7 @@ namespace TodoApp.Services.Tests.Services
         [Test]
         public async Task GetItemByIdAsync_ExistingId_ReturnsRetrievedItemWithSuccess()
         {
-            var time = 
+            var time =
                 new DateTime(year: 2018, month: 5, day: 4, hour: 3, minute: 2, second: 1);
             var id = new Guid("44e506f7-c42b-42e5-823c-a5f1cf2e16f9");
             var item = new Item

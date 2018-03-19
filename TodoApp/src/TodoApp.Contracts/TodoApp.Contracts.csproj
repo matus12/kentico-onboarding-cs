@@ -64,6 +64,7 @@
     <Compile Include="Factories\IGuidFactory.cs" />
     <Compile Include="Services\IAddItemService.cs" />
     <Compile Include="Services\IGetItemByIdService.cs" />
+    <Compile Include="Services\IUpdateItemService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

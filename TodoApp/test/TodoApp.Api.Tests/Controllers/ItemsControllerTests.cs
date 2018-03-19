@@ -36,19 +36,34 @@ namespace TodoApp.Api.Tests.Controllers
             new Item {Text = "item2", Id = Guid2}
         };
 
-        private static IEnumerable<Item> InvalidItems
+        private static IEnumerable<Item> InvalidPostItems
         {
+            // ReSharper disable once UnusedMember.Local
+            get
+            {
+                yield return null;
+                yield return new Item {Text = " invalid text  ", Id = Guid1};
+                yield return new Item {Text = "validText", Id = Guid0};
+            }
+        }
+
+        private static IEnumerable<Item> InvalidPutItems
+
+        {
+            // ReSharper disable once UnusedMember.Local
             get
             {
                 yield return null;
                 yield return new Item {Text = " invalid text  "};
-                yield return new Item {Text = "validText", Id = new Guid("67c77bb1-1c3c-4776-a9bd-b1707ea304c4")};
+                yield return new Item {Text = "validText", Id = Guid0};
+                yield return new Item {Text = "validText", Id = Guid.Empty};
             }
         }
 
         private ItemsController _controller;
         private IAddItemService _addItemService;
         private IGetItemByIdService _getItemByIdService;
+        private IUpdateItemService _updateItemService;
         private IItemRepository _repository;
         private ILocationHelper _helper;
 
@@ -57,14 +72,22 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _addItemService = Substitute.For<IAddItemService>();
             _getItemByIdService = Substitute.For<IGetItemByIdService>();
+            _updateItemService = Substitute.For<IUpdateItemService>();
             _repository = Substitute.For<IItemRepository>();
             _helper = Substitute.For<ILocationHelper>();
 
-            _controller = new ItemsController(_addItemService, _getItemByIdService, _repository, _helper)
-            {
-                Request = new HttpRequestMessage(),
-                Configuration = new HttpConfiguration()
-            };
+            _controller =
+                new ItemsController(
+                    _addItemService,
+                    _getItemByIdService,
+                    _updateItemService,
+                    _repository,
+                    _helper
+                )
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
         }
 
         [Test]
@@ -82,7 +105,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_ExistingId_ReturnsItemWithSameId()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item> { Entity = Items[0]});
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>(Items[0]));
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -102,7 +125,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_NonExistentId_ReturnsNotFound()
         {
-            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>());
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>(null));
 
             var (contentResult, item) = await GetResultFromAction<Item>(controller => controller.GetAsync(Guid0));
 
@@ -126,7 +149,7 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(location, Is.EqualTo(UriString));
         }
 
-        [TestCaseSource(nameof(InvalidItems))]
+        [TestCaseSource(nameof(InvalidPostItems))]
         public async Task PostAsync_InvalidItem_ReturnsBadRequest(Item item)
         {
             var response = await GetResultFromAction(controller => controller.PostAsync(item));
@@ -137,9 +160,9 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_ItemToUpdateWithExistingId_ReturnsUpdatedItem()
         {
-            _repository.UpdateAsync(Arg.Is<Item>(value
+            _updateItemService.UpdateItemAsync(Arg.Is<Item>(value
                     => AreIdsEqual(value)))
-                .Returns(Items[1]);
+                .Returns(new RetrievedEntity<Item>(Items[1]));
 
             var (contentResult, item) =
                 await GetResultFromAction<Item>(controller => controller.PutAsync(Items[1].Id, Items[1]));
@@ -148,13 +171,41 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(item, Is.EqualTo(Items[1]).UsingItemEqualityComparer());
         }
 
+        [TestCaseSource(nameof(InvalidPutItems))]
+        public async Task PutAsync_InvalidItem_ReturnsBadRequest(Item item)
+        {
+            var response = await GetResultFromAction(controller => controller.PutAsync(Guid1, item));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
         [Test]
         public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
+            _getItemByIdService.GetItemByIdAsync(Guid0).Returns(new RetrievedEntity<Item>(Items[0]));
+
             var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid0));
 
             await _repository.Received(1).DeleteAsync(Guid0);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        }
+
+        [Test]
+        public async Task DeleteAsync_NonExistingId_ReturnsNotFound()
+        {
+            _getItemByIdService.GetItemByIdAsync(Guid1).Returns(new RetrievedEntity<Item>(null));
+
+            var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid1));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task DeleteAsync_EmptyGuid_ReturnsBadRequest()
+        {
+            var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid.Empty));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         private static bool AreIdsEqual(Item value)
@@ -179,6 +230,6 @@ namespace TodoApp.Api.Tests.Controllers
             var responseMessage = await actionResult.ExecuteAsync(CancellationToken.None);
 
             return responseMessage;
-        }  
+        }
     }
 }

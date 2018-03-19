@@ -8,17 +8,18 @@ namespace TodoApp.Services.Tests.Factories
 {
     internal class GuidFactoryTests
     {
-        private IGuidFactory _guidService;
+        private IGuidFactory _guidFactory;
 
         [SetUp]
         public void SetUp()
         {
-            _guidService = new GuidFactory();
+            _guidFactory = new GuidFactory();
         }
+
         [Test]
         public void GenerateGuid_ReturnsNonEmptyGuid()
         {
-            var generatedGuid = _guidService.GenerateGuid();
+            var generatedGuid = _guidFactory.GenerateGuid();
             
             Assert.That(generatedGuid, Is.Not.EqualTo(Guid.Empty));
         }
@@ -29,7 +30,7 @@ namespace TodoApp.Services.Tests.Factories
             const int numberOfGeneratedGuids = 150;
 
             var generatedGuids = Enumerable
-                .Repeat<Func<Guid>>(() => _guidService.GenerateGuid(), numberOfGeneratedGuids)
+                .Repeat<Func<Guid>>(() => _guidFactory.GenerateGuid(), numberOfGeneratedGuids)
                 .Select(oneGuidFactory => oneGuidFactory());
             var nonUniqueGuids = generatedGuids
                 .GroupBy(guid => guid)
