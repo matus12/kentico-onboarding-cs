@@ -4,6 +4,7 @@ using System.Threading;
 using NUnit.Framework;
 using TodoApp.Contracts.Factories;
 using TodoApp.Services.Factories;
+// ReSharper disable UnusedMember.Local
 
 namespace TodoApp.Services.Tests.Factories
 {

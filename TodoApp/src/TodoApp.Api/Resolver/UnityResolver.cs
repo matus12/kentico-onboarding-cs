@@ -36,10 +36,8 @@ namespace TodoApp.Api.Resolver
         private readonly IUnityContainer _container;
         private bool _disposed;
 
-        public UnityResolver(IUnityContainer container)
-        {
-            _container = container ?? throw new ArgumentNullException(nameof(container));
-        }
+        public UnityResolver(IUnityContainer container) 
+            => _container = container ?? throw new ArgumentNullException(nameof(container));
 
         public object GetService(Type serviceType)
         {

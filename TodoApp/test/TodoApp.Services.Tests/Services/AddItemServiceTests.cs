@@ -8,6 +8,7 @@ using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Services.Services;
 using TodoApp.Tests.Base.Comparers;
+// ReSharper disable ArgumentsStyleLiteral
 
 namespace TodoApp.Services.Tests.Services
 {

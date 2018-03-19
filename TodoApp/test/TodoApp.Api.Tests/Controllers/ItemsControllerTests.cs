@@ -13,6 +13,7 @@ using TodoApp.Contracts.Models;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Tests.Base.Comparers;
+// ReSharper disable UnusedMember.Local
 
 namespace TodoApp.Api.Tests.Controllers
 {
