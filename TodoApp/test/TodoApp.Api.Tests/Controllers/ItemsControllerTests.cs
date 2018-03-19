@@ -188,6 +188,16 @@ namespace TodoApp.Api.Tests.Controllers
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
+        [Test]
+        public async Task DeleteAsync_NonExistingId_ReturnsNotFound()
+        {
+            _getItemByIdService.GetItemByIdAsync(Guid1).Returns(new RetrievedEntity<Item>(null));
+
+            var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid1));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
         private static bool AreIdsEqual(Item value)
             => value.Id == Items[1].Id;
 
