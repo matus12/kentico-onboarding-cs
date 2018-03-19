@@ -14,8 +14,6 @@ using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Tests.Base.Comparers;
 
-// ReSharper disable UnusedMember.Local
-
 namespace TodoApp.Api.Tests.Controllers
 {
     [TestFixture]
@@ -40,6 +38,7 @@ namespace TodoApp.Api.Tests.Controllers
 
         private static IEnumerable<Item> InvalidPostItems
         {
+            // ReSharper disable once UnusedMember.Local
             get
             {
                 yield return null;
@@ -51,6 +50,7 @@ namespace TodoApp.Api.Tests.Controllers
         private static IEnumerable<Item> InvalidPutItems
 
         {
+            // ReSharper disable once UnusedMember.Local
             get
             {
                 yield return null;
@@ -198,6 +198,14 @@ namespace TodoApp.Api.Tests.Controllers
             var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid1));
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task DeleteAsync_EmptyGuid_ReturnsBadRequest()
+        {
+            var response = await GetResultFromAction(controller => controller.DeleteAsync(Guid.Empty));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         private static bool AreIdsEqual(Item value)

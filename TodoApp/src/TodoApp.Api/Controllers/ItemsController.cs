@@ -51,12 +51,12 @@ namespace TodoApp.Api.Controllers
 
             var retrievedItem = await _getItemByIdService.GetItemByIdAsync(id);
 
-            if (retrievedItem.WasFound)
+            if (!retrievedItem.WasFound)
             {
-                return Ok(retrievedItem.Entity);
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok(retrievedItem.Entity);
         }
 
         public async Task<IHttpActionResult> PostAsync([FromBody] Item item)
@@ -85,16 +85,23 @@ namespace TodoApp.Api.Controllers
 
             var updatedItem = await _updateItemService.UpdateItemAsync(item);
 
-            if (updatedItem.WasFound)
+            if (!updatedItem.WasFound)
             {
-                return Ok(updatedItem.Entity);
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok(updatedItem.Entity);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
+            ValidateGuid(id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var itemToDelete = await _getItemByIdService.GetItemByIdAsync(id);
 
             if (!itemToDelete.WasFound)
