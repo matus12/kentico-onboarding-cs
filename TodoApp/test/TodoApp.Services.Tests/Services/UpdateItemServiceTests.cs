@@ -65,7 +65,7 @@ namespace TodoApp.Services.Tests.Services
             _getItemByIdService.GetItemByIdAsync(guid)
                 .Returns(new RetrievedEntity<Item>(itemBeforeUpdate));
             _repository.UpdateAsync(Arg.Is<Item>(value
-                => value.ItemIdentifierEqualityComparer(itemToUpdate)
+                => value.CompareWith(itemToUpdate)
             )).Returns(new Item
             {
                 Id = guid,

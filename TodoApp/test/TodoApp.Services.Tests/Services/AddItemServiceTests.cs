@@ -48,7 +48,7 @@ namespace TodoApp.Services.Tests.Services
             };
             var newItem = new Item {Text = newItemText};
             _repository.AddAsync(Arg.Is<Item>(value
-                => value.ItemIdentifierEqualityComparer(expectedItem)
+                => value.CompareWith(expectedItem)
             )).Returns(expectedItem);
 
             var testItem = await _service.AddItemAsync(newItem);
