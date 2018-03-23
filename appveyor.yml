@@ -1,0 +1,17 @@
+configuration: Release
+
+image: Visual Studio 2017
+
+before_build:
+  - nuget restore ./TodoApp/TodoApp.sln
+
+build:
+  verbosity: minimal
+  publish_wap: true
+test:
+  # all except assemblies to test
+  assemblies:
+    except:
+      - ./TodoApp/test/TodoApp.Tests.Base/bin/Release/TodoApp.Tests.Base.dll
+      - ./TodoApp/test/TodoApp.Api.Tests/bin/Release/TodoApp.Tests.Base.dll
+      - ./TodoApp/test/TodoApp.Services.Tests/bin/Release/TodoApp.Tests.Base.dll

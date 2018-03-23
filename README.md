@@ -1,3 +1,2 @@
 # kentico-onboarding-cs
-
-[![Build Status](https://travis-ci.org/matus12/kentico-onboarding-cs.svg?branch=feature%2Ftask-5)](https://travis-ci.org/{ORG-or-USERNAME}/{REPO-NAME})
+[![Build status](https://ci.appveyor.com/api/projects/status/xyyifan0j2y5u4s2?svg=true)](https://ci.appveyor.com/project/matus12/kentico-onboarding-cs)
